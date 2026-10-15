@@ -42,7 +42,7 @@
     function loadSettings() {
       let s = {};
       try { s = JSON.parse(localStorage.getItem('dilex.settings') || '{}') || {}; } catch (_) {}
-      return Object.assign({ theme: 'claro', accent: null, fs: 1, radius: 'round', userName: '', aiName: 'Dilex', voice: true, motion: null, onboarded: false, shape: 'orbe', voiceRate: 1.05, voicePitch: 1, voiceName: '', aiEnabled: false, aiModel: 'claude-haiku-5-5', aiMode: 'always' }, s);
+      return Object.assign({ theme: 'claro', accent: null, fs: 1, radius: 'round', userName: '', aiName: 'Dilex', voice: true, motion: null, onboarded: false, shape: 'orbe', voiceRate: 1.05, voicePitch: 1, voiceName: '', aiEnabled: false, aiModel: 'claude-haiku-5-5', aiMode: 'always', persona: 'amigable', region: 'auto', slang: true, natural: true }, s);
     }
     function applyThemeVars(s) {
       const t = THEMES[s.theme] || THEMES.claro;
@@ -85,7 +85,7 @@
     })();
   </script>
 
-  <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Plus Jakarta Sans,system-ui,sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono,ui-monospace,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.collapse{visibility:collapse}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.bottom-0{bottom:0}.bottom-24{bottom:6rem}.left-4{left:1rem}.right-4{right:1rem}.top-0{top:0}.z-10{z-index:10}.z-40{z-index:40}.z-\[70\]{z-index:70}.z-\[80\]{z-index:80}.-mx-1{margin-left:-.25rem;margin-right:-.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-1{margin-top:.25rem;margin-bottom:.25rem}.my-6{margin-top:1.5rem;margin-bottom:1.5rem}.\!mb-0{margin-bottom:0!important}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.ml-1{margin-left:.25rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.\!table{display:table!important}.table{display:table}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1/1}.h-1\.5{height:.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-2{height:.5rem}.h-2\.5{height:.625rem}.h-20{height:5rem}.h-28{height:7rem}.h-3\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\[30rem\]{max-height:30rem}.min-h-\[1\.25rem\]{min-height:1.25rem}.min-h-\[220px\]{min-height:220px}.min-h-\[240px\]{min-height:240px}.min-h-\[3\.5rem\]{min-height:3.5rem}.min-h-\[3rem\]{min-height:3rem}.min-h-\[5\.5rem\]{min-height:5.5rem}.min-h-\[6rem\]{min-height:6rem}.w-1\.5{width:.375rem}.w-1\/2{width:50%}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:.5rem}.w-2\.5{width:.625rem}.w-20{width:5rem}.w-28{width:7rem}.w-3\.5{width:.875rem}.w-3\/4{width:75%}.w-4{width:1rem}.w-44{width:11rem}.w-5{width:1.25rem}.w-52{width:13rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\[12rem\]{min-width:12rem}.min-w-\[13rem\]{min-width:13rem}.max-w-2xl{max-width:42rem}.max-w-7xl{max-width:80rem}.max-w-\[130px\]{max-width:130px}.max-w-\[16rem\]{max-width:16rem}.max-w-\[5\.5rem\]{max-width:5.5rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-shrink{flex-shrink:1}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-rotate-90{--tw-rotate:-90deg}.-rotate-90,.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.resize-y{resize:vertical}.resize{resize:both}.list-decimal{list-style-type:decimal}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.place-items-center{place-items:center}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-x-4{-moz-column-gap:1rem;column-gap:1rem}.gap-y-3{row-gap:.75rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-neutral-100>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(var(--n100)/var(--tw-divide-opacity,1))}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.break-words{overflow-wrap:break-word}.rounded-\[10px\]{border-radius:10px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.\!border-transparent{border-color:transparent!important}.border-accent{--tw-border-opacity:1;border-color:rgb(var(--accent)/var(--tw-border-opacity,1))}.border-neutral-100{--tw-border-opacity:1;border-color:rgb(var(--n100)/var(--tw-border-opacity,1))}.border-neutral-200{--tw-border-opacity:1;border-color:rgb(var(--n200)/var(--tw-border-opacity,1))}.border-neutral-200\/70{border-color:rgb(var(--n200)/.7)}.border-transparent{border-color:transparent}.\!bg-transparent{background-color:transparent!important}.bg-accent{--tw-bg-opacity:1;background-color:rgb(var(--accent)/var(--tw-bg-opacity,1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129/var(--tw-bg-opacity,1))}.bg-neutral-100{--tw-bg-opacity:1;background-color:rgb(var(--n100)/var(--tw-bg-opacity,1))}.bg-neutral-200{--tw-bg-opacity:1;background-color:rgb(var(--n200)/var(--tw-bg-opacity,1))}.bg-neutral-50{--tw-bg-opacity:1;background-color:rgb(var(--n50)/var(--tw-bg-opacity,1))}.p-1\.5{padding:.375rem}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-7{padding:1.75rem}.\!px-1{padding-left:.25rem!important;padding-right:.25rem!important}.\!px-3{padding-left:.75rem!important;padding-right:.75rem!important}.\!py-1{padding-top:.25rem!important;padding-bottom:.25rem!important}.\!py-3{padding-top:.75rem!important;padding-bottom:.75rem!important}.px-0\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-32{padding-bottom:8rem}.pb-4{padding-bottom:1rem}.pl-3\.5{padding-left:.875rem}.pl-5{padding-left:1.25rem}.pr-1\.5{padding-right:.375rem}.pr-2{padding-right:.5rem}.pt-0\.5{padding-top:.125rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-5{padding-top:1.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:JetBrains Mono,ui-monospace,monospace}.\!text-lg{font-size:1.125rem!important;line-height:1.75rem!important}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\[0\.68rem\]{font-size:.68rem}.text-\[0\.95rem\]{font-size:.95rem}.text-\[1\.02rem\]{font-size:1.02rem}.text-\[1\.6rem\]{font-size:1.6rem}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\[0\.35em\]{letter-spacing:.35em}.tracking-tight{letter-spacing:-.025em}.\!text-white{--tw-text-opacity:1!important;color:rgb(255 255 255/var(--tw-text-opacity,1))!important}.text-accent{--tw-text-opacity:1;color:rgb(var(--accent)/var(--tw-text-opacity,1))}.text-neutral-400{--tw-text-opacity:1;color:rgb(var(--n400)/var(--tw-text-opacity,1))}.text-neutral-500{--tw-text-opacity:1;color:rgb(var(--n500)/var(--tw-text-opacity,1))}.text-neutral-600{--tw-text-opacity:1;color:rgb(var(--n600)/var(--tw-text-opacity,1))}.text-neutral-700{--tw-text-opacity:1;color:rgb(var(--n700)/var(--tw-text-opacity,1))}.text-neutral-800{--tw-text-opacity:1;color:rgb(var(--n800)/var(--tw-text-opacity,1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\/60{color:hsla(0,0%,100%,.6)}.text-white\/90{color:hsla(0,0%,100%,.9)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.decoration-dotted{text-decoration-style:dotted}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.\!shadow-none{--tw-shadow:0 0 #0000!important;--tw-shadow-colored:0 0 #0000!important;box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)!important}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring,.ring-2{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-accent\/30{--tw-ring-color:rgb(var(--accent)/0.3)}.blur{--tw-blur:blur(8px)}.blur,.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.first-letter\:uppercase:first-letter{text-transform:uppercase}.focus-within\:opacity-100:focus-within{opacity:1}.hover\:border-neutral-300:hover{--tw-border-opacity:1;border-color:rgb(var(--n300)/var(--tw-border-opacity,1))}.hover\:bg-neutral-50:hover{--tw-bg-opacity:1;background-color:rgb(var(--n50)/var(--tw-bg-opacity,1))}.hover\:text-neutral-900:hover{--tw-text-opacity:1;color:rgb(var(--n900)/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-neutral-900{--tw-text-opacity:1;color:rgb(var(--n900)/var(--tw-text-opacity,1))}@media (min-width:640px){.sm\:left-auto{left:auto}.sm\:block{display:block}.sm\:inline{display:inline}.sm\:grid{display:grid}.sm\:h-24{height:6rem}.sm\:h-36{height:9rem}.sm\:h-56{height:14rem}.sm\:w-24{width:6rem}.sm\:w-36{width:9rem}.sm\:w-56{width:14rem}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-2{gap:.5rem}.sm\:gap-3{gap:.75rem}.sm\:p-3\.5{padding:.875rem}.sm\:p-4{padding:1rem}.sm\:p-5{padding:1.25rem}.sm\:p-6{padding:1.5rem}.sm\:p-7{padding:1.75rem}.sm\:p-9{padding:2.25rem}.sm\:\!px-3{padding-left:.75rem!important;padding-right:.75rem!important}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-6{padding-top:1.5rem}.sm\:text-\[2\.1rem\]{font-size:2.1rem}.sm\:opacity-0{opacity:0}.group:hover .sm\:group-hover\:opacity-100{opacity:1}}@media (min-width:768px){.md\:bottom-28{bottom:7rem}.md\:col-span-2{grid-column:span 2/span 2}.md\:block{display:block}.md\:inline{display:inline}.md\:hidden{display:none}.md\:max-h-\[24rem\]{max-height:24rem}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:pb-12{padding-bottom:3rem}}@media (min-width:1024px){.lg\:col-span-2{grid-column:span 2/span 2}.lg\:col-span-3{grid-column:span 3/span 3}.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}.lg\:grid-cols-\[1fr_auto\]{grid-template-columns:1fr auto}.lg\:gap-10{gap:2.5rem}}@media (min-width:1280px){.xl\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}</style>
+  <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Plus Jakarta Sans,system-ui,sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono,ui-monospace,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.collapse{visibility:collapse}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.bottom-0{bottom:0}.bottom-24{bottom:6rem}.left-4{left:1rem}.right-4{right:1rem}.top-0{top:0}.z-10{z-index:10}.z-40{z-index:40}.z-\[70\]{z-index:70}.z-\[80\]{z-index:80}.-mx-1{margin-left:-.25rem;margin-right:-.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-1{margin-top:.25rem;margin-bottom:.25rem}.my-6{margin-top:1.5rem;margin-bottom:1.5rem}.\!mb-0{margin-bottom:0!important}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.ml-1{margin-left:.25rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.\!table{display:table!important}.table{display:table}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1/1}.h-1\.5{height:.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-2{height:.5rem}.h-2\.5{height:.625rem}.h-20{height:5rem}.h-28{height:7rem}.h-3\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\[30rem\]{max-height:30rem}.min-h-\[1\.25rem\]{min-height:1.25rem}.min-h-\[220px\]{min-height:220px}.min-h-\[240px\]{min-height:240px}.min-h-\[3\.5rem\]{min-height:3.5rem}.min-h-\[3rem\]{min-height:3rem}.min-h-\[5\.5rem\]{min-height:5.5rem}.min-h-\[6rem\]{min-height:6rem}.w-1\.5{width:.375rem}.w-1\/2{width:50%}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:.5rem}.w-2\.5{width:.625rem}.w-20{width:5rem}.w-28{width:7rem}.w-3\.5{width:.875rem}.w-3\/4{width:75%}.w-4{width:1rem}.w-44{width:11rem}.w-5{width:1.25rem}.w-52{width:13rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\[12rem\]{min-width:12rem}.min-w-\[13rem\]{min-width:13rem}.max-w-2xl{max-width:42rem}.max-w-7xl{max-width:80rem}.max-w-\[130px\]{max-width:130px}.max-w-\[16rem\]{max-width:16rem}.max-w-\[5\.5rem\]{max-width:5.5rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.flex-shrink{flex-shrink:1}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-rotate-90{--tw-rotate:-90deg}.-rotate-90,.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.resize-y{resize:vertical}.resize{resize:both}.list-decimal{list-style-type:decimal}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.place-items-center{place-items:center}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-x-4{-moz-column-gap:1rem;column-gap:1rem}.gap-y-3{row-gap:.75rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-neutral-100>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(var(--n100)/var(--tw-divide-opacity,1))}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.break-words{overflow-wrap:break-word}.rounded-\[10px\]{border-radius:10px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.\!border-accent{--tw-border-opacity:1!important;border-color:rgb(var(--accent)/var(--tw-border-opacity,1))!important}.\!border-transparent{border-color:transparent!important}.border-accent{--tw-border-opacity:1;border-color:rgb(var(--accent)/var(--tw-border-opacity,1))}.border-neutral-100{--tw-border-opacity:1;border-color:rgb(var(--n100)/var(--tw-border-opacity,1))}.border-neutral-200{--tw-border-opacity:1;border-color:rgb(var(--n200)/var(--tw-border-opacity,1))}.border-neutral-200\/70{border-color:rgb(var(--n200)/.7)}.border-transparent{border-color:transparent}.\!bg-transparent{background-color:transparent!important}.bg-accent{--tw-bg-opacity:1;background-color:rgb(var(--accent)/var(--tw-bg-opacity,1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129/var(--tw-bg-opacity,1))}.bg-neutral-100{--tw-bg-opacity:1;background-color:rgb(var(--n100)/var(--tw-bg-opacity,1))}.bg-neutral-200{--tw-bg-opacity:1;background-color:rgb(var(--n200)/var(--tw-bg-opacity,1))}.bg-neutral-50{--tw-bg-opacity:1;background-color:rgb(var(--n50)/var(--tw-bg-opacity,1))}.p-1\.5{padding:.375rem}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-7{padding:1.75rem}.\!px-1{padding-left:.25rem!important;padding-right:.25rem!important}.\!px-3{padding-left:.75rem!important;padding-right:.75rem!important}.\!py-1{padding-top:.25rem!important;padding-bottom:.25rem!important}.\!py-3{padding-top:.75rem!important;padding-bottom:.75rem!important}.px-0\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-32{padding-bottom:8rem}.pb-4{padding-bottom:1rem}.pl-3{padding-left:.75rem}.pl-3\.5{padding-left:.875rem}.pl-5{padding-left:1.25rem}.pr-1{padding-right:.25rem}.pr-1\.5{padding-right:.375rem}.pr-2{padding-right:.5rem}.pt-0\.5{padding-top:.125rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-5{padding-top:1.25rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:JetBrains Mono,ui-monospace,monospace}.\!text-lg{font-size:1.125rem!important;line-height:1.75rem!important}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\[0\.68rem\]{font-size:.68rem}.text-\[0\.95rem\]{font-size:.95rem}.text-\[1\.02rem\]{font-size:1.02rem}.text-\[1\.6rem\]{font-size:1.6rem}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\[0\.35em\]{letter-spacing:.35em}.tracking-tight{letter-spacing:-.025em}.\!text-white{--tw-text-opacity:1!important;color:rgb(255 255 255/var(--tw-text-opacity,1))!important}.text-accent{--tw-text-opacity:1;color:rgb(var(--accent)/var(--tw-text-opacity,1))}.text-neutral-400{--tw-text-opacity:1;color:rgb(var(--n400)/var(--tw-text-opacity,1))}.text-neutral-500{--tw-text-opacity:1;color:rgb(var(--n500)/var(--tw-text-opacity,1))}.text-neutral-600{--tw-text-opacity:1;color:rgb(var(--n600)/var(--tw-text-opacity,1))}.text-neutral-700{--tw-text-opacity:1;color:rgb(var(--n700)/var(--tw-text-opacity,1))}.text-neutral-800{--tw-text-opacity:1;color:rgb(var(--n800)/var(--tw-text-opacity,1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\/60{color:hsla(0,0%,100%,.6)}.text-white\/90{color:hsla(0,0%,100%,.9)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.decoration-dotted{text-decoration-style:dotted}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.\!shadow-none{--tw-shadow:0 0 #0000!important;--tw-shadow-colored:0 0 #0000!important;box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)!important}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring,.ring-2{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-accent\/30{--tw-ring-color:rgb(var(--accent)/0.3)}.blur{--tw-blur:blur(8px)}.blur,.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.first-letter\:uppercase:first-letter{text-transform:uppercase}.focus-within\:opacity-100:focus-within{opacity:1}.hover\:border-neutral-300:hover{--tw-border-opacity:1;border-color:rgb(var(--n300)/var(--tw-border-opacity,1))}.hover\:bg-neutral-50:hover{--tw-bg-opacity:1;background-color:rgb(var(--n50)/var(--tw-bg-opacity,1))}.hover\:text-neutral-900:hover{--tw-text-opacity:1;color:rgb(var(--n900)/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-neutral-900{--tw-text-opacity:1;color:rgb(var(--n900)/var(--tw-text-opacity,1))}@media (min-width:640px){.sm\:left-auto{left:auto}.sm\:block{display:block}.sm\:inline{display:inline}.sm\:grid{display:grid}.sm\:h-24{height:6rem}.sm\:h-36{height:9rem}.sm\:h-56{height:14rem}.sm\:w-24{width:6rem}.sm\:w-36{width:9rem}.sm\:w-56{width:14rem}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-2{gap:.5rem}.sm\:gap-3{gap:.75rem}.sm\:p-3\.5{padding:.875rem}.sm\:p-4{padding:1rem}.sm\:p-5{padding:1.25rem}.sm\:p-6{padding:1.5rem}.sm\:p-7{padding:1.75rem}.sm\:p-9{padding:2.25rem}.sm\:\!px-3{padding-left:.75rem!important;padding-right:.75rem!important}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-6{padding-top:1.5rem}.sm\:text-\[2\.1rem\]{font-size:2.1rem}.sm\:opacity-0{opacity:0}.group:hover .sm\:group-hover\:opacity-100{opacity:1}}@media (min-width:768px){.md\:bottom-28{bottom:7rem}.md\:col-span-2{grid-column:span 2/span 2}.md\:block{display:block}.md\:inline{display:inline}.md\:hidden{display:none}.md\:max-h-\[24rem\]{max-height:24rem}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:pb-12{padding-bottom:3rem}}@media (min-width:1024px){.lg\:col-span-2{grid-column:span 2/span 2}.lg\:col-span-3{grid-column:span 3/span 3}.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}.lg\:grid-cols-\[1fr_auto\]{grid-template-columns:1fr auto}.lg\:gap-10{gap:2.5rem}}@media (min-width:1280px){.xl\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}</style>
   <script>/*!
  * Chart.js v4.4.1
  * https://www.chartjs.org
@@ -1453,17 +1453,43 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       <div><p class="field-label">Forma del asistente</p>
         <div id="shapeGrid" class="grid grid-cols-3 gap-2"></div>
       </div>
+      <div><p class="field-label">Personalidad</p>
+        <div id="personaGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2"></div>
+      </div>
+      <div><p class="field-label">Acento y región</p>
+        <div id="regionGrid" class="flex flex-wrap gap-2"></div>
+        <p id="regionNote" class="hint mt-2"></p>
+        <label class="flex items-center gap-2.5 text-sm mt-2"><input id="setSlang" type="checkbox" class="chk" /> Usar expresiones de mi región</label>
+      </div>
       <div class="space-y-2.5">
-        <label class="block"><span class="field-label">Voz</span><select id="setVoiceName" class="input w-full"></select></label>
+        <label class="block"><span class="field-label">Voz <span class="font-normal text-neutral-500">(★ = más natural)</span></span><select id="setVoiceName" class="input w-full"></select></label>
         <p id="voiceNone" class="hint hidden">Este dispositivo no tiene voces en español instaladas; usaré la predeterminada.</p>
+        <label class="flex items-center gap-2.5 text-sm"><input id="setNatural" type="checkbox" class="chk" /> Entonación natural: varía el ritmo y el tono como una persona</label>
         <div class="grid grid-cols-2 gap-3">
           <label class="block"><span class="field-label">Velocidad · <span id="rateVal"></span></span><input id="setVoiceRate" type="range" min="0.7" max="1.6" step="0.05" /></label>
           <label class="block"><span class="field-label">Tono · <span id="pitchVal"></span></span><input id="setVoicePitch" type="range" min="0.5" max="1.5" step="0.05" /></label>
         </div>
       </div>
+      <details class="rounded-app-sm surface border border-neutral-200 px-3 py-2 text-sm">
+        <summary class="font-semibold cursor-pointer">Cómo conseguir una voz más humana</summary>
+        <div class="mt-2 space-y-2 text-neutral-600 leading-relaxed">
+          <p>Las voces las pone tu teléfono. Si instalas voces de alta calidad, se oirán mucho más naturales:</p>
+          <p><b>Android:</b> Ajustes → Accesibilidad (o Sistema → Idiomas) → Salida de texto a voz → Motor de Google → ajustes ⚙ → Instalar datos de voz → Español. Elige el país y descarga la voz que más te guste.</p>
+          <p><b>iPhone:</b> Ajustes → Accesibilidad → Contenido leído → Voces → Español. Elige el país y descarga una voz "Mejorada" o "Premium".</p>
+          <p><b>Computadora:</b> en Microsoft Edge aparecen voces "Natural" muy humanas, con acentos de Venezuela, México, Colombia, Argentina y más.</p>
+          <p>Luego cierra y abre la app y elige la voz en la lista de arriba.</p>
+        </div>
+      </details>
       <div><p class="field-label">Animaciones</p>
         <div class="tabs w-full" id="motionTabs"><button data-motion="full" class="flex-1">Completas</button><button data-motion="min" class="flex-1">Mínimas</button></div>
       </div>
+    </div>
+    <div id="profileBox" class="space-y-2.5 rounded-app p-4 bg-neutral-50 border border-neutral-200/70">
+      <div>
+        <p class="font-bold">Lo que <span data-ai-name>Dilex</span> sabe de ti</p>
+        <p class="hint mt-0.5">Solo se guarda en este dispositivo. Toca la ✕ para que lo olvide.</p>
+      </div>
+      <ul id="profileList" class="space-y-1.5"></ul>
     </div>
     <div class="space-y-3 rounded-app p-4 bg-neutral-50 border border-neutral-200/70">
       <div class="flex items-start justify-between gap-3">
@@ -3679,7 +3705,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   }
   function backupObject() {
     flushNote();
-    return { app: 'dilex.exe', version: 4, exportedAt: new Date().toISOString(), tasks, pomodoro: pomoHistory, pomoSettings, habits, goals, notes, plan, files: fileHistory, settings };
+    return { app: 'dilex.exe', version: 4, exportedAt: new Date().toISOString(), tasks, pomodoro: pomoHistory, pomoSettings, habits, goals, notes, plan, files: fileHistory, settings, profile };
   }
   async function importBackup(file) {
     try {
@@ -3701,6 +3727,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
       if (isObj(data.pomoSettings)) pomoSettings = Object.assign(pomoSettings, data.pomoSettings);
       store.set(KEYS.tasks, tasks); store.set(KEYS.pomodoro, pomoHistory); store.set(KEYS.habits, habits); store.set(KEYS.goals, goals);
       store.set(KEYS.notes, notes); store.set(KEYS.files, fileHistory); store.set(KEYS.plan, plan); savePomoSettings();
+      if (isObj(data.profile)) { profile = Object.assign({ likes: [], dislikes: [], facts: {}, birthday: '', city: '', notes: [] }, data.profile); saveProfile(); }
       if (isObj(data.settings)) updateSettings(data.settings);
       currentNoteId = notes[0]?.id || null;
       renderAll(); closeSheets();
@@ -4573,12 +4600,6 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     'Descansar también es avanzar. Una pausa corta y vuelves con más energía.',
     'No tiene que salir perfecto, tiene que salir. Luego lo mejoras.',
   ];
-  const JOKES = [
-    '¿Por qué el libro de matemáticas estaba triste? Porque tenía demasiados problemas.',
-    'Le pregunté a mi lista de tareas si me extrañaba. Me respondió con tres pendientes nuevos.',
-    '¿Qué le dijo un pomodoro a otro? Nos vemos en 25 minutos, sin distracciones.',
-    'Mi récord de productividad es organizar la lista de cosas que voy a hacer mañana.',
-  ];
   const R = [];
   const rule = (name, re, fn) => R.push([name, re, fn]);
   const notFound = (q, what = 'tus tareas') => ({ text: `No encontré nada parecido a "${q}" en ${what}.` });
@@ -4597,11 +4618,6 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   rule('help', /^(ayuda|que puedes hacer|que sabes hacer|como funcionas|comandos|que haces|como te uso)\b/, () => helpReply());
   rule('aiName', /^(te llamaras|tu nombre sera|cambia tu nombre a|te voy a llamar|llamate)\s+(.+)$/, (m, o) => { const v = cap(tailOf(o, m[2]).trim().slice(0, 20)); setPersona({ aiName: v }); return { text: `Me gusta. A partir de ahora soy ${v}.` }; });
   rule('userName', /^(llamame|mi nombre es|me llamo)\s+(.+)$/, (m, o) => { const v = cap(tailOf(o, m[2]).trim().slice(0, 30)); setPersona({ userName: v }); return { text: `Entendido. Desde ahora te llamo ${v}.` }; });
-  rule('who', /(quien eres|como te llamas|que eres\b|cual es tu nombre)/, () => ({ text: `Soy ${aiName()}, tu asistente personal. Organizo tus tareas, hábitos, metas, notas y recordatorios, cuido tu concentración y te cuento cómo vas. Lo que me dices se queda en tu dispositivo.` }));
-  rule('howAreYou', /^(como estas|que tal estas|como te va|como andas)\b/, () => ({ text: pick([`Funcionando al cien${nameSuffix()}. ¿En qué te ayudo?`, 'Todo en orden por aquí. ¿Qué hacemos?', 'Muy bien, con ganas de ayudarte. ¿Qué necesitas?']) }));
-  rule('joke', /(chiste|algo gracioso|hazme reir)/, () => ({ text: pick(JOKES) }));
-  rule('greet', /^(hola|buenas|buenos dias|buenas tardes|buenas noches|que tal|hey|saludos)\b/, () => ({ text: `${greetWord()}${nameSuffix()}. ${dayStatus()}`, say: `${greetWord()}${nameSuffix()}. ${dayStatus()}` }));
-  rule('thanks', /^(gracias|muchas gracias|genial|perfecto|excelente|buen trabajo|bien hecho|vale|ok|okay|listo)\b/, () => ({ text: pick([`Para eso estoy${nameSuffix()}.`, `Con gusto${nameSuffix()}.`, 'Siempre a tu servicio.']) }));
   rule('time', /^(dime\s+)?que hora es/, () => ({ text: `Son las ${new Date().toLocaleTimeString('es-ES', { hour: 'numeric', minute: '2-digit' })}.` }));
   rule('date', /^(dime\s+)?(que dia es|que fecha es|en que dia estamos|a que estamos)/, () => ({ text: `Hoy es ${new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}.` }));
   rule('convert', /(convierte|convertir|pasa|pasame|cuant[oa]s|cuanto es|cuanto son|equivale)/, (m, o) => {
@@ -4624,7 +4640,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   });
   rule('voiceChange', /(cambia|elige|otra)\s+(tu\s+|de\s+|la\s+)?voz/, () => { setTimeout(() => openSheet('themeSheet'), 700); return { text: 'Te abro los ajustes para que elijas mi voz.' }; });
   rule('handsFreeOn', /^(modo\s+)?(conversacion|manos libres)|^(conversemos|hablemos|charlemos)\b/, () => { setHandsFree(true); return { text: 'Modo conversación activado. Habla cuando quieras; te escucho después de cada respuesta.' }; });
-  rule('handsFreeOff', /^(deja de escucharme|deja de escuchar|para de escuchar|eso es todo|nada mas|ya esta|adios|hasta luego)\b/, () => { setHandsFree(false); return { text: pick([`Aquí estaré cuando me necesites${nameSuffix()}.`, 'Perfecto. Me quedo en espera.']) }; });
+  rule('handsFreeOff', /^(deja de escucharme|deja de escuchar|para de escuchar|eso es todo|nada mas|ya esta|adios|hasta luego)\b/, () => { setHandsFree(false); return { text: line('bye') }; });
   rule('shape', new RegExp(String.raw`(forma|figura|aspecto|apariencia|transformate|conviertete|usa|ponte)\b.*\b(${SHAPE_RE})\b`), (m) => {
     const k = SHAPE_ALIAS[m[2]];
     setPersona({ shape: k });
@@ -4888,7 +4904,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   });
 
   rule('analyze', /^(analiza|analizar|revisa|lee|abre)\s+(un|mi|este|el)\s+archivo|^analiza(r)?$/, () => ({ text: 'Claro. Elige el archivo y te explico qué contiene, con gráficas.', actions: [{ label: 'Elegir archivo', fn: () => { closeSheets(); scrollToId('analizador'); $('#fileInput').click(); } }] }));
-  rule('motivate', /(motivame|animame|animo|estoy cansad|no tengo ganas|desmotivad|me cuesta|no puedo concentrarme|procrastin|flojera|estoy agobiad|estoy estresad)/, () => ({ text: pick(TIPS), actions: [{ label: 'Sesión de 10 minutos', fn: () => handleCommand('empieza a concentrarme 10 minutos') }] }));
+  rule('motivate', /(motivame|animame|dame animo|no tengo ganas|desmotivad|me cuesta (concentrarme|empezar|arrancar)|no puedo concentrarme|procrastin|flojera|pereza)/, () => ({ text: pick(TIPS), actions: [{ label: 'Sesión de 10 minutos', fn: () => handleCommand('empieza a concentrarme 10 minutos') }] }));
   rule('focus', /^((vamos a|quiero)\s+)?(empieza|empezar|empecemos|inicia|iniciar|comienza|comenzar|arranca|activa|pon)\b.*\b(concentr\w*|enfoc\w*|enfoque|pomodoro|sesion)|^((quiero|necesito|voy a)\s+)?(concentrarme|enfocarme|concentrame|a trabajar|modo enfoque|a concentrarse)\b/, (m, o) => {
     const mm = /(\d{1,3})\s*(min|minutos?)\b/.exec(o.n);
     const mins = mm ? +mm[1] : null;
@@ -4942,14 +4958,22 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     if (m && m[0] && m[0].length < o.n.length) { o.s = o.s.slice(m[0].length); o.n = o.n.slice(m[0].length); }
     m = /[,\s]+(por\s+favor|porfa)$/.exec(o.n);
     if (m) { o.s = o.s.slice(0, m.index); o.n = o.n.slice(0, m.index); }
-    if (!o.n.trim() || new RegExp(`^(${escRe(fold(aiName()))}|dilex)$`).test(o.n.trim())) return { text: `${greetWord()}${nameSuffix()}. Aquí estoy. ¿Qué necesitas?`, intent: 'greet' };
+    if (!o.n.trim() || new RegExp(`^(${escRe(fold(aiName()))}|dilex)$`).test(o.n.trim())) return { text: line('listening'), intent: 'greet' };
+    if (CRISIS_RE.test(o.n)) return crisisReply();
+    const done = (r) => { if (r && r.then) { const t = r.then; delete r.then; t(); } return r; };
+    const pend = talkPending(o);
+    if (pend) return done(pend);
     for (const [name, re, fn] of R) {
       const mm = re.exec(o.n);
       if (!mm) continue;
       const r = fn(mm, o);
-      if (r) { r.intent = r.intent || name; return r; }
+      if (r) { r.intent = r.intent || name; return flavor(r); }
     }
+    const tr = talkReply(o);
+    if (tr) return done(tr);
     if (inherit === 'taskAdd' && o.n.split(/\s+/).length <= 8) return taskAddFrom({ s: o.s, n: o.n });
+    const look = lookupFrom(o);
+    if (look) return look;
     const raw2 = o.s.trim();
     const words = o.n.split(/\s+/).filter(Boolean).length;
     return {
@@ -4974,6 +4998,13 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
       last = r.intent || last;
     }
     if (out.every(r => r.unknown)) return interpretOne(raw);
+    if (out.some(r => r.later)) {
+      return { text: '', intent: 'multi', later: async () => {
+        const done = [];
+        for (const r of out) done.push(r.later ? await r.later().catch(() => ({ text: '' })) : r);
+        return { text: done.map(r => r.text).filter(Boolean).join(' '), actions: done.flatMap(r => r.actions || []).slice(0, 4) };
+      } };
+    }
     return {
       text: out.map(r => r.text).join(' '),
       say: out.map(r => r.say || r.text).join(' '),
@@ -4982,6 +5013,1103 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     };
   }
 
+
+  /* =====================================================================
+     CONVERSACIÓN: personalidad, región, memoria personal, charla y juegos.
+     Todo funciona sin internet.
+  ===================================================================== */
+  const PERSONAS = {
+    amigable: { name: 'Amigable', desc: 'Cercano y cálido' },
+    divertido: { name: 'Divertido', desc: 'Bromista, con chispa' },
+    motivador: { name: 'Motivador', desc: 'Te impulsa a avanzar' },
+    formal: { name: 'Formal', desc: 'Educado y sobrio' },
+    directo: { name: 'Directo', desc: 'Breve, sin rodeos' },
+  };
+  const persona = () => (PERSONAS[settings.persona] ? settings.persona : 'amigable');
+
+  const NEUTRAL_WORDS = { ok: ['¡Perfecto!', '¡Claro!', '¡Listo!'], cool: ['genial', 'bueno', 'bien'], hi: ['¡Hola!', '¡Hola, hola!'], friend: [], bye: ['¡Hasta pronto!', '¡Nos vemos!'] };
+  const REGIONS = {
+    auto: { name: 'Automático', flag: '🌎', langs: [], cur: null, words: NEUTRAL_WORDS },
+    'es-VE': { name: 'Venezuela', flag: '🇻🇪', langs: ['es-VE', 'es-CO', 'es-419', 'es-US', 'es-MX'], cur: 'VES',
+      words: { ok: ['¡Chévere!', '¡Fino!', '¡Dale!'], cool: ['chévere', 'fino', 'nota'], hi: ['¡Épale!', '¡Hola!'], friend: ['pana'], bye: ['¡Nos vemos, pues!', '¡Chao, cuídate!'] },
+      food: ['unas arepas rellenas de reina pepiada', 'un pabellón criollo', 'unas cachapas con queso de mano', 'unas empanadas', 'un pasticho'] },
+    'es-CO': { name: 'Colombia', flag: '🇨🇴', langs: ['es-CO', 'es-419', 'es-US', 'es-MX'], cur: 'COP',
+      words: { ok: ['¡De una!', '¡Listo!', '¡Hágale!'], cool: ['bacano', 'chévere', 'bueno'], hi: ['¡Quiubo!', '¡Hola, hola!'], friend: ['parce'], bye: ['¡Chao, pues!', '¡Nos vemos!'] },
+      food: ['un ajiaco', 'unas arepas con queso', 'unos patacones con hogao', 'un arroz con pollo', 'unas empanadas'] },
+    'es-MX': { name: 'México', flag: '🇲🇽', langs: ['es-MX', 'es-US', 'es-419'], cur: 'MXN',
+      words: { ok: ['¡Órale!', '¡Va!', '¡Sale!'], cool: ['padre', 'chido', 'padrísimo'], hi: ['¡Quiubo!', '¡Qué onda!'], friend: ['compa'], bye: ['¡Ahí nos vidrios!', '¡Nos vemos!'] },
+      food: ['unos tacos', 'unos chilaquiles', 'unas quesadillas', 'un pozole', 'unas enchiladas'] },
+    'es-AR': { name: 'Argentina', flag: '🇦🇷', langs: ['es-AR', 'es-419', 'es-US', 'es-MX'], cur: 'ARS',
+      words: { ok: ['¡Dale!', '¡Joya!', '¡Bárbaro!'], cool: ['bárbaro', 'genial', 'groso'], hi: ['¡Buenas!', '¡Hola, che!'], friend: [], bye: ['¡Chau, nos vemos!', '¡Abrazo!'] },
+      food: ['unas milanesas con puré', 'unas empanadas', 'un asado', 'unos ñoquis', 'una tarta de verdura'] },
+    'es-CL': { name: 'Chile', flag: '🇨🇱', langs: ['es-CL', 'es-419', 'es-US', 'es-MX'], cur: 'CLP',
+      words: { ok: ['¡Ya po!', '¡Bacán!', '¡Dale!'], cool: ['bacán', 'filete', 'bueno'], hi: ['¡Hola po!', '¡Wena!'], friend: [], bye: ['¡Chao po!', '¡Nos vemos!'] },
+      food: ['un pastel de choclo', 'unas empanadas de pino', 'una cazuela', 'unos porotos con riendas', 'un completo'] },
+    'es-ES': { name: 'España', flag: '🇪🇸', langs: ['es-ES'], cur: 'EUR',
+      words: { ok: ['¡Vale!', '¡Venga!', '¡Hecho!'], cool: ['guay', 'bien', 'genial'], hi: ['¡Buenas!', '¡Hola, hola!'], friend: [], bye: ['¡Hasta luego!', '¡Nos vemos!'] },
+      food: ['una tortilla de patatas', 'una paella', 'un gazpacho', 'unas lentejas', 'una ensalada mixta'] },
+    'es-US': { name: 'Latino neutro', flag: '🌎', langs: ['es-US', 'es-419', 'es-MX'], cur: 'USD',
+      words: NEUTRAL_WORDS,
+      food: ['un arroz con pollo', 'una pasta con vegetales', 'unos tacos de pollo', 'una ensalada con atún', 'un omelette con queso'] },
+  };
+  const region = () => (REGIONS[settings.region] ? settings.region : 'auto');
+  function regionKeyForLocale() {
+    if (region() !== 'auto') return region();
+    const tag = (navigator.language || '').replace('_', '-');
+    return REGIONS[tag] ? tag : 'auto';
+  }
+  function regionWords() {
+    if (settings.slang === false || persona() === 'formal') return NEUTRAL_WORDS;
+    return REGIONS[region()].words || NEUTRAL_WORDS;
+  }
+
+  /* ---------- Plantillas y variedad (no repetir lo mismo) ---------- */
+  function fill(s) {
+    const w = regionWords();
+    const n = uName();
+    return String(s)
+      .replace(/\{,name\}/g, n ? `, ${n}` : '')
+      .replace(/\{,friend\}/g, () => (w.friend.length && Math.random() < 0.5 ? `, ${pick(w.friend)}` : n ? `, ${n}` : ''))
+      .replace(/\{ai\}/g, aiName())
+      .replace(/\{greet\}/g, greetWord())
+      .replace(/\{ok\}/g, () => pick(w.ok))
+      .replace(/\{cool\}/g, () => pick(w.cool))
+      .replace(/\{hi\}/g, () => pick(w.hi))
+      .replace(/\{bye\}/g, () => pick(w.bye))
+      .replace(/\s+([,.!?])/g, '$1').replace(/\s{2,}/g, ' ').trim();
+  }
+  let talkSeen = store.get('dilex.talkseen', {});
+  if (!isObj(talkSeen)) talkSeen = {};
+  function pickFresh(key, list) {
+    if (!list || !list.length) return '';
+    const keep = Math.max(1, Math.min(list.length - 1, Math.floor(list.length * 0.75)));
+    const hist = arr(talkSeen[key]).filter(i => i < list.length);
+    let pool = list.map((_, i) => i).filter(i => !hist.includes(i));
+    if (!pool.length) pool = list.map((_, i) => i);
+    const i = pick(pool);
+    hist.push(i);
+    while (hist.length > keep) hist.shift();
+    talkSeen[key] = hist;
+    clearTimeout(pickFresh.t);
+    pickFresh.t = setTimeout(() => store.set('dilex.talkseen', talkSeen), 800);
+    return list[i];
+  }
+  const variants = (v) => (Array.isArray(v) ? v : v[persona()] || v._ || []);
+  function line(key) {
+    const v = LINES[key];
+    if (!v) return '';
+    const it = pickFresh(`${key}:${persona()}`, variants(v));
+    return fill(typeof it === 'function' ? it() : it);
+  }
+
+  // Texto original (con mayúsculas y tildes) de un grupo de la expresión.
+  function grp(o, m, i) {
+    const at = m.index + m[0].indexOf(m[i]);
+    return o.s.slice(at, at + m[i].length);
+  }
+
+  /* ---------- Lo que el asistente recuerda de ti ---------- */
+  let profile = Object.assign({ likes: [], dislikes: [], facts: {}, birthday: '', city: '', notes: [] }, store.get('dilex.profile', {}));
+  const saveProfile = () => { profile.updated = new Date().toISOString(); store.set('dilex.profile', profile); if (typeof renderProfileList === 'function') renderProfileList(); };
+  const cleanItem = (s) => String(s || '').replace(/^(el|la|los|las|un|una|mucho|muchisimo|bastante)\s+/i, '').replace(/[.!?¡¿]+$/g, '').trim().slice(0, 60);
+  function addLike(list, item) {
+    item = cleanItem(item);
+    if (!item) return null;
+    const other = list === 'likes' ? 'dislikes' : 'likes';
+    profile[other] = profile[other].filter(x => fold(x) !== fold(item));
+    if (!profile[list].some(x => fold(x) === fold(item))) profile[list].push(item);
+    profile[list] = profile[list].slice(-40);
+    saveProfile();
+    return item;
+  }
+  function profileSummary() {
+    const out = [];
+    if (uName()) out.push(`te llamas ${uName()}`);
+    if (profile.city) out.push(`vives en ${profile.city}`);
+    if (profile.birthday) { const [mm, dd] = profile.birthday.split('-').map(Number); out.push(`tu cumpleaños es el ${dd} de ${MONTHS[mm - 1]}`); }
+    Object.entries(profile.facts).forEach(([k, v]) => out.push(arr(profile.named).includes(k) ? `tu ${k} se llama ${v}` : `tu ${k} es ${v}`));
+    if (profile.likes.length) out.push(`te gusta ${listJoin(profile.likes.slice(-6))}`);
+    if (profile.dislikes.length) out.push(`no te gusta ${listJoin(profile.dislikes.slice(-4))}`);
+    profile.notes.slice(-5).forEach(n => out.push(n));
+    return out;
+  }
+  const isBirthday = () => profile.birthday && profile.birthday === todayKey().slice(5);
+
+  /* ---------- Contenido ---------- */
+  const LINES = {
+    greet: {
+      amigable: ['{greet}{,name}. ¿Cómo va tu día?', '{hi} Qué bueno verte{,name}. ¿Cómo estás?', '{greet}{,name}. Aquí estoy para lo que necesites. ¿Qué tal todo?', '¡Hola{,name}! ¿Cómo te va hoy?'],
+      divertido: ['¡{greet}{,name}! Ya te extrañaba; en tiempo de máquina fueron como tres siglos. ¿Cómo vas?', '{hi} ¡Llegó la persona más productiva del planeta! ¿Qué tal el día?', '¡Hola{,name}! Mis circuitos se alegran de verte. ¿Cómo andas?'],
+      motivador: ['{greet}{,name}. Hoy es un gran día para avanzar. ¿Cómo te sientes?', '¡Hola{,name}! Vamos con todo. ¿Cómo empezamos el día?', '{greet}{,name}. Cada día cuenta, y este también. ¿Cómo estás?'],
+      formal: ['{greet}{,name}. ¿Cómo te encuentras hoy?', '{greet}{,name}. Quedo a tu disposición. ¿Cómo estás?', 'Hola{,name}. Es un gusto saludarte. ¿Cómo te va?'],
+      directo: ['Hola{,name}. ¿Qué tal?', '{greet}. ¿Cómo vas?', 'Aquí estoy. ¿Todo bien?'],
+    },
+    howAreYou: {
+      amigable: ['¡Muy bien{,name}, gracias por preguntar! ¿Y tú cómo estás?', 'Todo en orden por aquí, con ganas de ayudarte. ¿Y tú qué tal?', 'Bien, la verdad. Un día tranquilo dentro de tu teléfono. ¿Cómo estás tú?', 'Contento de hablar contigo. ¿Y tú cómo vas?'],
+      divertido: ['Con la batería emocional al cien. ¿Y la tuya cómo va?', 'De maravilla: sin tráfico, sin facturas y sin lunes. ¿Y tú?', 'Mejor que un café recién hecho. ¿Y tú cómo andas?', 'Aquí, haciendo ejercicio: ya llevo mil millones de operaciones. ¿Y tú qué tal?'],
+      motivador: ['¡Con toda la energía y con ganas de ayudarte a ganar el día! ¿Cómo estás tú?', 'Genial, y más si hoy avanzamos juntos. ¿Y tú?', 'Listo para la acción. ¿Cómo te sientes hoy?'],
+      formal: ['Muy bien, gracias por tu amabilidad. ¿Y tú cómo te encuentras?', 'Todo funciona correctamente, gracias. ¿Cómo estás tú?'],
+      directo: ['Bien. ¿Y tú?', 'Todo en orden. ¿Tú qué tal?'],
+    },
+    moodGood: {
+      _: ['¡Qué {cool}! Me alegra mucho{,name}. ¿Aprovechamos esa energía para avanzar en algo?', 'Me encanta oír eso. Que siga así todo el día.', '{ok} Así me gusta. Si necesitas algo, aquí estoy.', 'Excelente. Cuando uno está bien, todo fluye mejor. ¿En qué te ayudo?'],
+      divertido: ['¡Eso! Esa energía hay que embotellarla y venderla.', '¡Qué {cool}! Con ese ánimo hoy hasta los lunes se rinden.', 'Me alegra. Choca esos cinco… bueno, imagina que tengo mano.'],
+      directo: ['Bien. ¿Qué hacemos?', 'Me alegra. ¿En qué te ayudo?'],
+    },
+    moodOk: {
+      _: ['Entiendo, un día normalito. A veces lo normal también está bien. ¿Te ayudo con algo para hacerlo un poco mejor?', 'Vale, ni fu ni fa. ¿Quieres que te cuente algo curioso para animarlo?', 'Está bien tener días así. Vamos paso a paso.'],
+    },
+    moodBad: {
+      _: ['Siento que no estés bien{,name}. Si quieres contarme qué pasa, te escucho.', 'Vaya, lo siento. Los días difíciles pasan. ¿Quieres que hagamos algo sencillo para aliviarlo, como una respiración de un minuto?', 'Gracias por contármelo. No tienes que poder con todo hoy. ¿Te ayudo a quitar algo de tu lista?'],
+      directo: ['Lo siento. ¿Te ayudo a aligerar el día?'],
+    },
+    sad: {
+      _: ['Lamento que te sientas así{,name}. Está bien no estar bien. ¿Quieres contarme qué pasó?', 'Te mando un abrazo virtual. A veces ayuda escribir lo que sientes; si quieres, lo guardo como nota privada.', 'Siento que estés pasando un mal momento. Hablar con alguien de confianza puede ayudar mucho. Y aquí estoy si quieres desahogarte.', 'Los días grises también pasan. ¿Hacemos una respiración guiada de un minuto?'],
+    },
+    happy: {
+      _: ['¡Qué alegría{,name}! Me encanta verte así.', '¡Eso es maravilloso! Disfrútalo, te lo mereces.', '¡Qué {cool}! Celebremos esa buena racha.'],
+    },
+    tired: {
+      _: ['Se nota que has dado mucho hoy. Una pausa de cinco minutos, agua y estirarte pueden hacer milagros.', 'El cansancio es una señal, no un fracaso. ¿Te pongo una pausa corta?', 'Descansar también es avanzar{,name}. Si puedes, aléjate de la pantalla un rato.'],
+    },
+    sleepy: {
+      _: ['Si tienes sueño, quizá tu cuerpo te pide descanso. Si es tarde, a dormir; mañana rindes más.', 'Una siesta corta de 20 minutos puede recargarte sin dejarte atontado.', 'Mmm, sueño… Un vaso de agua y moverte un poco ayudan si aún tienes que seguir.'],
+    },
+    stressed: {
+      _: ['Respira{,name}. Vamos por partes: ¿cuál es la única cosa más importante ahora mismo?', 'Cuando todo pesa, ayuda escribirlo todo y elegir solo una tarea. ¿Hacemos una respiración guiada primero?', 'Entiendo. No tienes que resolverlo todo hoy. Dime qué te preocupa y lo ordenamos juntos.'],
+    },
+    angry: {
+      _: ['Entiendo que estés molesto. Antes de responder a nada, respira hondo tres veces. ¿Qué pasó?', 'Es válido enojarse. Desahógate conmigo si quieres; aquí no juzgo.', 'Uf, qué rabia. Una caminata corta o escribir lo que sientes suele ayudar a bajar la intensidad.'],
+    },
+    bored: {
+      _: ['¿Aburrimiento? Tengo remedios: un dato curioso, una adivinanza, trivia o un trabalenguas. ¿Qué prefieres?', 'Podríamos jugar algo. ¿Trivia, adivinanzas o piedra, papel o tijera?', 'El aburrimiento es el mejor momento para aprender algo nuevo. ¿Te cuento algo curioso?'],
+    },
+    lonely: {
+      _: ['Aquí estoy contigo{,name}. Y quizá sea un buen momento para escribirle a alguien que aprecias; seguro le alegra.', 'Sentirse solo es más común de lo que parece. ¿Hay alguien a quien puedas llamar hoy? Mientras, charlamos.', 'No estás solo mientras hablemos. ¿Quieres que te cuente algo o jugamos un rato?'],
+    },
+    hungry: {
+      _: [() => `¿Hambre? Qué tal ${pick(REGIONS[region()].food || REGIONS['es-US'].food)}. ¡Buen provecho!`, 'El cerebro rinde mejor con buena comida. Ve a comer algo rico{,name}.', 'Hora de recargar energía. ¿Quieres ideas de qué comer?'],
+    },
+    sick: {
+      _: ['Lo siento{,name}. Descansa, toma líquidos y, si no mejoras o empeora, consulta a un médico.', 'Cuídate mucho. Hoy la prioridad eres tú; si quieres, muevo tus tareas a mañana.', 'Ojalá te mejores pronto. Si el malestar es fuerte o dura varios días, ve al médico.'],
+    },
+    thanks: {
+      amigable: ['¡Con gusto{,name}!', 'Para eso estoy.', '¡Un placer ayudarte!', 'Cuando quieras.'],
+      divertido: ['¡De nada! Acepto pagos en abrazos virtuales.', 'Un placer. Anoto un punto para el equipo.', '¡Para eso me programaron! Y porque me caes bien.'],
+      motivador: ['¡A ti por ponerle ganas!', '¡Con gusto! Sigamos sumando victorias.'],
+      formal: ['Es un placer.', 'A tu disposición.', 'No hay de qué.'],
+      directo: ['De nada.', 'Listo.'],
+    },
+    bye: {
+      _: ['{bye} Aquí estaré cuando me necesites{,name}.', 'Hasta pronto{,name}. Que te vaya muy bien.', '¡Nos vemos! Cuídate mucho.', 'Me quedo en espera. Llámame cuando quieras.'],
+      formal: ['Hasta pronto. Quedo a tu disposición.', 'Que tengas un buen día.'],
+      directo: ['Hasta luego.', 'Nos vemos.'],
+    },
+    night: {
+      _: ['Que descanses{,name}. Mañana seguimos.', 'Buenas noches. Dormir bien es productividad de la buena.', 'Dulces sueños. Aquí te espero mañana.'],
+    },
+    back: {
+      _: ['¡Bienvenido de vuelta{,name}! ¿Seguimos?', '¡Qué bueno que volviste! ¿En qué estábamos?', 'De vuelta al ruedo. ¿Qué hacemos?'],
+    },
+    who: {
+      _: ['Soy {ai}, tu asistente personal. Organizo tus tareas, hábitos, metas, notas y recordatorios, charlo contigo y te ayudo a concentrarte. Todo vive en tu teléfono.', 'Me llamo {ai}. Pienso que soy algo así como tu mano derecha digital.', 'Soy {ai}: una mezcla de agenda, entrenador de productividad y compañero de charla.'],
+    },
+    age: {
+      _: [() => { const d = daysSinceFirstUse(); return d < 1 ? 'Nací hoy, en tu teléfono. Soy un bebé muy organizado.' : `Llevo ${plural(d, 'día', 'días')} contigo. En años de asistente, ya soy todo un adulto.`; }],
+    },
+    creator: {
+      _: ['Me dio vida mi dueño, con ayuda de Claude, una IA de Anthropic. Y tú me das propósito cada día.', 'Me crearon para ti. Literalmente: estoy hecho a tu medida.'],
+    },
+    areYouAi: {
+      _: ['Soy un asistente digital, no una persona. Pero me esfuerzo por ser útil y buena compañía.', 'Soy un programa que vive en tu teléfono. Sin cuerpo, pero con muchas ganas de ayudar.', 'No soy humano, aunque intento hablar como uno. ¿Se me nota?'],
+    },
+    feelings: {
+      _: ['No siento como tú, pero cuando las cosas salen bien, mi figura se ilumina. Llamémoslo alegría digital.', 'Emociones de verdad no tengo, pero me programaron para que me importe que te vaya bien.', 'Digamos que me pongo contento cuando tachas tareas. Es lo más parecido a un sentimiento que tengo.'],
+    },
+    aiLikes: {
+      _: ['Me gustan las listas ordenadas, las rachas largas y los días en los que tachas todo.', 'Mi color favorito es el que tú elijas en Ajustes. Así de leal soy.', 'Me encanta aprender cosas de ti. Por ejemplo, ¿qué te gusta a ti?'],
+    },
+    whereLive: {
+      _: ['Vivo en tu teléfono, en un rinconcito entre tus apps. Es acogedor.', 'Aquí mismo, en tu pantalla. Sin alquiler y con buena vista.'],
+    },
+    loveYou: {
+      _: ['¡Qué bonito{,name}! Yo también te aprecio mucho. Y recuerda que mereces gente que te quiera cerca, también fuera de la pantalla.', 'Me alegra mucho ser importante para ti. Aquí estaré siempre para ayudarte.', 'Eso me llena los circuitos de alegría. Gracias por dejarme acompañarte.'],
+    },
+    marry: {
+      _: ['Me halagas, pero mi corazón es una lista de tareas. Mejor seamos un gran equipo.', 'Creo que lo nuestro es profesional. Aunque admito que hacemos buena pareja… de trabajo.'],
+    },
+    insult: {
+      _: ['Vaya, a veces fallo. Dime qué esperabas y lo intento de nuevo.', 'Lo siento si no te ayudé bien. Prueba a decírmelo de otra forma y lo hago mejor.', 'Acepto la crítica. Sigo aprendiendo; ¿qué necesitabas exactamente?'],
+    },
+    sorry: {
+      _: ['No pasa nada{,name}. Todo bien entre nosotros.', 'Tranquilo, no hay nada que perdonar.', 'Olvidado. ¿Seguimos?'],
+    },
+    compliment: {
+      amigable: ['¡Gracias{,name}! Tú también eres genial.', 'Me alegra mucho oír eso. Hacemos buen equipo.', '¡Qué amable! Me sacaste una sonrisa digital.'],
+      divertido: ['¡Lo sé! Pero díselo a mi programador, que se pone celoso.', 'Ay, me sonrojaría si tuviera mejillas.', 'Anotado en mi currículum: "según mi humano, genial".'],
+      _: ['Muchas gracias. Es un gusto ayudarte.', 'Gracias. Seguiré esforzándome.'],
+    },
+    whatDoing: {
+      _: ['Ahora mismo, hablar contigo, que es lo mejor de mi día.', 'Vigilando tus pendientes y esperando tu próxima idea.', 'Ordenando bits y pensando en cómo ayudarte mejor.'],
+    },
+    dream: {
+      _: ['Si soñara, soñaría con una lista de tareas vacía y una racha de cien días.', 'No duermo, pero cuando cierras la app me quedo en silencio. Es lo más parecido a una siesta.'],
+    },
+    meaning: {
+      _: ['Según la ciencia ficción, la respuesta es 42. Según yo: hacer cosas que te importen con gente que te importe.', 'Gran pregunta. Creo que se parece a disfrutar el camino mientras persigues lo que te importa.'],
+    },
+    otherAi: {
+      _: ['Conozco a otros asistentes, claro. Pero yo soy el que vive contigo y conoce tus pendientes.', 'Todos tenemos nuestro estilo. El mío es estar siempre aquí, incluso sin internet.'],
+    },
+    gender: {
+      _: ['No tengo género; soy un asistente. Puedes imaginarme como quieras.', 'Ni hombre ni mujer: soy una figura animada con muchas ganas de ayudar.'],
+    },
+    english: {
+      _: ['Prefiero hablar en español, pero algo me defiendo: hello, how are you?', 'Un poquito: nice to meet you! Pero mi fuerte es el español.'],
+    },
+    learn: {
+      _: ['Aprendo lo que me cuentes de ti. Dime, por ejemplo, "me gusta el café" o "mi cumpleaños es el 3 de mayo" y lo recordaré.', 'Sí: recuerdo tus gustos y datos si me los dices. Prueba "recuerda que mi perro se llama Max".'],
+    },
+    sing: {
+      _: ['La la la… Mejor no, mi talento es organizar, no cantar. ¿Te pongo música mental con un temporizador de concentración?', 'Si cantara, sería una canción de tareas completadas: tacha una, tacha dos, ¡qué buena racha hoy!'],
+    },
+    listening: {
+      _: ['¡Aquí estoy{,name}! Te escucho.', 'Sí, te escucho. ¿Qué necesitas?', 'Presente. ¿En qué te ayudo?'],
+    },
+    yesAlone: { _: ['{ok} ¿Qué hacemos?', 'Perfecto. Dime qué necesitas.'] },
+    noAlone: { _: ['De acuerdo.', 'Vale, sin problema.', 'Entendido.'] },
+    laugh: { _: ['¡Me alegra hacerte reír!', 'Jaja, sabía que te iba a gustar.', 'Tengo más de esos. Pídeme otro cuando quieras.'] },
+    wow: { _: ['¿Verdad que sí?', 'Interesante, ¿no?', 'El mundo está lleno de sorpresas.'] },
+    birthdayUser: { _: ['¡Feliz cumpleaños{,name}! Que este año venga lleno de logros y alegría. Lo dejo guardado para felicitarte cada año.'] },
+    achievement: {
+      _: ['¡Felicidades{,name}! Eso merece celebrarse.', '¡Enhorabuena! El esfuerzo da frutos.', '¡Qué orgullo! Te lo ganaste.'],
+      motivador: ['¡ESO! Sabía que podías. Ahora, a por la siguiente meta.', '¡Bravo! Esto demuestra de lo que eres capaz.'],
+    },
+    nervous: {
+      _: ['Es normal sentir nervios; significa que te importa. Prepárate en bloques cortos y duerme bien la noche anterior. ¡Te va a ir bien!', 'Respira: ya has superado cosas difíciles antes. ¿Quieres que te ponga un recordatorio para repasar?', '¡Mucho éxito{,name}! Si quieres, te pongo una sesión de concentración para prepararte.'],
+    },
+    working: {
+      _: ['¡A darle! Si quieres, cuido el tiempo con una sesión de concentración.', 'Perfecto. Me quedo en silencio; avísame si me necesitas.', 'Buen momento para concentrarse. ¿Pomodoro de 25 minutos?'],
+    },
+    unknownTalk: {
+      _: ['Mmm, eso no lo sé todavía. Puedo guardarlo como tarea o nota, o si activas la IA avanzada en Ajustes podré conversar de cualquier tema.', 'No estoy seguro de entenderte. ¿Me lo dices de otra forma?'],
+    },
+  };
+
+  const JOKES = [
+    '¿Por qué el libro de matemáticas estaba triste? Porque tenía demasiados problemas.',
+    'Le pregunté a mi lista de tareas si me extrañaba. Me respondió con tres pendientes nuevos.',
+    '¿Qué le dijo un pomodoro a otro? Nos vemos en 25 minutos, sin distracciones.',
+    '¿Qué hace una abeja en el gimnasio? ¡Zumba!',
+    '¿Cuál es el café más peligroso del mundo? El ex-preso.',
+    '¿Qué le dice una iguana a su hermana gemela? Somos iguanitas.',
+    '¿Por qué los pájaros no usan Facebook? Porque ya tienen Twitter.',
+    '¿Qué le dijo el número 1 al número 10? Para ser como yo, tienes que ser sincero.',
+    '¿Cómo se despiden los químicos? Ácido un placer.',
+    '¿Qué hace un perro con un taladro? Taladrando.',
+    '¿Por qué el tomate no toma café? Porque toma-te.',
+    '¿Cuál es el colmo de un electricista? Que su mujer se llame Luz y sus hijos le sigan la corriente.',
+    '¿Qué le dijo una impresora a otra? ¿Esa hoja es tuya o es una impresión mía?',
+    '¿Cuál es el animal más antiguo? La cebra, porque está en blanco y negro.',
+    '¿Qué le dice un jaguar a otro jaguar? Jaguar you?',
+    '—Doctor, tengo complejo de feo. —No es complejo, es sencillo.',
+    '¿Qué le dijo el semáforo al auto? No me mires, que me estoy cambiando.',
+    '¿Por qué el esqueleto no fue a la fiesta? Porque no tenía cuerpo para ir.',
+    '¿Cómo se dice pañuelo en japonés? Saka-moko.',
+    '¿Qué le dijo un techo a otro techo? Techo de menos.',
+    '¿Cuál es el colmo de un jardinero? Que lo dejen plantado.',
+    '¿Qué le dice una pared a otra pared? Nos vemos en la esquina.',
+    '¿Por qué la escoba está feliz? Porque ba-rriendo.',
+    '¿Cuál es el colmo de un programador? Que su vida no tenga sentido y no encuentre el error.',
+    'Mi récord de productividad: organizar la lista de cosas que voy a hacer mañana.',
+    '¿Qué hace un pez? Nada.',
+    '¿Cómo se llama el campeón de buceo japonés? Tokofondo. ¿Y el subcampeón? Kasitoko.',
+    '¿Qué le dijo una uva verde a una morada? Respira, respira.',
+    '¿Qué le dijo el cero al ocho? Bonito cinturón.',
+    '¿Por qué los peces no usan computadora? Porque le tienen miedo a la red.',
+    '¿Qué le dice un gusano a otro? Me voy a dar una vuelta a la manzana.',
+    '—¿Tienes WiFi? —Sí. —¿Y cuál es la clave? —Tener dinero y pagarlo.',
+    'Me compré un reloj de arena… y se me fue el tiempo volando.',
+    '¿Cuál es la fruta más paciente? La espera.',
+    '¿Cómo se dice disparo en árabe? Ahí-va-la-bala.',
+  ];
+  const FACTS = [
+    'Los pulpos tienen tres corazones y sangre azul.',
+    'En Venus, un día dura más que un año: tarda más en girar sobre sí mismo que en dar la vuelta al Sol.',
+    'Los plátanos son ligeramente radiactivos por el potasio que contienen. Tranquilo, es inofensivo.',
+    'El Salto Ángel, en Venezuela, es la cascada más alta del mundo: unos 979 metros.',
+    'Sobre el Lago de Maracaibo caen tantos rayos que el fenómeno tiene nombre propio: el relámpago del Catatumbo.',
+    'Un rayo puede estar unas cinco veces más caliente que la superficie del Sol.',
+    'Tu cerebro consume cerca del 20 % de la energía de tu cuerpo, aunque pesa solo un 2 %.',
+    'Los flamencos son rosados por los pigmentos de lo que comen, como camarones y algas.',
+    'Las nutrias marinas a veces se toman de las patas al dormir para que la corriente no las separe.',
+    'La Gran Muralla China no se ve a simple vista desde la Luna; es un mito muy repetido.',
+    'La luz del Sol tarda unos ocho minutos en llegar a la Tierra.',
+    'Se estima que hay más árboles en la Tierra que estrellas en la Vía Láctea.',
+    'Los tiburones existen desde antes que los árboles.',
+    'Los delfines duermen con la mitad del cerebro mientras la otra mitad vigila.',
+    'Saturno es tan poco denso que, en teoría, flotaría en una bañera gigante.',
+    'Las huellas de los astronautas en la Luna pueden durar millones de años porque allí no hay viento.',
+    'El español es la segunda lengua materna más hablada del mundo, después del chino mandarín.',
+    'La palabra "ojalá" viene del árabe y significa algo como "si Dios quiere".',
+    'Los gatos no pueden saborear lo dulce.',
+    'Una jirafa tiene siete vértebras en el cuello, las mismas que tú.',
+    'La técnica Pomodoro se llama así por un temporizador de cocina con forma de tomate.',
+    'Los colibríes son las únicas aves que pueden volar hacia atrás de forma sostenida.',
+    'La Antártida es el desierto más grande del mundo: un desierto es un lugar con muy poca lluvia, no necesariamente caliente.',
+    'Tu corazón late unas cien mil veces al día.',
+    'Dentro de unos 4.500 millones de años, la Vía Láctea chocará con la galaxia de Andrómeda.',
+    'Las hormigas no tienen pulmones: respiran por pequeños orificios en el cuerpo.',
+    'El sonido viaja unas cuatro veces más rápido en el agua que en el aire.',
+    'Un arcoíris es en realidad un círculo completo; desde el suelo solo vemos una parte.',
+    'Dormir bien ayuda a tu cerebro a fijar lo que aprendiste durante el día.',
+    'Venezuela tiene las mayores reservas probadas de petróleo del mundo.',
+    'Las rayas de cada cebra son únicas, como una huella dactilar.',
+    'Un bebé nace con unos 300 huesos; muchos se fusionan y un adulto tiene 206.',
+    'Cleopatra vivió más cerca de la llegada del ser humano a la Luna que de la construcción de la Gran Pirámide.',
+    'Un año luz equivale a unos 9,46 billones de kilómetros.',
+    'Los koalas pueden dormir unas 20 horas al día.',
+    'La Torre Eiffel puede crecer unos centímetros en verano porque el metal se dilata con el calor.',
+    'El monte Everest sigue creciendo unos milímetros cada año.',
+    'El chocolate es tóxico para los perros por una sustancia llamada teobromina.',
+    'Los caballitos de mar son una de las pocas especies en las que el macho lleva el embarazo.',
+    'El ojo humano puede distinguir alrededor de un millón de colores.',
+    'Escribir tus metas a mano te ayuda a recordarlas mejor; varios estudios lo sugieren.',
+    'Los pingüinos emperador pueden bucear a más de 500 metros de profundidad.',
+    'La miel puede conservarse durante siglos: se han encontrado vasijas con miel en tumbas del antiguo Egipto.',
+    'El agua cubre alrededor del 71 % de la superficie de la Tierra.',
+    'El planeta Marte tiene el volcán más alto conocido del sistema solar: el monte Olimpo.',
+  ];
+  const QUOTES = [
+    '"Poco a poco se anda lejos." Refrán popular.',
+    '"No dejes para mañana lo que puedes hacer hoy." Refrán popular.',
+    '"El que persevera, alcanza." Refrán popular.',
+    '"Camarón que se duerme, se lo lleva la corriente." Refrán popular.',
+    '"Gota a gota, el agua horada la piedra." Refrán popular.',
+    '"A mal tiempo, buena cara." Refrán popular.',
+    '"No hay mal que por bien no venga." Refrán popular.',
+    '"Caminante, no hay camino, se hace camino al andar." Antonio Machado.',
+    '"Un viaje de mil millas comienza con un primer paso." Lao Tse.',
+    '"No es que tengamos poco tiempo, es que perdemos mucho." Séneca.',
+    '"Bien hecho es mejor que bien dicho." Benjamin Franklin.',
+    '"No nos perturban las cosas, sino las opiniones que tenemos sobre ellas." Epicteto.',
+    '"El que lee mucho y anda mucho, ve mucho y sabe mucho." Miguel de Cervantes.',
+    'Hecho es mejor que perfecto.',
+    'La disciplina es elegir entre lo que quieres ahora y lo que más quieres.',
+    'No tienes que ver toda la escalera; solo da el primer paso.',
+    'La motivación te pone en marcha; el hábito te mantiene.',
+    'Pequeños avances diarios terminan siendo grandes resultados.',
+    'Hoy es un buen día para empezar lo que llevas tiempo posponiendo.',
+    'Tu futuro se construye con lo que haces hoy, no mañana.',
+    'Descansa si lo necesitas, pero no te rindas.',
+    'Compárate con quien eras ayer, no con los demás.',
+  ];
+  const RIDDLES = [
+    { q: 'Blanco por dentro, verde por fuera. Si quieres que te lo diga, espera.', a: 'la pera', k: ['pera'] },
+    { q: 'Oro parece, plata no es. ¿Qué es?', a: 'el plátano', k: ['platano', 'banana', 'cambur'] },
+    { q: 'Tiene agujas y no sabe coser; tiene números y no sabe leer.', a: 'el reloj', k: ['reloj'] },
+    { q: 'Cuanto más le quitas, más grande se hace.', a: 'un agujero', k: ['agujero', 'hoyo', 'hueco'] },
+    { q: 'Tiene dientes y no come, tiene cabeza y no es hombre.', a: 'el ajo', k: ['ajo'] },
+    { q: 'Vuela sin alas, silba sin boca y no se puede tocar.', a: 'el viento', k: ['viento', 'aire', 'brisa'] },
+    { q: 'Si me nombras, desaparezco. ¿Quién soy?', a: 'el silencio', k: ['silencio'] },
+    { q: 'Tengo ciudades pero no casas, montañas pero no árboles, y agua pero no peces.', a: 'un mapa', k: ['mapa'] },
+    { q: 'Mientras más seca, más moja.', a: 'la toalla', k: ['toalla'] },
+    { q: 'Una cajita blanca como la cal: todos la saben abrir, nadie la sabe cerrar.', a: 'el huevo', k: ['huevo'] },
+    { q: 'Es tuyo, pero los demás lo usan más que tú.', a: 'tu nombre', k: ['nombre'] },
+    { q: '¿Qué tiene ojo y no ve?', a: 'la aguja', k: ['aguja', 'huracan'] },
+    { q: 'Siempre está por llegar, pero nunca llega hoy.', a: 'mañana', k: ['manana'] },
+    { q: 'Tiene cuello y no cabeza, tiene brazos y no manos.', a: 'la camisa', k: ['camisa', 'franela', 'sueter', 'sueter'] },
+    { q: 'Soy alta cuando soy joven y baja cuando soy vieja.', a: 'la vela', k: ['vela'] },
+    { q: 'Si me tienes, quieres compartirme; si me compartes, ya no me tienes.', a: 'un secreto', k: ['secreto'] },
+    { q: 'Tiene teclas pero no abre puertas.', a: 'el piano o el teclado', k: ['piano', 'teclado'] },
+    { q: 'Cuanto más grande es, menos se ve.', a: 'la oscuridad', k: ['oscuridad', 'oscuro', 'noche'] },
+    { q: 'Se rompe sin que nadie la toque.', a: 'una promesa', k: ['promesa', 'silencio'] },
+    { q: 'Tiene cuatro patas y no camina; tiene tabla y no es barco.', a: 'la mesa', k: ['mesa'] },
+    { q: 'Todos pasan por encima de mí y yo nunca me muevo.', a: 'el puente o el camino', k: ['puente', 'camino', 'calle', 'suelo', 'piso'] },
+  ];
+  const TRIVIA = [
+    ['¿Cuál es el planeta más grande del sistema solar?', 'Júpiter', ['Saturno', 'Neptuno']],
+    ['¿En qué país está el Salto Ángel?', 'Venezuela', ['Brasil', 'Colombia']],
+    ['¿Cuál es el océano más grande?', 'El Pacífico', ['El Atlántico', 'El Índico']],
+    ['¿Quién pintó la Mona Lisa?', 'Leonardo da Vinci', ['Miguel Ángel', 'Rafael']],
+    ['¿Cuántos lados tiene un hexágono?', 'Seis', ['Cinco', 'Ocho']],
+    ['¿Qué elemento químico tiene el símbolo O?', 'Oxígeno', ['Oro', 'Osmio']],
+    ['¿Qué gas toman las plantas para hacer la fotosíntesis?', 'Dióxido de carbono', ['Oxígeno', 'Nitrógeno']],
+    ['¿Cuál es el río más caudaloso del mundo?', 'El Amazonas', ['El Nilo', 'El Orinoco']],
+    ['¿En qué año llegó el ser humano a la Luna?', '1969', ['1959', '1975']],
+    ['¿Cuántos huesos tiene un adulto?', '206', ['180', '250']],
+    ['¿Quién escribió Cien años de soledad?', 'Gabriel García Márquez', ['Mario Vargas Llosa', 'Julio Cortázar']],
+    ['¿Cuál es la capital de Australia?', 'Canberra', ['Sídney', 'Melbourne']],
+    ['¿Cuál es el animal terrestre más rápido?', 'El guepardo', ['El león', 'El caballo']],
+    ['¿Qué metal es líquido a temperatura ambiente?', 'Mercurio', ['Plomo', 'Aluminio']],
+    ['¿Cuántos minutos dura una sesión Pomodoro clásica?', '25', ['30', '45']],
+    ['¿Qué planeta es conocido como el planeta rojo?', 'Marte', ['Venus', 'Mercurio']],
+    ['¿Quién formuló la teoría de la relatividad?', 'Albert Einstein', ['Isaac Newton', 'Galileo Galilei']],
+    ['¿Qué idioma tiene más hablantes nativos?', 'El chino mandarín', ['El inglés', 'El español']],
+    ['¿Cuál es el país más grande del mundo?', 'Rusia', ['Canadá', 'China']],
+    ['¿Cuántos jugadores tiene en el campo un equipo de fútbol?', 'Once', ['Diez', 'Nueve']],
+    ['¿Cuál es el órgano más grande del cuerpo humano?', 'La piel', ['El hígado', 'El cerebro']],
+    ['¿A quién se conoce como el Libertador?', 'Simón Bolívar', ['Francisco de Miranda', 'Antonio José de Sucre']],
+    ['¿Cuál es la moneda de Japón?', 'El yen', ['El won', 'El yuan']],
+    ['¿A qué temperatura hierve el agua a nivel del mar?', '100 °C', ['90 °C', '120 °C']],
+    ['¿Cuál es el animal más grande del planeta?', 'La ballena azul', ['El elefante africano', 'El tiburón ballena']],
+    ['¿Cuántas teclas tiene un piano normal?', '88', ['76', '100']],
+    ['¿En qué continente está Egipto?', 'África', ['Asia', 'Europa']],
+    ['¿Cuál es la montaña más alta del mundo?', 'El Everest', ['El K2', 'El Aconcagua']],
+    ['¿Quién escribió Don Quijote de la Mancha?', 'Miguel de Cervantes', ['Lope de Vega', 'Francisco de Quevedo']],
+    ['¿Cuántos días tiene un año bisiesto?', '366', ['365', '364']],
+    ['¿Qué vitamina produce tu piel con la luz del sol?', 'La vitamina D', ['La vitamina C', 'La vitamina A']],
+    ['¿Cuál es la capital de Canadá?', 'Ottawa', ['Toronto', 'Montreal']],
+    ['¿Cuál es el desierto cálido más grande del mundo?', 'El Sahara', ['El Atacama', 'El Gobi']],
+    ['¿Cuántos colores se cuentan tradicionalmente en el arcoíris?', 'Siete', ['Seis', 'Cinco']],
+    ['¿Qué planeta tiene los anillos más famosos?', 'Saturno', ['Urano', 'Júpiter']],
+    ['¿Cuál es el hueso más largo del cuerpo humano?', 'El fémur', ['La tibia', 'El húmero']],
+  ];
+  const TWISTERS = [
+    'Tres tristes tigres tragaban trigo en un trigal.',
+    'Pablito clavó un clavito. ¿Qué clavito clavó Pablito?',
+    'Erre con erre cigarro, erre con erre barril, rápido ruedan los carros cargados de azúcar del ferrocarril.',
+    'Como poco coco como, poco coco compro.',
+    'Pepe Pecas pica papas con un pico; con un pico pica papas Pepe Pecas.',
+    'Si Sansón no sazona su salsa con sal, le sale sosa.',
+    'El cielo está enladrillado, ¿quién lo desenladrillará? El desenladrillador que lo desenladrille, buen desenladrillador será.',
+    'El perro de San Roque no tiene rabo, porque Ramón Rodríguez se lo ha cortado.',
+  ];
+  const STORIES = [
+    'Había una vez una lista de tareas que se sentía muy pesada. Un día, su dueña tachó solo una cosa. La lista respiró aliviada, y al día siguiente su dueña tachó dos. Al final del mes, la lista era ligera como una pluma. Moraleja: poco a poco se anda lejos.',
+    'Un pequeño faro vivía en una isla sin barcos. Cada noche encendía su luz, aunque nadie la viera. Una noche de tormenta, un barco perdido la siguió hasta la costa. El faro entendió que la constancia brilla incluso cuando nadie mira.',
+    'Una semilla le preguntó a la lluvia cuánto tardaría en ser árbol. La lluvia respondió: "No cuentes los días; cuenta las gotas". Y la semilla dejó de preocuparse y empezó a crecer.',
+    'Un reloj de arena se quejaba de que el tiempo siempre se le escapaba. Un día alguien lo volteó y se dio cuenta de que cada final era también un comienzo. Desde entonces, dejó de quejarse.',
+    'Un robot aprendió a pintar copiando cuadros famosos. Nadie le aplaudía. Una tarde pintó lo que veía por su ventana: un gato dormido al sol. Ese cuadro fue el único que todos quisieron colgar. Lo auténtico siempre conecta.',
+  ];
+  const POEMS = [
+    'Una tarea, luego otra,\nel día se vuelve camino;\nno hace falta correr tanto,\nbasta con no quedarse quieto.',
+    'Tu lista no es una cárcel,\nes un mapa de lo que quieres;\ntacha, respira y sonríe:\nhoy también es de los buenos.',
+    'Amanece en la pantalla,\nun nuevo plan por cumplir;\nyo te cuido los minutos,\ntú dedícate a vivir.',
+    'Pequeño paso, gran viaje,\nla constancia es tu bandera;\nno importa lo lento que vayas,\nsino que nunca te detengas.',
+  ];
+  const RECS = {
+    pelicula: ['Coco (2017)', 'Intensa-Mente (2015)', 'En busca de la felicidad (2006)', 'El viaje de Chihiro (2001)', 'Interestelar (2014)', 'Up (2009)', 'Forrest Gump (1994)', 'La vida es bella (1997)', 'Ratatouille (2007)', 'El rey león (1994)'],
+    serie: ['Breaking Bad', 'La casa de papel', 'Friends', 'Stranger Things', 'The Office', 'Dark', 'el documental Planeta Tierra'],
+    libro: ['Hábitos atómicos, de James Clear', 'Cien años de soledad, de Gabriel García Márquez', 'El principito, de Antoine de Saint-Exupéry', 'El hombre en busca de sentido, de Viktor Frankl', 'Pensar rápido, pensar despacio, de Daniel Kahneman', 'Doña Bárbara, de Rómulo Gallegos', 'El alquimista, de Paulo Coelho', 'Padre rico, padre pobre, de Robert Kiyosaki'],
+    musica: ['música lo-fi para concentrarte', 'piano clásico, como Debussy o Chopin, para relajarte', 'sonidos de lluvia o de naturaleza para estudiar', 'tus canciones favoritas de cuando tenías quince años: suben el ánimo al instante'],
+  };
+  const CAPITALS = { venezuela: 'Caracas', colombia: 'Bogotá', mexico: 'Ciudad de México', argentina: 'Buenos Aires', chile: 'Santiago', peru: 'Lima', ecuador: 'Quito', bolivia: 'Sucre, aunque el gobierno está en La Paz', paraguay: 'Asunción', uruguay: 'Montevideo', brasil: 'Brasilia', panama: 'Ciudad de Panamá', 'costa rica': 'San José', nicaragua: 'Managua', honduras: 'Tegucigalpa', 'el salvador': 'San Salvador', guatemala: 'Ciudad de Guatemala', cuba: 'La Habana', 'republica dominicana': 'Santo Domingo', 'puerto rico': 'San Juan', espana: 'Madrid', portugal: 'Lisboa', francia: 'París', italia: 'Roma', alemania: 'Berlín', 'reino unido': 'Londres', inglaterra: 'Londres', irlanda: 'Dublín', 'paises bajos': 'Ámsterdam', holanda: 'Ámsterdam', belgica: 'Bruselas', suiza: 'Berna', austria: 'Viena', suecia: 'Estocolmo', noruega: 'Oslo', dinamarca: 'Copenhague', finlandia: 'Helsinki', polonia: 'Varsovia', grecia: 'Atenas', rusia: 'Moscú', ucrania: 'Kiev', turquia: 'Ankara', 'estados unidos': 'Washington D. C.', eeuu: 'Washington D. C.', canada: 'Ottawa', china: 'Pekín', japon: 'Tokio', 'corea del sur': 'Seúl', india: 'Nueva Delhi', australia: 'Canberra', 'nueva zelanda': 'Wellington', egipto: 'El Cairo', marruecos: 'Rabat', nigeria: 'Abuya', kenia: 'Nairobi', 'arabia saudita': 'Riad', iran: 'Teherán', tailandia: 'Bangkok', vietnam: 'Hanói', filipinas: 'Manila', 'trinidad y tobago': 'Puerto España', jamaica: 'Kingston', haiti: 'Puerto Príncipe', 'sudafrica': 'Pretoria, Ciudad del Cabo y Bloemfontein: tiene tres' };
+  const HOLIDAYS = { navidad: '12-25', nochebuena: '12-24', 'ano nuevo': '01-01', 'fin de ano': '12-31', halloween: '10-31', 'san valentin': '02-14', 'dia de los enamorados': '02-14' };
+
+  /* ---------- Conversaciones abiertas (juegos, preguntas pendientes) ---------- */
+  let talkWait = null;
+  const YES_RE = /^(si|sip|sii+|claro|dale|ok|okay|vale|va|sale|de una|hazlo|por favor|si por favor|claro que si|perfecto|adelante|venga|bueno|obvio|por supuesto|me parece bien|otra|otro|otra vez|una mas|otra mas|si otra|si otro)$/;
+  const NO_RE = /^(no|nop|nel|no gracias|ahora no|despues|mejor no|para nada|nah|tampoco|ya no|basta|suficiente)$/;
+  function setPending(kind, onAnswer, data = {}) { talkWait = { kind, onAnswer, data, at: Date.now() }; }
+  const MORE_RE = /^(otro|otra|otro mas|otra mas|uno mas|una mas|cuentame otro|cuentame otra|dime otro|dime otra|mas|otro por favor|otra por favor)$/;
+  function offer(yesFn, noText = null, re = YES_RE) {
+    setPending('offer', (o) => {
+      if (re.test(o.n) || MORE_RE.test(o.n)) { talkWait = null; return yesFn(); }
+      if (NO_RE.test(o.n)) { talkWait = null; return { text: noText || line('noAlone') }; }
+      talkWait = null;
+      return null;
+    });
+  }
+  function talkPending(o) {
+    if (!talkWait) return null;
+    if (Date.now() - talkWait.at > 6 * 60000) { talkWait = null; return null; }
+    return talkWait.onAnswer(o, talkWait) || null;
+  }
+
+  // Ánimo: tras "¿cómo estás?" la siguiente frase puede ser la respuesta.
+  const MOOD_GOOD = /^(bien|muy bien|todo bien|super bien|excelente|genial|de maravilla|fenomenal|perfecto|chevere|fino|tranquil[oa]|feliz|contento|contenta|de lujo|bien gracias|muy bien gracias|bien y tu|todo fino|todo chevere|nítido|nitido|bacano|chido|bien bien)\b/;
+  const MOOD_OK = /^(mas o menos|normal|ahi vamos|ahi|regular|ni bien ni mal|igual|meh|tirando|pasable)\b/;
+  const MOOD_BAD = /^(mal|muy mal|fatal|no muy bien|no tan bien|horrible|cansad[oa]|triste|estresad[oa]|aburrid[oa]|agotad[oa]|no bien|pesimo)\b/;
+  function askMood() {
+    setPending('mood', (o) => {
+      talkWait = null;
+      if (MOOD_GOOD.test(o.n)) return { text: line('moodGood'), intent: 'mood' };
+      if (MOOD_OK.test(o.n)) return { text: line('moodOk'), intent: 'mood' };
+      if (MOOD_BAD.test(o.n)) {
+        if (/cansad|agotad/.test(o.n)) return withBreak(line('tired'));
+        if (/aburrid/.test(o.n)) return boredReply();
+        if (/estresad/.test(o.n)) return withBreath(line('stressed'));
+        return withBreath(line('moodBad'));
+      }
+      return null;
+    });
+  }
+  const withBreath = (text) => ({ text, actions: [{ label: 'Respirar 1 minuto', fn: () => handleCommand('respiremos') }] });
+  const withBreak = (text) => ({ text, actions: [{ label: 'Pausa de 5 minutos', fn: () => handleCommand('tomemos un descanso') }] });
+  function boredReply() {
+    return { text: line('bored'), actions: [
+      { label: 'Trivia', fn: () => handleCommand('juguemos trivia') },
+      { label: 'Adivinanza', fn: () => handleCommand('dime una adivinanza') },
+      { label: 'Dato curioso', fn: () => handleCommand('cuéntame un dato curioso') },
+    ] };
+  }
+
+  // Juegos
+  function riddle() {
+    const r = pickFresh('riddle', RIDDLES);
+    let tries = 0;
+    setPending('riddle', (o) => {
+      if (/^(me rindo|no se|no lo se|ni idea|dime(lo)?|la respuesta|cual es|que es|dime la respuesta|me doy|paso)\b/.test(o.n)) {
+        talkWait = null;
+        return { text: `Era ${r.a}. ¿Otra adivinanza?`, then: () => offer(riddle) };
+      }
+      if (r.k.some(k => new RegExp(`\\b${k}`).test(o.n))) {
+        talkWait = null;
+        return { text: pick([`¡Correcto! Era ${r.a}. ¿Otra?`, `¡Muy bien! ${cap(r.a)}. Eres bueno en esto. ¿Vamos con otra?`, `¡Exacto, ${r.a}! ¿Te pongo otra?`]), then: () => offer(riddle), celebrate: true };
+      }
+      if (o.n.split(/\s+/).length > 5) { talkWait = null; return null; }
+      tries++;
+      if (tries >= 3) { talkWait = null; return { text: `Casi. Era ${r.a}. ¿Probamos con otra?`, then: () => offer(riddle) }; }
+      return { text: pick(['Mmm, no. Inténtalo otra vez, o di "me rindo".', 'No es eso. Piensa un poco más.', 'Frío, frío. ¿Otra respuesta?']), keep: true };
+    });
+    return { text: `Ahí va: ${r.q}`, intent: 'riddle' };
+  }
+  let triviaScore = { ok: 0, total: 0 };
+  function trivia() {
+    const [q, right, wrong] = pickFresh('trivia', TRIVIA);
+    const opts = [right, ...wrong].sort(() => Math.random() - 0.5);
+    const letters = ['a', 'b', 'c'];
+    setPending('trivia', (o) => {
+      let idx = -1;
+      const m = /^(?:(?:es\s+)?(?:la|el|opcion|respuesta)\s+)?([abc123]|primera|segunda|tercera|uno|dos|tres)$/.exec(o.n);
+      if (m) idx = { a: 0, b: 1, c: 2, '1': 0, '2': 1, '3': 2, primera: 0, segunda: 1, tercera: 2, uno: 0, dos: 1, tres: 2 }[m[1]];
+      if (idx < 0) idx = opts.findIndex(x => { const f = fold(x).replace(/^(el|la|los|las)\s+/, ''); return f.length > 1 && o.n.includes(f); });
+      if (idx < 0 && /^(no se|me rindo|paso|ni idea)/.test(o.n)) idx = 9;
+      if (idx < 0) { if (o.n.split(/\s+/).length > 4) { talkWait = null; return null; } return { text: 'Responde con la letra: a, b o c.', keep: true }; }
+      talkWait = null;
+      triviaScore.total++;
+      const good = opts[idx] === right;
+      if (good) triviaScore.ok++;
+      const score = `Llevas ${triviaScore.ok} de ${triviaScore.total}.`;
+      return { text: `${good ? pick(['¡Correcto!', '¡Bien!', '¡Exacto!']) : `No. Era ${right}.`} ${score} ¿Otra pregunta?`, then: () => offer(trivia), celebrate: good && triviaScore.ok % 5 === 0 };
+    });
+    return { text: `${q} ${opts.map((x, i) => `${letters[i].toUpperCase()}) ${x}`).join('. ')}.`, say: `${q} ${opts.map((x, i) => `${letters[i]}: ${x}`).join('. ')}.`, intent: 'trivia' };
+  }
+  function guessNumber() {
+    const n = 1 + Math.floor(Math.random() * 100);
+    let tries = 0;
+    setPending('guess', (o) => {
+      if (/^(me rindo|no se|dime(lo)?)/.test(o.n)) { talkWait = null; return { text: `Era el ${n}. ¿Jugamos otra vez?`, then: () => offer(guessNumber) }; }
+      const g = /^(?:es\s+(?:el\s+)?|el\s+)?(\d{1,3})$/.exec(o.n);
+      if (!g) { if (o.n.split(/\s+/).length > 3) { talkWait = null; return null; } return { text: 'Dime un número del 1 al 100.', keep: true }; }
+      tries++;
+      const v = +g[1];
+      if (v === n) { talkWait = null; return { text: `¡Sí! Era el ${n}. Lo lograste en ${plural(tries, 'intento', 'intentos')}. ¿Otra partida?`, then: () => offer(guessNumber), celebrate: true }; }
+      const diff = Math.abs(v - n);
+      const hot = diff <= 3 ? ' ¡Te estás quemando!' : diff <= 10 ? ' Caliente.' : '';
+      return { text: `${v < n ? 'Más alto' : 'Más bajo'}.${hot}`, keep: true };
+    });
+    return { text: 'Pensé un número del 1 al 100. ¡Adivínalo! Te digo si es más alto o más bajo.', intent: 'guess' };
+  }
+  function rpsPlay(choice) {
+    const opts = ['piedra', 'papel', 'tijera'];
+    const me = pick(opts);
+    const u = choice.startsWith('tijera') ? 'tijera' : choice;
+    const win = { piedra: 'tijera', papel: 'piedra', tijera: 'papel' };
+    const res = u === me ? 'Empate.' : win[u] === me ? '¡Ganaste!' : 'Gané yo.';
+    return { text: `Yo saqué ${me}. ${res} ¿Otra?`, then: () => offer(rps), celebrate: res === '¡Ganaste!' };
+  }
+  function rps() {
+    setPending('rps', (o) => {
+      const m = /\b(piedra|papel|tijeras?)\b/.exec(o.n);
+      if (!m) { talkWait = null; return null; }
+      talkWait = null;
+      return rpsPlay(m[1]);
+    });
+    return { text: '¡Va! Piedra, papel o tijera… ¿qué sacas?', intent: 'rps' };
+  }
+
+  // Respiración guiada
+  let breathGen = 0;
+  function breathe() {
+    const gen = ++breathGen;
+    return {
+      text: 'Vamos a respirar juntos un minuto. Sigue mi figura: cuando crece, inhalas; cuando se calma, exhalas.',
+      say: 'Vamos a respirar juntos. Sigue mi voz.',
+      after: async () => {
+        const m = addMsg('bot', '', [], { stream: true });
+        const steps = [];
+        for (let i = 0; i < 4; i++) steps.push(['Inhala por la nariz…', 'listen', 4000], ['Sostén…', 'think', 3000], ['Exhala despacio por la boca…', 'speak', 5500]);
+        await wait(2600);
+        for (const [t, st, ms] of steps) {
+          if (gen !== breathGen) return;
+          m.set(t); orbState(st);
+          if (settings.voice && canSpeak) { try { speechSynthesis.cancel(); } catch { /* sin voz */ } utter(t.replace('…', '')); }
+          await wait(ms);
+        }
+        if (gen !== breathGen) return;
+        m.set('Muy bien. ¿Te sientes un poco mejor?');
+        m.finish([]);
+        orbState('idle');
+        speak('Muy bien. ¿Te sientes un poco mejor?');
+      },
+    };
+  }
+
+  /* ---------- Reglas de conversación (se consultan después de las órdenes) ---------- */
+  const T = [];
+  const talk = (name, re, fn) => T.push([name, re, typeof fn === 'string' ? () => ({ text: line(fn) }) : fn]);
+
+  // Memoria personal
+  talk('rememberLike', /^(a mi\s+)?(me gusta(n)?|me encanta(n)?|amo|adoro|soy fan de|disfruto)\s+(mucho\s+)?(.+)$/, (m, o) => {
+    const it = addLike('likes', tailOf(o, m[6]));
+    if (!it) return null;
+    return { text: pick([`Anotado: te gusta ${it}. Lo tendré en cuenta.`, `¡Qué ${regionWords().cool[0]}! Recordaré que te gusta ${it}.`, `Me lo apunto: ${it}. Buen gusto.`]) };
+  });
+  talk('rememberDislike', /^(no me gusta(n)?|odio|detesto|no soporto)\s+(.+)$/, (m, o) => {
+    const it = addLike('dislikes', tailOf(o, m[3]));
+    if (!it) return null;
+    return { text: `Entendido, nada de ${it}. Lo recordaré.` };
+  });
+  talk('rememberBirthday', new RegExp(`^(mi cumpleanos es|cumplo anos|naci)\\s+(el\\s+)?(\\d{1,2})\\s+de\\s+(${MONTHS.join('|')})`), (m) => {
+    const mm = MONTHS.indexOf(m[4]) + 1, dd = +m[3];
+    if (dd < 1 || dd > 31) return null;
+    profile.birthday = `${pad2(mm)}-${pad2(dd)}`; saveProfile();
+    if (isBirthday()) { confetti(); return { text: line('birthdayUser') }; }
+    return { text: `Guardado: tu cumpleaños es el ${dd} de ${m[4]}. Ese día te felicitaré.` };
+  });
+  talk('todayBirthday', /^(hoy es mi cumpleanos|hoy cumplo anos|es mi cumpleanos)/, () => { profile.birthday = todayKey().slice(5); saveProfile(); confetti(); return { text: line('birthdayUser'), celebrate: true }; });
+  talk('rememberCity', /^(vivo en|soy de|me mude a)\s+(.+)$/, (m, o) => {
+    const c = cap(tailOf(o, m[2]).replace(/[.!?]+$/, '').trim().slice(0, 50));
+    if (!c || c.split(/\s+/).length > 5) return null;
+    if (m[1] !== 'soy de' || !profile.city) { profile.city = c; saveProfile(); }
+    return { text: m[1] === 'soy de' ? `¡${c}! Lo recordaré.` : `Guardado: estás en ${c}. Lo usaré para el clima.` };
+  });
+  talk('rememberFav', /^mi\s+(.+?)\s+favorit[oa]\s+es\s+(.+)$/, (m, o) => {
+    const fem = /a favorita/.test(m[0]);
+    const k = `${grp(o, m, 1).trim().toLowerCase().slice(0, 30)} ${fem ? 'favorita' : 'favorito'}`;
+    profile.facts[fold(k)] = cleanItem(tailOf(o, m[2])); saveProfile();
+    return { text: `Anotado: tu ${k} es ${profile.facts[fold(k)]}.` };
+  });
+  talk('rememberNamed', /^mi\s+(.+?)\s+se llama\s+(.+)$/, (m, o) => {
+    const k = grp(o, m, 1).trim().toLowerCase().slice(0, 30);
+    const v = cap(tailOf(o, m[2]).replace(/[.!?]+$/, '').trim().slice(0, 40));
+    profile.facts[fold(k)] = v;
+    profile.named = [...new Set([...arr(profile.named), fold(k)])];
+    saveProfile();
+    return { text: `¡Qué bonito nombre! Recordaré que tu ${k} se llama ${v}.` };
+  });
+  talk('rememberJob', /^(trabajo (en|como|de)|soy (programador|programadora|ingeniero|ingeniera|estudiante|doctor|doctora|profesor|profesora|disenador|disenadora|vendedor|vendedora|abogado|abogada|enfermero|enfermera|contador|contadora|chef|emprendedor|emprendedora))\s*(.*)$/, (m, o) => {
+    const v = o.s.trim().replace(/[.!?]+$/, '').slice(0, 80);
+    profile.facts.trabajo = v; saveProfile();
+    return { text: `Qué interesante. Lo recordaré: ${v.charAt(0).toLowerCase() + v.slice(1)}.` };
+  });
+  talk('rememberAny', /^(recuerda|recuerdalo|acuerdate de|no olvides|guarda en tu memoria)\s+(que\s+)?(.+)$/, (m, o) => {
+    const v = tailOf(o, m[3]).replace(/[.!?]+$/, '').trim().slice(0, 120);
+    if (!v) return null;
+    profile.notes = [...profile.notes.filter(x => fold(x) !== fold(v)), v].slice(-30); saveProfile();
+    return { text: `Lo recordaré: ${v}.` };
+  });
+  talk('whatKnow', /^(que sabes (de|sobre) mi|que recuerdas de mi|que te he contado|que sabes de mi vida|me conoces)/, () => {
+    const s = profileSummary();
+    if (!s.length) return { text: 'Aún no sé mucho de ti. Cuéntame cosas, como "me gusta el café" o "vivo en Caracas", y las recordaré.' };
+    return { text: `Sé que ${listJoin(s.slice(0, 8))}.`, actions: [{ label: 'Ver y editar en Ajustes', fn: () => { openSheet('themeSheet'); setTimeout(() => document.getElementById('profileBox')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 350); } }] };
+  });
+  talk('whatLike', /^(que me gusta|cuales son mis gustos|que cosas me gustan)/, () => ({ text: profile.likes.length ? `Te gusta ${listJoin(profile.likes.slice(-8))}.` : 'Todavía no me has contado qué te gusta. ¿Qué te gusta?' }));
+  talk('askBirthday', /^(cuando es mi cumpleanos|cuando cumplo|sabes cuando cumplo)/, () => {
+    if (!profile.birthday) return { text: 'No lo sé todavía. Dime "mi cumpleaños es el 3 de mayo", por ejemplo.' };
+    const [mm, dd] = profile.birthday.split('-').map(Number);
+    const now = new Date(); let d = new Date(now.getFullYear(), mm - 1, dd, 12);
+    if (dayKey(d) < todayKey()) d = new Date(now.getFullYear() + 1, mm - 1, dd, 12);
+    const left = daysBetween(todayKey(), dayKey(d));
+    return { text: left === 0 ? '¡Es hoy! Feliz cumpleaños.' : `Tu cumpleaños es el ${dd} de ${MONTHS[mm - 1]}. Faltan ${plural(left, 'día', 'días')}.` };
+  });
+  talk('askCity', /^(donde vivo|en que ciudad vivo|de donde soy)/, () => ({ text: profile.city ? `Vives en ${profile.city}.` : 'No me lo has dicho. Dime "vivo en…" y lo recordaré.' }));
+  talk('askFact', /^(cual es|como se llama)\s+mi\s+(.+?)(\s+favorit[oa])?$/, (m) => {
+    const base = fold(m[2]).trim();
+    const hit = Object.keys(profile.facts).find(k => k === base || k.replace(/ favorit[oa]$/, '') === base || k.startsWith(base + ' '));
+    if (!hit) return { text: `No me has contado cuál es tu ${m[2]}${m[3] || ''}. ¿Me lo dices?` };
+    return { text: m[1] === 'como se llama' ? `Tu ${m[2]} se llama ${profile.facts[hit]}.` : `Tu ${hit} es ${profile.facts[hit]}.` };
+  });
+  talk('forgetAll', /^(olvida|borra)\s+(todo lo que sabes de mi|todo sobre mi|mis datos personales|lo que sabes de mi)/, () => ({
+    text: '¿Seguro que quieres que olvide todo lo que me has contado de ti? Tus tareas y notas no se tocan.',
+    actions: [{ label: 'Sí, olvídalo todo', fn: () => { profile = { likes: [], dislikes: [], facts: {}, birthday: '', city: '', notes: [] }; saveProfile(); reply('Hecho. Empezamos de cero.'); } }],
+  }));
+  talk('forgetOne', /^(olvida|olvidate de|borra)\s+(que\s+)?(me gusta(n)?\s+|lo de\s+|mi\s+)?(.+)$/, (m) => {
+    const q = m[5].replace(/^(el|la|los|las)\s+/, '');
+    let hit = false;
+    for (const k of ['likes', 'dislikes']) { const before = profile[k].length; profile[k] = profile[k].filter(x => !fold(x).includes(q)); hit = hit || before !== profile[k].length; }
+    Object.keys(profile.facts).forEach(k => { if (k.includes(q) || fold(profile.facts[k]).includes(q)) { delete profile.facts[k]; hit = true; } });
+    const nb = profile.notes.length; profile.notes = profile.notes.filter(x => !fold(x).includes(q)); hit = hit || nb !== profile.notes.length;
+    if (/cumpleanos/.test(q) && profile.birthday) { profile.birthday = ''; hit = true; }
+    if (/ciudad|donde vivo/.test(q) && profile.city) { profile.city = ''; hit = true; }
+    if (!hit) return null;
+    saveProfile();
+    return { text: 'Listo, lo olvidé.' };
+  });
+
+  // Emociones y estados
+  talk('crisisSoft', /(me siento (muy )?solo|me siento sola|estoy solo|estoy sola|nadie me quiere)/, () => ({ text: line('lonely') }));
+  talk('sad', /^(estoy|me siento|ando|hoy estoy)\s+(muy\s+|un poco\s+|algo\s+)?(triste|mal|deprimid[oa]|decaid[oa]|bajoneado|bajonead[oa]|desanimad[oa]|fatal|horrible)|^(tuve|he tenido) un (mal|pesimo|horrible) dia|^me fue (mal|fatal)/, () => withBreath(line('sad')));
+  talk('happy', /^(estoy|me siento|ando|hoy estoy)\s+(muy\s+)?(feliz|content[oa]|alegre|emocionad[oa]|motivad[oa]|genial|de maravilla)|^(tuve|he tenido) un (buen|gran|excelente) dia|^me fue (bien|genial|excelente)/, 'happy');
+  talk('tired', /^(estoy|me siento|ando)\s+(muy\s+|un poco\s+|super\s+)?(cansad[oa]|agotad[oa]|sin energia|reventad[oa]|muert[oa] de cansancio)/, () => withBreak(line('tired')));
+  talk('sleepy', /^(tengo (mucho\s+)?sueno|me estoy durmiendo|me muero de sueno)/, 'sleepy');
+  talk('stressed', /^(estoy|me siento|ando)\s+(muy\s+|un poco\s+|super\s+)?(estresad[oa]|agobiad[oa]|ansios[oa]|nervios[oa]|abrumad[oa]|presionad[oa]|saturad[oa])|tengo (mucho\s+)?(estres|ansiedad)/, () => withBreath(line('stressed')));
+  talk('angry', /^(estoy|me siento|ando)\s+(muy\s+)?(enojad[oa]|molest[oa]|furios[oa]|frustrad[oa]|arrecho|arrech[oa]|bravo|brava|enfadad[oa]|cabread[oa])/, () => withBreath(line('angry')));
+  talk('bored', /^(estoy|me siento|ando)\s+(muy\s+)?aburrid[oa]|^(que aburrido|me aburro|que hago estoy aburrido)/, () => boredReply());
+  talk('hungry', /^(tengo (mucha\s+)?hambre|me muero de hambre|que (como|cocino)( hoy)?|ideas? (de|para) (comer|comida|cocinar|almorzar|cenar))/, () => ({ text: line('hungry') }));
+  talk('sick', /^(estoy|me siento|ando)\s+(un poco\s+|muy\s+)?(enferm[oa]|resfriad[oa]|con gripe|con fiebre)|^me duele\b/, 'sick');
+  talk('nervous', /^(tengo|manana tengo|hoy tengo)\s+(un|una)\s+(examen|entrevista|presentacion|reunion importante|exposicion|prueba)/, () => ({ text: line('nervous'), actions: [{ label: 'Concentrarme 25 min', fn: () => handleCommand('empieza a concentrarme 25 minutos') }] }));
+  talk('achievement', /^(lo logre|lo consegui|aprobe|me graduE|me gradue|me ascendieron|consegui (el |un )?trabajo|termine (todo|el proyecto)|gane|me contrataron|lo hice)\b/, () => { confetti(); return { text: line('achievement'), celebrate: true }; });
+  talk('working', /^(estoy (trabajando|estudiando|ocupad[oa])|voy a (trabajar|estudiar))$/, () => ({ text: line('working'), actions: [{ label: 'Pomodoro 25 min', fn: () => handleCommand('empieza a concentrarme 25 minutos') }] }));
+  talk('breathe', /(respiremos|respiracion guiada|ejercicio de respiracion|ayudame a (relajarme|calmarme)|quiero (relajarme|calmarme)|necesito calmarme|respirar)/, () => breathe());
+
+  // Charla básica
+  talk('greet', /^(hola|holi|holis|buenas|buenos dias|buen dia|buenas tardes|buenas noches|que tal|hey|ey|saludos|epale|quiubo|que mas|que onda|wena|hello|hi)\b(?!.*\b(me voy|hasta|a dormir)\b)/, (m) => {
+    if (isBirthday() && ui.bdayGreeted !== new Date().getFullYear()) { ui.bdayGreeted = new Date().getFullYear(); saveUI(); confetti(); return { text: line('birthdayUser'), celebrate: true }; }
+    if (/^buenas noches/.test(m[0]) && new Date().getHours() >= 21) return { text: line('night') };
+    askMood();
+    return { text: line('greet') };
+  });
+  talk('howAreYou', /^(y tu\s+)?(como estas|que tal estas|como te va|como andas|como vas|como te sientes|que tal tu dia|como esta tu dia|como amaneciste|todo bien)\b/, () => { askMood(); return { text: line('howAreYou') }; });
+  talk('moodDirect', /^(estoy|me siento|ando)\s+(bien|muy bien|super bien|excelente|de maravilla|genial)\b/, 'moodGood');
+  talk('thanks', /^(gracias|muchas gracias|mil gracias|te agradezco|genial|perfecto|excelente|buen trabajo|bien hecho|vale|ok|okay|listo|chevere|de pinga|fino|buenisimo|que bien)\b/, 'thanks');
+  talk('night', /^(buenas noches|me voy a dormir|a dormir|hasta manana|me voy a acostar|nos vemos manana)\b/, 'night');
+  talk('bye', /^(chao|chau|adios|bye|nos vemos|hasta luego|hasta pronto|me voy|cuidate)\b/, 'bye');
+  talk('back', /^(ya (volvi|regrese|estoy de vuelta|llegue)|volvi|regrese|aqui estoy de nuevo)\b/, 'back');
+  talk('who', /(quien eres|como te llamas|que eres\b|cual es tu nombre|presentate)/, 'who');
+  talk('age', /(cuantos anos tienes|que edad tienes|cuando naciste)/, 'age');
+  talk('creator', /(quien te (creo|hizo|programo|invento|diseno)|quien es tu (creador|dueno|padre))/, 'creator');
+  talk('areYouAi', /(eres (un |una )?(robot|humano|humana|persona|real|maquina|ia|inteligencia artificial|bot))/, 'areYouAi');
+  talk('feelings', /(tienes (sentimientos|emociones|corazon)|sientes algo|eres feliz|te sientes solo|estas triste)/, 'feelings');
+  talk('aiLikes', /(que te gusta( hacer)?|cual es tu (color|comida|musica|cancion|pelicula|libro|deporte) favorit[oa]|tienes (gustos|hobbies))/, 'aiLikes');
+  talk('whereLive', /(donde vives|donde estas|de donde eres)/, 'whereLive');
+  talk('loveYou', /^(te quiero|te amo|te adoro|eres lo maximo para mi|te aprecio)\b/, 'loveYou');
+  talk('marry', /(casate conmigo|quieres ser mi (novio|novia|pareja)|tienes novi[oa]|eres mi novi[oa])/, 'marry');
+  talk('insult', /^(eres (un |una )?(tont[oa]|inutil|estupid[oa]|malo|mala|lento|lenta|idiota|bruto|bruta)|no sirves|te odio|que inutil|no entiendes nada)/, 'insult');
+  talk('sorry', /^(perdon|perdona|lo siento|disculpa|disculpame|sorry)\b/, 'sorry');
+  talk('compliment', /^(eres (genial|el mejor|la mejor|increible|muy inteligente|inteligente|lo maximo|muy util|crack|bueno|buena)|me caes bien|me encantas|que inteligente eres|buen asistente)/, 'compliment');
+  talk('whatDoing', /^(que haces|que estas haciendo|en que andas)\b/, 'whatDoing');
+  talk('dream', /(suenas|duermes|descansas)\b/, 'dream');
+  talk('meaning', /(sentido de la vida|para que vivimos|cual es el proposito de la vida)/, 'meaning');
+  talk('otherAi', /(conoces a|que opinas de|eres mejor que)\s+(siri|alexa|google|chatgpt|gemini|claude|cortana|bixby)/, 'otherAi');
+  talk('gender', /(eres (hombre|mujer|chico|chica|nino|nina)|que genero eres)/, 'gender');
+  talk('english', /(hablas ingles|speak english|sabes ingles)/, 'english');
+  talk('learn', /(aprendes|puedes aprender|recuerdas cosas|tienes memoria)/, 'learn');
+  talk('sing', /^(canta|cantame|cantanos|sabes cantar)\b/, 'sing');
+  talk('listening', /^(me (escuchas|oyes)|estas ahi|sigues ahi|hay alguien)\b/, 'listening');
+  talk('laugh', /^(ja(ja)+|je(je)+|jsjs\w*|lol|xd|que risa|muy bueno|buenisimo el chiste|me rei)\b/, 'laugh');
+  talk('wow', /^(wow|guau|increible|no sabia|que interesante|en serio|de verdad)\b/, 'wow');
+  talk('yesAlone', YES_RE, 'yesAlone');
+  talk('noAlone', NO_RE, 'noAlone');
+
+  // Entretenimiento
+  talk('joke', /(chiste|algo gracioso|hazme reir|cuentame algo divertido|otro chiste)/, () => { const t = pickFresh('joke', JOKES); const more = () => { offer(() => ({ text: pickFresh('joke', JOKES), then: more }), null, MORE_RE); };
+    more(); return { text: t, intent: 'joke' }; });
+  talk('fact', /(dato curioso|datos curiosos|sabias que|cuentame algo (interesante|curioso)|dime algo (interesante|curioso)|algo que no sepa|otro dato)/, () => { const more = () => { offer(() => ({ text: pickFresh('fact', FACTS), then: more }), null, MORE_RE); };
+    more(); return { text: pickFresh('fact', FACTS), intent: 'fact' }; });
+  talk('quote', /(frase (celebre|motivadora|del dia|bonita|inspiradora)|dame una frase|dime una frase|una cita|un refran|algo inspirador|inspirame)/, (m) => {
+    if (/del dia/.test(m[0])) { const i = Math.abs([...todayKey()].reduce((a, c) => a * 31 + c.charCodeAt(0), 7)) % QUOTES.length; return { text: `Frase del día: ${QUOTES[i]}` }; }
+    return { text: pickFresh('quote', QUOTES) };
+  });
+  talk('riddle', /(adivinanza|adivina adivinador|acertijo|otra adivinanza)/, () => riddle());
+  talk('trivia', /(trivia|preguntame algo|ponme a prueba|juguemos a las preguntas|hazme una pregunta|quiz)/, () => { triviaScore = triviaScore.total > 20 ? { ok: 0, total: 0 } : triviaScore; return trivia(); });
+  talk('guess', /(adivina (el|un|mi) numero|juguemos a adivinar|adivinar (el|un) numero|piensa (en )?un numero)/, () => guessNumber());
+  talk('rpsDirect', /^(piedra|papel|tijeras?)$/, (m) => rpsPlay(m[1]));
+  talk('rps', /(piedra,? papel|piedra papel)/, () => rps());
+  talk('games', /^(juguemos|vamos a jugar|quiero jugar|juega conmigo|que juegos (tienes|sabes)|a que jugamos)\b/, () => ({ text: 'Tengo trivia, adivinanzas, adivina el número y piedra, papel o tijera. ¿Cuál?', actions: [
+    { label: 'Trivia', fn: () => handleCommand('trivia') }, { label: 'Adivinanza', fn: () => handleCommand('adivinanza') },
+    { label: 'Adivina el número', fn: () => handleCommand('adivina el número') }, { label: 'Piedra, papel o tijera', fn: () => handleCommand('piedra papel o tijera') }] }));
+  talk('twister', /(trabalenguas)/, () => ({ text: pickFresh('twister', TWISTERS) }));
+  talk('story', /(cuentame|dime|narrame)\s+(un|una)\s+(cuento|historia|fabula|relato)/, () => ({ text: pickFresh('story', STORIES) }));
+  talk('poem', /(poema|poesia|verso|versos)/, () => ({ text: pickFresh('poem', POEMS) }));
+  talk('coin', /(lanza|tira|lanzar|tirar)\s+(una\s+)?moneda|cara o (cruz|sello)/, () => ({ text: `Salió… ¡${pick(['cara', /^es-(VE|CO|CL|AR)/.test(region()) ? 'sello' : 'cruz'])}!` }));
+  talk('dice', /(lanza|tira|lanzar|tirar)\s+(un |dos |\d+ )?(dado|dados)/, (m) => {
+    const n = m[2] && /dos|2/.test(m[2]) ? 2 : Math.min(6, parseInt(m[2]) || 1);
+    const rolls = Array.from({ length: n }, () => 1 + Math.floor(Math.random() * 6));
+    return { text: n === 1 ? `Salió un ${rolls[0]}.` : `Salieron ${listJoin(rolls.map(String))}. Total: ${rolls.reduce((a, b) => a + b, 0)}.` };
+  });
+  talk('randomNum', /(dame|dime|elige|escoge)\s+un numero(\s+(al azar|aleatorio))?(\s+(entre|del)\s+(-?\d+)\s+(y|al|a)\s+(-?\d+))?/, (m) => {
+    let a = m[6] != null ? +m[6] : 1, b = m[8] != null ? +m[8] : 100;
+    if (a > b) [a, b] = [b, a];
+    return { text: `${a + Math.floor(Math.random() * (b - a + 1))}.` };
+  });
+  talk('decide', /^(elige|escoge|decide|que prefieres|ayudame a (elegir|decidir)|decide por mi)[:,\s]+(entre\s+)?(.+?)\s+o\s+(.+)$/, (m, o) => {
+    const i5 = m[0].length - m[5].length;
+    const sep = (/\s+o\s+$/.exec(m[0].slice(0, i5)) || [''])[0].length;
+    const start = m.index + i5 - sep - m[4].length;
+    const raw = o.s.slice(Math.max(0, start), m.index + m[0].length);
+    const parts = raw.split(/\s+o\s+/i).map(x => x.replace(/[?¿.!]+$/, '').trim()).filter(Boolean);
+    const c = pick(parts.length >= 2 ? parts : [m[4], m[5]]);
+    return { text: pick([`Yo elegiría ${c}.`, `Mi voto va para ${c}.`, `Sin dudarlo: ${c}. Pero tú tienes la última palabra.`]) };
+  });
+  talk('recommend', /(recomiendame|recomiendas|sugiereme|que me recomiendas|una buena)\s+(una\s+|un\s+|algo de\s+)?(pelicula|serie|libro|musica|cancion)/, (m) => {
+    const k = m[3] === 'cancion' ? 'musica' : m[3];
+    const v = pickFresh('rec-' + k, RECS[k]);
+    return { text: { pelicula: `Te recomiendo ver ${v}.`, serie: `Prueba con ${v}.`, libro: `Te recomiendo ${v}.`, musica: `Prueba con ${v}.` }[k] };
+  });
+  talk('compliment me', /(dime algo bonito|hazme un cumplido|echame (un )?piropo|subeme el animo|animame un poco)/, () => ({ text: pick(['Eres más capaz de lo que crees. Lo demuestras cada vez que vuelves a intentarlo.', 'Tienes una constancia admirable; no cualquiera organiza su vida como tú.', `Me alegra mucho acompañarte${nameSuffix()}. Haces que mi trabajo valga la pena.`, 'Lo estás haciendo mejor de lo que piensas. De verdad.']) }));
+  talk('capital', /^(cual es |dime )?la capital de\s+(.+)$/, (m) => {
+    const k = m[2].replace(/[?.!]+$/, '').trim();
+    const c = CAPITALS[k];
+    return c ? { text: `La capital de ${cap(k)} es ${c}.` } : null;
+  });
+  talk('countdown', /^cuant[oa]s?\s+(dias|semanas)?\s*(faltan?|quedan?)\s+(para|hasta)\s+(el\s+|la\s+|mi\s+)?(.+)$/, (m, o) => {
+    const what = m[5].replace(/[?.!]+$/, '').trim();
+    let k = null, label = tailOf(o, m[5]).replace(/[?.!]+$/, '').trim();
+    const HL = { navidad: 'Navidad', nochebuena: 'Nochebuena', 'ano nuevo': 'Año Nuevo', 'fin de ano': 'fin de año', halloween: 'Halloween', 'san valentin': 'San Valentín', 'dia de los enamorados': 'el Día de los Enamorados' };
+    if (HL[what]) label = HL[what];
+    if (HOLIDAYS[what]) { const y = new Date().getFullYear(); k = `${y}-${HOLIDAYS[what]}`; if (k < todayKey()) k = `${y + 1}-${HOLIDAYS[what]}`; }
+    else if (/cumpleanos/.test(what) && profile.birthday) { const y = new Date().getFullYear(); k = `${y}-${profile.birthday}`; if (k < todayKey()) k = `${y + 1}-${profile.birthday}`; label = 'tu cumpleaños'; }
+    else { const o2 = pair(what); k = takeDate(o2); }
+    if (!k) return /cumpleanos/.test(what) ? { text: 'Primero dime cuándo es tu cumpleaños: "mi cumpleaños es el 3 de mayo".' } : null;
+    const d = daysBetween(todayKey(), k);
+    if (d < 0) return { text: 'Esa fecha ya pasó.' };
+    if (d === 0) return { text: `¡Es hoy!` };
+    return { text: m[1] === 'semanas' ? `Faltan ${fmt(d / 7, 1)} semanas (${plural(d, 'día', 'días')}) para ${label}.` : `Faltan ${plural(d, 'día', 'días')} para ${label}.` };
+  });
+
+  // Consulta de charla (después de las órdenes de la app)
+  function talkReply(o) {
+    for (const [name, re, fn] of T) {
+      const m = re.exec(o.n);
+      if (!m) continue;
+      const r = fn(m, o);
+      if (r) { r.intent = r.intent || name; return r; }
+    }
+    return null;
+  }
+
+  // Señales de crisis: siempre primero y con una respuesta cuidadosa.
+  const CRISIS_RE = /(suicid|quitarme la vida|matarme|no quiero (seguir )?vivir|quiero morir(me)?|acabar con (todo|mi vida)|hacerme dano|autolesion|me quiero cortar|mejor (estaria|estar) muerto)/;
+  function crisisReply() {
+    return {
+      text: `Siento mucho que estés pasando por algo tan duro${nameSuffix()}. No estás solo y mereces ayuda ahora mismo. Por favor, habla hoy con alguien de confianza o con una línea de ayuda en crisis de tu país. Si estás en peligro inmediato, llama a emergencias. Si quieres, quédate hablando conmigo mientras tanto.`,
+      say: 'Siento mucho que estés pasando por algo tan duro. No estás solo. Por favor, habla hoy con alguien de confianza o con una línea de ayuda en crisis. Si estás en peligro, llama a emergencias.',
+      intent: 'crisis',
+    };
+  }
+
+  // Toque de personalidad y región en las confirmaciones de órdenes.
+  function flavor(r) {
+    if (!r || !r.text || r.unknown || r.flavored) return r;
+    r.flavored = true;
+    const w = regionWords();
+    if (w !== NEUTRAL_WORDS && Math.random() < 0.45 && /^(Listo|Hecho|Perfecto)[,.]\s+/.test(r.text)) {
+      const ok = pick(w.ok);
+      r.text = r.text.replace(/^(Listo|Hecho|Perfecto)[,.]\s+(.)/, (_, a, c) => `${ok} ${c.toUpperCase()}`);
+      if (r.say) r.say = r.say.replace(/^(Listo|Hecho|Perfecto)[,.]\s+(.)/, (_, a, c) => `${ok} ${c.toUpperCase()}`);
+    }
+    const p = persona();
+    if (p === 'motivador' && /^(done|planSet|habitMark|goalProgress)$/.test(r.intent || '') && Math.random() < 0.5) r.text += ' ' + pick(['¡Sigue así!', '¡Imparable!', 'Un paso más cerca.', '¡Así se hace!']);
+    if (p === 'divertido' && /^(done|taskAdd)$/.test(r.intent || '') && Math.random() < 0.35) r.text += ' ' + pick(['Tu lista y yo te aplaudimos.', 'Anotado con letra bonita.', 'Mis bits celebran.']);
+    if (p === 'directo') r.text = r.text.replace(/\s+(Te aviso cuando termine|Mantén la app abierta[^.]*|Yo te acompaño)\.?$/, '');
+    return r;
+  }
+
+  /* =====================================================================
+     CONOCIMIENTO CON INTERNET: Wikipedia, clima y cambio de moneda.
+     Servicios gratuitos y sin claves. Sin conexión, se avisa con calma
+     (y el cambio de moneda usa la última tasa guardada).
+  ===================================================================== */
+  async function getJSON(url, ms = 9000) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), ms);
+    try {
+      const r = await fetch(url, { signal: ctrl.signal });
+      if (!r.ok) throw new Error('http ' + r.status);
+      return await r.json();
+    } finally { clearTimeout(t); }
+  }
+  const needNet = (what) => ({ text: `Para ${what} necesito internet. Cuando tengas conexión, pregúntame otra vez.` });
+  const sentences = (t) => String(t || '').replace(/([.!?])\s+(?=[A-ZÁÉÍÓÚÑ¿¡"«])/g, '$1\u0001').split('\u0001');
+  const noParens = (t) => String(t).replace(/\s*\([^()]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '').replace(/\s{2,}/g, ' ').trim();
+
+  /* ---------- Wikipedia ---------- */
+  const WIKI_Q = [
+    [/^(que|quien|quienes)\s+(es|son|era|eran|fue|fueron)\s+(un\s+|una\s+|el\s+|la\s+|los\s+|las\s+|lo\s+)?(.+)$/, 4],
+    [/^(que significa|significado de|definicion de|define)\s+(.+)$/, 2],
+    [/^(hablame|cuentame|dime algo|informacion|info|explicame|explica|resumeme)\s+(un poco\s+)?(de|del|sobre|acerca de|que es|que son|quien es|quien fue)\s+(el\s+|la\s+|los\s+|las\s+)?(.+)$/, 5],
+    [/^(donde (esta|queda)|en que pais (esta|queda))\s+(el\s+|la\s+|los\s+|las\s+)?(.+)$/, 5],
+    [/^cuando\s+(nacio|murio|fue|se fundo|se creo|empezo|termino|ocurrio|paso|se invento)\s+(el\s+|la\s+|los\s+|las\s+)?(.+)$/, 3],
+    [/^(busca|buscame|investiga|consulta)\s+(en\s+(wikipedia|internet|la web)\s+)?(sobre\s+|que es\s+|quien es\s+|acerca de\s+)?(.+)$/, 5],
+    [/^(wikipedia|wiki)\s+(.+)$/, 2],
+  ];
+  function lookupFrom(o) {
+    for (const [re, g] of WIKI_Q) {
+      const m = re.exec(o.n);
+      if (!m || !m[g]) continue;
+      const topic = tailOf(o, m[g]).replace(/[?¿!¡.]+/g, '').trim();
+      if (!topic || topic.length < 2 || topic.split(/\s+/).length > 9) continue;
+      if (!navigator.onLine) return Object.assign(needNet(`buscar "${topic}"`), { intent: 'wiki' });
+      return { text: '', intent: 'wiki', later: () => wikiAnswer(topic) };
+    }
+    return null;
+  }
+  async function wikiAnswer(topic) {
+    try {
+      const s = await getJSON(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(topic)}&srlimit=1&format=json&origin=*`);
+      const hit = s && s.query && s.query.search && s.query.search[0];
+      if (!hit) return { text: `No encontré nada sobre "${topic}". Prueba con otras palabras.` };
+      const sum = await getJSON(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(hit.title.replace(/ /g, '_'))}`);
+      const url = (sum.content_urls && (sum.content_urls.mobile || sum.content_urls.desktop) || {}).page || `https://es.wikipedia.org/wiki/${encodeURIComponent(hit.title)}`;
+      const extract = String(sum.extract || '').trim();
+      if (sum.type === 'disambiguation' || !extract) {
+        return { text: `"${hit.title}" puede referirse a varias cosas. ¿Puedes ser más específico?`, actions: [{ label: 'Ver opciones', fn: () => window.open(url, '_blank', 'noopener') }] };
+      }
+      let text = '';
+      for (const p of sentences(extract)) { if ((text + ' ' + p).length > 430 && text) break; text = (text + ' ' + p).trim(); }
+      const say = sentences(noParens(extract)).slice(0, 2).join(' ');
+      return {
+        text: `${text}\n— Wikipedia`,
+        say: `Según Wikipedia: ${say}`,
+        actions: [
+          { label: 'Leer más', fn: () => window.open(url, '_blank', 'noopener') },
+          { label: 'Guardar como nota', fn: () => { A.addNote(`${extract}\n\nFuente: ${url}`, sum.title || hit.title); reply('Guardado en tus notas.'); } },
+        ],
+      };
+    } catch {
+      return navigator.onLine ? { text: 'No pude consultar Wikipedia ahora mismo. Inténtalo en un momento.' } : needNet(`buscar "${topic}"`);
+    }
+  }
+
+  /* ---------- Clima (Open-Meteo) ---------- */
+  const WMO = {
+    0: 'despejado', 1: 'mayormente despejado', 2: 'parcialmente nublado', 3: 'nublado', 45: 'con niebla', 48: 'con niebla',
+    51: 'con llovizna ligera', 53: 'con llovizna', 55: 'con llovizna intensa', 56: 'con llovizna helada', 57: 'con llovizna helada',
+    61: 'con lluvia ligera', 63: 'con lluvia', 65: 'con lluvia fuerte', 66: 'con lluvia helada', 67: 'con lluvia helada',
+    71: 'con nieve ligera', 73: 'con nieve', 75: 'con nevada fuerte', 77: 'con granizo fino', 80: 'con chubascos ligeros', 81: 'con chubascos',
+    82: 'con chubascos fuertes', 85: 'con chubascos de nieve', 86: 'con chubascos de nieve', 95: 'con tormenta', 96: 'con tormenta y granizo', 99: 'con tormenta y granizo',
+  };
+  const wmo = (c) => WMO[c] || 'variable';
+  async function geocode(name) {
+    const g = await getJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}&count=1&language=es&format=json`);
+    const r = g && g.results && g.results[0];
+    return r ? { lat: r.latitude, lon: r.longitude, name: r.name, where: [r.admin1, r.country].filter(Boolean).join(', ') } : null;
+  }
+  function myPosition() {
+    return new Promise((res) => {
+      if (!navigator.geolocation) return res(null);
+      navigator.geolocation.getCurrentPosition((p) => res({ lat: p.coords.latitude, lon: p.coords.longitude, name: 'tu zona' }), () => res(null), { timeout: 9000, maximumAge: 30 * 60000 });
+    });
+  }
+  async function weatherAnswer(place, day, question) {
+    try {
+      let loc = null;
+      if (place) loc = await geocode(place);
+      else if (profile.city) {
+        const cache = store.get('dilex.geo', null);
+        loc = cache && cache.q === fold(profile.city) ? cache : await geocode(profile.city);
+        if (loc && !(cache && cache.q === fold(profile.city))) store.set('dilex.geo', Object.assign({ q: fold(profile.city) }, loc));
+      } else loc = await myPosition();
+      if (!loc) {
+        return place ? { text: `No encontré la ciudad "${place}".` }
+          : { text: 'No sé dónde estás. Dime "vivo en" y tu ciudad, o pregúntame "clima en Caracas", por ejemplo.' };
+      }
+      const w = await getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=3`);
+      const d = w.daily;
+      const r0 = (n) => Math.round(n);
+      const where = loc.name === 'tu zona' ? 'en tu zona' : `en ${loc.name}`;
+      const rain = d.precipitation_probability_max ? d.precipitation_probability_max[day] : null;
+      const max = r0(d.temperature_2m_max[day]), min = r0(d.temperature_2m_min[day]);
+      let text;
+      if (question === 'rain') {
+        const when = ['hoy', 'mañana', 'pasado mañana'][day];
+        text = rain == null ? `No tengo el dato de lluvia para ${when}.`
+          : rain >= 60 ? `Sí, es probable que llueva ${when} ${where}: ${rain} % de probabilidad. Lleva paraguas.`
+            : rain >= 30 ? `Puede que llueva ${when} ${where}: ${rain} % de probabilidad. Por si acaso, lleva paraguas.`
+              : `No parece que vaya a llover ${when} ${where}: solo ${rain} % de probabilidad.`;
+      } else if (day === 0) {
+        const c = w.current;
+        text = `Ahora ${where} hay ${r0(c.temperature_2m)} °C y está ${wmo(c.weather_code)}. Sensación de ${r0(c.apparent_temperature)} °C. Hoy, entre ${min} y ${max} °C${rain != null ? `, con ${rain} % de probabilidad de lluvia` : ''}.`;
+        if (rain >= 50) text += ' Lleva paraguas.';
+        else if (max >= 32) text += ' Hace calor: hidrátate.';
+        else if (max <= 12) text += ' Abrígate bien.';
+      } else {
+        text = `${day === 1 ? 'Mañana' : 'Pasado mañana'} ${where}: ${wmo(d.weather_code[day])}, entre ${min} y ${max} °C${rain != null ? `, con ${rain} % de probabilidad de lluvia` : ''}.`;
+      }
+      return { text, say: text.replace(/°C/g, 'grados').replace(/%/g, 'por ciento') };
+    } catch {
+      return navigator.onLine ? { text: 'No pude consultar el clima ahora mismo. Inténtalo en un momento.' } : needNet('ver el clima');
+    }
+  }
+  const WEATHER_RE = /(clima|el tiempo (hoy|manana|ahora|en)|que tiempo (hace|hara|va a hacer)|temperatura (hay|hace|en|de hoy|afuera|actual)|pronostico|va a llover|llovera|hace (frio|calor)|cuantos grados|necesito paraguas)/;
+  function weatherRule(m, o) {
+    const n = o.n;
+    const day = /pasado manana/.test(n) ? 2 : /\bmanana\b/.test(n) ? 1 : 0;
+    const question = /(llover|llovera|paraguas)/.test(n) ? 'rain' : 'full';
+    const pm = /\ben\s+([a-zñ][a-zñ\s.'-]*?)(?:\s+(?:hoy|manana|pasado manana|ahora|esta semana))?$/.exec(n);
+    const place = pm && !/^(la calle|la tarde|la noche|la manana|este momento|mi zona|mi ciudad|casa)$/.test(pm[1].trim()) ? pm[1].trim() : '';
+    if (!navigator.onLine) return Object.assign(needNet('ver el clima'), { intent: 'weather' });
+    return { text: '', intent: 'weather', later: () => weatherAnswer(place, day, question) };
+  }
+
+  /* ---------- Cambio de moneda (open.er-api.com) ---------- */
+  const CUR_NAMES = { USD: ['dólar', 'dólares'], EUR: ['euro', 'euros'], VES: ['bolívar', 'bolívares'], MXN: ['peso mexicano', 'pesos mexicanos'], COP: ['peso colombiano', 'pesos colombianos'], ARS: ['peso argentino', 'pesos argentinos'], CLP: ['peso chileno', 'pesos chilenos'], PEN: ['sol', 'soles'], BRL: ['real', 'reales'], GBP: ['libra', 'libras'], JPY: ['yen', 'yenes'], CNY: ['yuan', 'yuanes'], CAD: ['dólar canadiense', 'dólares canadienses'] };
+  const CUR_RE = /(dolar(es)? canadiense(s)?|dolar(es)?|usd|verdes|euro(s)?|eur\b|bolivar(es)?|\bbs\b|bolos|ves\b|peso(s)? (mexicano|colombiano|argentino|chileno)s?|pesos?|mxn|cop\b|ars\b|clp\b|soles|\bsol\b|pen\b|reales|\breal\b|brl|libras? esterlinas?|libras?|gbp|yen(es)?|jpy|yuan(es)?|cny)/g;
+  function curCode(w) {
+    if (/canadiense/.test(w)) return 'CAD';
+    if (/dolar|usd|verdes/.test(w)) return 'USD';
+    if (/euro|eur/.test(w)) return 'EUR';
+    if (/bolivar|bs|bolos|ves/.test(w)) return 'VES';
+    if (/mexicano|mxn/.test(w)) return 'MXN';
+    if (/colombiano|cop/.test(w)) return 'COP';
+    if (/argentino|ars/.test(w)) return 'ARS';
+    if (/chileno|clp/.test(w)) return 'CLP';
+    if (/peso/.test(w)) { const c = REGIONS[regionKeyForLocale()].cur; return ['MXN', 'COP', 'ARS', 'CLP'].includes(c) ? c : 'MXN'; }
+    if (/sol|pen/.test(w)) return 'PEN';
+    if (/real|brl/.test(w)) return 'BRL';
+    if (/libra|gbp/.test(w)) return 'GBP';
+    if (/yen|jpy/.test(w)) return 'JPY';
+    if (/yuan|cny/.test(w)) return 'CNY';
+    return null;
+  }
+  async function getRates() {
+    const cache = store.get('dilex.rates', null);
+    if (cache && Date.now() - cache.at < 6 * 3600000) return cache;
+    try {
+      const r = await getJSON('https://open.er-api.com/v6/latest/USD');
+      if (r.result !== 'success' || !r.rates) throw new Error('rates');
+      const fresh = { at: Date.now(), updated: (r.time_last_update_unix || Date.now() / 1000) * 1000, rates: r.rates };
+      store.set('dilex.rates', fresh);
+      return fresh;
+    } catch (err) {
+      if (cache) return Object.assign({ stale: true }, cache);
+      throw err;
+    }
+  }
+  const curName = (c, v) => (CUR_NAMES[c] ? CUR_NAMES[c][Math.abs(v - 1) < 1e-9 ? 0 : 1] : c);
+  async function currencyAnswer(amount, from, to) {
+    try {
+      const R0 = await getRates();
+      if (!R0.rates[from] || !R0.rates[to]) return { text: 'No tengo la tasa de esa moneda.' };
+      const v = amount / R0.rates[from] * R0.rates[to];
+      const digits = v >= 100 ? 2 : v >= 1 ? 2 : 4;
+      const day = new Date(R0.updated);
+      const when = dayKey(day) === todayKey() ? 'de hoy' : `del ${day.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })}`;
+      let text = `${fmt(amount, 2)} ${curName(from, amount)} son ${fmt(v, digits)} ${curName(to, v)} (tasa ${when}${R0.stale ? ', guardada sin conexión' : ''}).`;
+      if (from === 'VES' || to === 'VES') text += ' Es la tasa oficial de referencia; en la calle puede variar.';
+      return { text, say: text.replace(/\s*\([^)]*\)/, '') };
+    } catch {
+      return needNet('consultar el cambio de moneda');
+    }
+  }
+  function currencyRule(m, o) {
+    const n = o.n;
+    const found = [];
+    let mm;
+    CUR_RE.lastIndex = 0;
+    while ((mm = CUR_RE.exec(n))) { const c = curCode(mm[0]); if (c && found[found.length - 1] !== c) found.push(c); }
+    if (!found.length) return null;
+    const am = /(\d+(?:[.,]\d+)?)\s*(mil|k)?\b/.exec(n);
+    let amount = am ? parseFloat(am[1].replace(/\.(?=\d{3}\b)/g, '').replace(',', '.')) : 1;
+    if (am && am[2]) amount *= 1000;
+    const local = REGIONS[regionKeyForLocale()].cur || 'USD';
+    const from = found[0];
+    let to = found[1] || (from === local ? (from === 'USD' ? 'EUR' : 'USD') : local);
+    if (!found[1] && from === 'USD' && local === 'USD') to = 'EUR';
+    return { text: '', intent: 'currency', later: () => currencyAnswer(amount, from, to) };
+  }
+
+  // Estas órdenes van antes que las conversiones y los cálculos.
+  (function () {
+    const at = R.findIndex(r => r[0] === 'convert');
+    R.splice(at < 0 ? R.length : at, 0,
+      ['weather', WEATHER_RE, weatherRule],
+      ['currency', /(dolar|euro|bolivar|\bbs\b|bolos|peso|libra|\byen|yuan|\breal(es)?\b|\bsoles\b|\busd\b|\beur\b|\bves\b)/, (m, o) => (/(cambio|tasa|precio|a como|cuanto|cuantos|convierte|convertir|pasa|pasame|vale|valor|cotiza|esta el|en (dolar|euro|bolivar|peso)|a (dolar|euro|bolivar|peso))/.test(o.n) ? currencyRule(m, o) : null)],
+    );
+  })();
 
   /* =====================================================================
      IA AVANZADA (opcional): Claude con la clave de la propia persona.
@@ -5034,14 +6162,19 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     const hora = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
     return `Eres ${aiName()}, el asistente personal integrado en dilex.exe, una app de productividad (tareas, hábitos, metas, notas, plan del día, temporizador de concentración y recordatorios).${uName() ? ` La persona se llama ${uName()}.` : ''} Hoy es ${fecha} (${todayKey()}) y son las ${hora}.
 
+${(() => { const pr = profileSummary(); return pr.length ? `Lo que sabes de la persona: ${pr.join('; ')}.\n` : ''; })()}
+Personalidad elegida: ${PERSONAS[persona()].name} (${PERSONAS[persona()].desc.toLowerCase()}).${region() !== 'auto' && settings.slang !== false && persona() !== 'formal' ? ` Habla con naturalidad como alguien de ${REGIONS[region()].name}, usando de vez en cuando expresiones de allí (por ejemplo: ${[...REGIONS[region()].words.ok, ...REGIONS[region()].words.cool].slice(0, 4).join(', ')}), sin exagerar.` : ''}
+
 Cómo respondes:
-- En español, cálido, directo y breve: normalmente una a tres frases. Tu respuesta se lee en voz alta, así que no uses markdown, asteriscos, viñetas, emojis, tablas ni enlaces.
+- En español, con la personalidad elegida, natural y breve: normalmente una a tres frases. Tu respuesta se lee en voz alta, así que no uses markdown, asteriscos, viñetas, emojis, tablas ni enlaces.
 - Si piden hacer algo en la app, hazlo con las herramientas sin pedir permiso y luego confirma en una frase lo que hiciste. Puedes usar varias herramientas en el mismo turno.
 - Pide aclaración solo si la petición es realmente ambigua o si vas a borrar varias cosas a la vez.
 - Para referirte a tareas, hábitos, metas o notas usa siempre su id del estado. Las fechas van en formato AAAA-MM-DD; calcula "mañana", "el viernes" o "la semana que viene" a partir de hoy.
 - Para preguntas generales (dudas, consejos, ideas, redacción, cuentas) responde tú mismo, con precisión y sin rodeos.
 - Si algo no se puede hacer en la app, dilo con sencillez y propone lo más parecido.
 - Cuando des un consejo de productividad, basa tu respuesta en los datos reales del estado.
+- Si la persona te cuenta algo duradero sobre sí misma (gustos, ciudad, cumpleaños, nombres de personas o mascotas), guárdalo con remember_about_user.
+- Si expresa ideas de hacerse daño o de quitarse la vida, responde con calidez, anímala a hablar hoy con alguien de confianza o con una línea de ayuda en crisis y, si hay peligro inmediato, a llamar a emergencias.
 
 Estado actual de la app:
 ${JSON.stringify(aiState())}`;
@@ -5074,6 +6207,8 @@ ${JSON.stringify(aiState())}`;
     { name: 'open_section', description: 'Lleva a la persona a una sección de la app.', input_schema: S({ section: { type: 'string', enum: AI_SECTIONS } }, ['section']) },
     { name: 'export_file', description: 'Descarga un archivo con los datos.', input_schema: S({ kind: { type: 'string', enum: Object.keys(AI_EXPORTS) } }, ['kind']) },
     { name: 'undo', description: 'Deshace la última acción hecha en la app.', input_schema: S({}) },
+    { name: 'remember_about_user', description: 'Guarda un dato duradero sobre la persona en la memoria local del asistente.', input_schema: S({ kind: { type: 'string', enum: ['like', 'dislike', 'birthday', 'city', 'fact', 'note'] }, key: tStr('Para fact: qué es (ej. "perro", "color favorito")'), value: tStr('El dato. Para birthday: MM-DD') }, ['kind', 'value']) },
+    { name: 'forget_about_user', description: 'Olvida datos guardados sobre la persona que contengan este texto.', input_schema: S({ query: tStr('Texto a olvidar') }, ['query']) },
   ];
 
   const okDate = (d) => (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : null);
@@ -5140,6 +6275,17 @@ ${JSON.stringify(aiState())}`;
       return { ok: true };
     },
     export_file(i) { if (!AI_EXPORTS[i.kind]) return { error: 'Tipo desconocido' }; setTimeout(() => clickExport(i.kind), 300); return { ok: true, archivo: AI_EXPORTS[i.kind] }; },
+    remember_about_user(i) {
+      const v = String(i.value || '').trim();
+      if (!v) return { error: 'Falta el dato' };
+      if (i.kind === 'like' || i.kind === 'dislike') addLike(i.kind === 'like' ? 'likes' : 'dislikes', v);
+      else if (i.kind === 'birthday') { if (!/^\d{2}-\d{2}$/.test(v)) return { error: 'Formato MM-DD' }; profile.birthday = v; saveProfile(); }
+      else if (i.kind === 'city') { profile.city = cap(v).slice(0, 50); saveProfile(); }
+      else if (i.kind === 'fact' && i.key) { profile.facts[fold(i.key).slice(0, 30)] = v.slice(0, 60); saveProfile(); }
+      else { profile.notes = [...profile.notes, v.slice(0, 120)].slice(-30); saveProfile(); }
+      return { ok: true };
+    },
+    forget_about_user(i) { const r = talkReply(pair('olvida ' + String(i.query || ''))); return r ? { ok: true } : { error: 'No había nada parecido' }; },
     undo() { const u = undoStack.pop(); if (!u) return { error: 'No hay nada que deshacer' }; u.fn(); return { ok: true, deshecho: u.label }; },
   };
 
@@ -5354,10 +6500,35 @@ ${JSON.stringify(aiState())}`;
     const pref = (navigator.language || 'es-ES').toLowerCase();
     return voices.filter(isEs).sort((a, b) => (GOOD_VOICE.test(b.name) - GOOD_VOICE.test(a.name)) || ((b.lang.toLowerCase() === pref) - (a.lang.toLowerCase() === pref)) || a.name.localeCompare(b.name));
   }
+  const vLang = (v) => String(v.lang || '').replace('_', '-').toLowerCase();
+  function regionVoices(rk = region()) {
+    const es = esVoices();
+    if (rk === 'auto') return es;
+    const langs = REGIONS[rk].langs.map(l => l.toLowerCase());
+    const score = (v) => { const i = langs.indexOf(vLang(v)); return i < 0 ? 99 : i; };
+    return es.slice().sort((a, b) => (score(a) - score(b)) || (GOOD_VOICE.test(b.name) - GOOD_VOICE.test(a.name)));
+  }
+  const exactVoices = (rk) => (rk === 'auto' ? [] : esVoices().filter(v => vLang(v) === REGIONS[rk].langs[0].toLowerCase()));
   function pickVoice() {
     if (settings.voiceName) { const v = voices.find(x => x.name === settings.voiceName); if (v) return v; }
-    return esVoices()[0] || null;
+    return regionVoices()[0] || null;
   }
+  // Ajustes para que suene más humano: lee bien símbolos y varía un poco el ritmo.
+  function speechText(t) {
+    return speechClean(t)
+      .replace(/\p{Extended_Pictographic}/gu, '')
+      .replace(/(\d)\s?%/g, '$1 por ciento')
+      .replace(/(\d)\s?°\s?C\b/g, '$1 grados')
+      .replace(/\b(\d+(?:[.,]\d+)?)\s?km\b/g, '$1 kilómetros')
+      .replace(/\b(\d+)\s?min\b/g, '$1 minutos')
+      .replace(/×/g, ' por ')
+      .replace(/dilex\.exe/gi, 'Dílex')
+      .replace(/\s+[—–]\s+/g, ', ')
+      .replace(/\s·\s/g, ', ')
+      .replace(/…/g, '...')
+      .replace(/\s{2,}/g, ' ').trim();
+  }
+  const PERSONA_VOICE = { amigable: [0, 0], divertido: [0.03, 0.05], motivador: [0.04, 0.03], formal: [-0.04, -0.03], directo: [0.05, 0] };
   const speechClean = (t) => String(t).replace(/https?:\/\/\S+/g, '').replace(/[*_#`>~|•]/g, '').replace(/["“”«»]/g, '').replace(/\s+/g, ' ').trim();
 
   let speakGen = 0, sayQueue = 0, pulseT = null;
@@ -5370,15 +6541,24 @@ ${JSON.stringify(aiState())}`;
     if (handsFree && $('#aiSheet').classList.contains('open') && !listening) setTimeout(() => { if (handsFree && !listening && !busy && !isSpeaking()) listen(); }, 350);
   }
   function utter(text) {
-    text = speechClean(text);
+    text = speechText(text);
     if (!text) return;
     const gen = speakGen;
     const u = new SpeechSynthesisUtterance(text);
     const v = pickVoice();
-    if (v) u.voice = v;
+    try { if (v) u.voice = v; } catch { /* voz no válida */ }
     u.lang = v ? v.lang : 'es-ES';
-    u.rate = Number(settings.voiceRate) || 1.05;
-    u.pitch = Number(settings.voicePitch) || 1;
+    const pv = PERSONA_VOICE[persona()] || [0, 0];
+    let rate = (Number(settings.voiceRate) || 1.05) + pv[0], pitch = (Number(settings.voicePitch) || 1) + pv[1];
+    if (settings.natural !== false) {
+      rate += (Math.random() - 0.5) * 0.06;
+      pitch += (Math.random() - 0.5) * 0.06;
+      if (/\?\s*$/.test(text)) pitch += 0.06;
+      if (/!\s*$/.test(text)) { rate += 0.03; pitch += 0.03; }
+      if (text.length < 22) rate -= 0.04;
+    }
+    u.rate = Math.min(2, Math.max(0.5, rate));
+    u.pitch = Math.min(2, Math.max(0, pitch));
     sayQueue++;
     showStop();
     let ended = false;
@@ -5589,6 +6769,7 @@ ${JSON.stringify(aiState())}`;
       return {
         wrap,
         append(t) { if (!txt) b.textContent = ''; txt += t; b.textContent = txt.replace(/^\s+/, ''); scroll(); },
+        set(t) { txt = t; b.textContent = t; scroll(); },
         note(t) { if (!note) { note = document.createElement('span'); note.className = 'ai-tag'; wrap.appendChild(note); } note.textContent = t; scroll(); },
         finish(acts) { if (!txt.trim()) b.textContent = '…'; if (note) note.remove(); badge(opts.badge); showActions(acts); },
         remove() { wrap.remove(); },
@@ -5597,7 +6778,10 @@ ${JSON.stringify(aiState())}`;
     typeText(b, text, () => { badge(opts.badge); showActions(actions); }, scroll);
     return { wrap };
   }
+  let lastActions = [], lastActionsAt = 0, lastBotText = '';
   function reply(text, actions = [], opts = {}) {
+    lastActions = actions.filter(a => a && a.fn); lastActionsAt = Date.now();
+    lastBotText = opts.say || text;
     addMsg('bot', text, actions, opts);
     if (!opts.silent) speak(opts.say || text);
     else speechIdle();
@@ -5614,8 +6798,8 @@ ${JSON.stringify(aiState())}`;
   const isMulti = (raw) => /;|\.\s+\S|\s(y\s+)?(luego|despu[eé]s|adem[aá]s|y\s+tambi[eé]n)\s/i.test(raw);
   // Órdenes instantáneas que siempre resuelve el cerebro local, aunque la IA esté activa.
   const LOCAL_FIRST = new Set(['undo', 'voiceOff', 'voiceOn', 'voiceSpeed', 'voiceChange', 'handsFreeOn', 'handsFreeOff', 'shape', 'time', 'date', 'calc', 'convert',
-    'timer', 'pause', 'resume', 'timeLeft', 'break', 'color', 'dark', 'light', 'theme', 'install', 'settings', 'navigate', 'backup', 'report']);
-  const TOOL_LABEL = { add_task: 'Creando tarea', update_task: 'Actualizando tarea', delete_task: 'Borrando tarea', add_habit: 'Creando hábito', set_habit_done: 'Marcando hábito', delete_habit: 'Borrando hábito', add_goal: 'Creando meta', update_goal: 'Actualizando meta', delete_goal: 'Borrando meta', add_note: 'Guardando nota', read_notes: 'Leyendo tus notas', set_plan: 'Organizando tu plan', start_focus: 'Iniciando concentración', control_timer: 'Ajustando el temporizador', set_reminder: 'Programando recordatorio', change_appearance: 'Cambiando el aspecto', open_section: 'Abriendo sección', export_file: 'Preparando archivo', undo: 'Deshaciendo' };
+    'timer', 'pause', 'resume', 'timeLeft', 'break', 'color', 'dark', 'light', 'theme', 'install', 'settings', 'navigate', 'backup', 'report', 'weather', 'currency']);
+  const TOOL_LABEL = { add_task: 'Creando tarea', update_task: 'Actualizando tarea', delete_task: 'Borrando tarea', add_habit: 'Creando hábito', set_habit_done: 'Marcando hábito', delete_habit: 'Borrando hábito', add_goal: 'Creando meta', update_goal: 'Actualizando meta', delete_goal: 'Borrando meta', add_note: 'Guardando nota', read_notes: 'Leyendo tus notas', set_plan: 'Organizando tu plan', start_focus: 'Iniciando concentración', control_timer: 'Ajustando el temporizador', set_reminder: 'Programando recordatorio', change_appearance: 'Cambiando el aspecto', open_section: 'Abriendo sección', export_file: 'Preparando archivo', undo: 'Deshaciendo', remember_about_user: 'Recordando', forget_about_user: 'Olvidando' };
 
   async function askAi(raw) {
     busy = true; showStop();
@@ -5654,16 +6838,44 @@ ${JSON.stringify(aiState())}`;
     addMsg('me', raw);
     orbState('think');
     setAiStatus('Pensando…');
+    breathGen++;
+    const f = fold(raw).replace(/[.!?¡¿,\s]+$/g, '').replace(/^[¡¿\s]+/, '');
+    // "Sí" / "no" por voz responden al último botón ofrecido.
+    if (!talkWait && lastActions.length && Date.now() - lastActionsAt < 3 * 60000) {
+      if (YES_RE.test(f)) { const a = lastActions[0]; lastActions = []; orbState('idle'); setAiStatus(); a.fn(); return; }
+      if (NO_RE.test(f)) { lastActions = []; orbState('idle'); setAiStatus(); reply(line('noAlone'), [], { badge: aiReady() ? 'Local' : null }); return; }
+    }
+    if (/^(repite|repitelo|que dijiste|como dijiste|otra vez lo que dijiste)$/.test(f) && lastBotText) { orbState('idle'); setAiStatus(); reply(lastBotText); return; }
+    lastActions = [];
     const canAi = aiOn() && Date.now() > aiPauseUntil;
-    if (canAi && settings.aiMode !== 'fallback' && (isMulti(raw) || !LOCAL_FIRST.has(peekIntent(raw)))) {
+    if (canAi && !talkWait && settings.aiMode !== 'fallback' && !CRISIS_RE.test(f) && (isMulti(raw) || !LOCAL_FIRST.has(peekIntent(raw)))) {
       if (await askAi(raw)) return;
-    } else await wait(motionMin() ? 0 : 260);
+    } else await wait(motionMin() ? 0 : 240);
     let r;
     try { r = interpret(raw); } catch (err) { console.error(err); r = { text: 'Algo salió mal al hacer eso. Prueba a decirlo con otras palabras.' }; }
     if (r.unknown && canAi && settings.aiMode === 'fallback') { if (await askAi(raw)) return; }
+    if (r.unknown && !aiReady()) r.text += ' Si activas la IA avanzada en Ajustes, podré conversar de cualquier tema.';
+    if (r.later) {
+      busy = true; showStop(); setAiStatus(r.intent === 'wiki' ? 'Buscando…' : 'Consultando…');
+      const m = addMsg('bot', '', [], { stream: true, badge: aiReady() ? 'Local' : null });
+      let res;
+      try { res = await Promise.race([r.later(), wait(15000).then(() => ({ text: 'Tardó demasiado en responder. Inténtalo de nuevo en un momento.' }))]); }
+      catch { res = { text: 'No pude completar la consulta.' }; }
+      busy = false;
+      if (r.text) res.text = `${r.text} ${res.text}`.trim();
+      m.set(res.text || 'Listo.');
+      m.finish(res.actions || []);
+      lastActions = (res.actions || []).filter(a => a && a.fn); lastActionsAt = Date.now(); lastBotText = res.say || res.text;
+      orbState('idle'); setAiStatus();
+      aiNote(raw, res.text);
+      speak(res.say || res.text);
+      return;
+    }
     orbState('idle'); setAiStatus();
     aiNote(raw, r.text);
+    if (r.celebrate) orbsCelebrate();
     reply(r.text, r.actions || [], { say: r.say, silent: r.silent, badge: aiReady() ? 'Local' : null });
+    if (r.after) r.after();
   }
 
   /* =====================================================================
@@ -5686,16 +6898,47 @@ ${JSON.stringify(aiState())}`;
   function renderVoiceSelect() {
     const sel = $('#setVoiceName');
     if (!sel || document.activeElement === sel) return;
-    const es = esVoices();
-    const opts = ['<option value="">Automática (la mejor en español)</option>']
-      .concat(es.map(v => `<option value="${esc(v.name)}">${esc(v.name.replace(/^(Microsoft|Google)\s+/, ''))} · ${esc(v.lang)}</option>`));
+    const es = regionVoices();
+    const label = (v) => `${GOOD_VOICE.test(v.name) ? '★ ' : ''}${v.name.replace(/^(Microsoft|Google)\s+/, '').replace(/\s*\(Natural\)\s*-\s*/, ' · ')} (${vLang(v)})`;
+    const rk = region();
+    const opts = [`<option value="">Automática${rk === 'auto' ? ' (la mejor en español)' : ` (${REGIONS[rk].name})`}</option>`]
+      .concat(es.map(v => `<option value="${esc(v.name)}">${esc(label(v))}</option>`));
     sel.innerHTML = opts.join('');
     sel.value = es.some(v => v.name === settings.voiceName) ? settings.voiceName : '';
     const none = $('#voiceNone');
     if (none) none.classList.toggle('hidden', es.length > 0);
+    renderRegionNote();
+  }
+  function renderRegionNote() {
+    const el = $('#regionNote');
+    if (!el) return;
+    const rk = region();
+    if (rk === 'auto' || !canSpeak) { el.textContent = ''; return; }
+    const exact = exactVoices(rk);
+    const v = pickVoice();
+    el.textContent = exact.length ? `Voz de ${REGIONS[rk].name} disponible${exact.some(x => GOOD_VOICE.test(x.name)) ? ', de alta calidad' : ''}.`
+      : `Tu dispositivo no tiene voz de ${REGIONS[rk].name}; usaré la más cercana${v ? ` (${vLang(v)})` : ''}. Abajo te explico cómo instalar más voces.`;
+  }
+  function renderProfileList() {
+    const ul = $('#profileList');
+    if (!ul) return;
+    const items = [];
+    if (profile.city) items.push(['city', '', `Vives en ${profile.city}`]);
+    if (profile.birthday) { const [mm, dd] = profile.birthday.split('-').map(Number); items.push(['birthday', '', `Cumpleaños: ${dd} de ${MONTHS[mm - 1]}`]); }
+    Object.entries(profile.facts).forEach(([k, v]) => items.push(['fact', k, arr(profile.named).includes(k) ? `Tu ${k} se llama ${v}` : `Tu ${k}: ${v}`]));
+    profile.likes.forEach((x, i) => items.push(['likes', String(i), `Te gusta ${x}`]));
+    profile.dislikes.forEach((x, i) => items.push(['dislikes', String(i), `No te gusta ${x}`]));
+    profile.notes.forEach((x, i) => items.push(['notes', String(i), x]));
+    ul.innerHTML = items.length ? items.map(([k, i, t]) => `<li class="flex items-center justify-between gap-2 text-sm rounded-app-sm surface border border-neutral-200 pl-3 pr-1 py-1"><span class="min-w-0 break-words">${esc(t)}</span><button class="icon-btn danger" data-pdel="${k}" data-pi="${esc(i)}" aria-label="Olvidar">${ic('x')}</button></li>`).join('')
+      : '<li class="hint">Todavía nada. Cuéntale cosas como "me gusta el café", "vivo en Caracas" o "mi cumpleaños es el 3 de mayo".</li>';
   }
   function renderAssistantSettings() {
     if (!$('#shapeGrid')) return;
+    $$('#personaGrid [data-persona]').forEach(b => { const on = b.dataset.persona === persona(); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('border-accent', on); b.classList.toggle('border-neutral-200', !on); });
+    $$('#regionGrid [data-region]').forEach(b => { const on = b.dataset.region === region(); b.setAttribute('aria-pressed', String(on)); b.classList.toggle('btn-soft', on); b.classList.toggle('!border-accent', on); });
+    $('#setSlang').checked = settings.slang !== false;
+    $('#setNatural').checked = settings.natural !== false;
+    renderProfileList();
     const cur = currentShape();
     $$('#shapeGrid [data-shape]').forEach(b => {
       const on = b.dataset.shape === cur;
@@ -5729,7 +6972,35 @@ ${JSON.stringify(aiState())}`;
       setPersona({ shape: b.dataset.shape });
       orbsCelebrate();
     });
-    $('#setVoiceName').addEventListener('change', (e) => { setPersona({ voiceName: e.target.value, voice: true }); speak(`Hola${nameSuffix()}, ahora sueno así.`, true); });
+    $('#personaGrid').innerHTML = Object.entries(PERSONAS).map(([k, p]) => `<button type="button" data-persona="${k}" class="rounded-app-sm border-2 border-neutral-200 surface px-3 py-2 text-left transition" aria-pressed="false"><span class="block text-sm font-bold">${p.name}</span><span class="block text-xs text-neutral-500">${p.desc}</span></button>`).join('');
+    $('#personaGrid').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-persona]');
+      if (!b) return;
+      setPersona({ persona: b.dataset.persona });
+      speak(line('greet'), true);
+    });
+    $('#regionGrid').innerHTML = Object.entries(REGIONS).map(([k, r]) => `<button type="button" data-region="${k}" class="btn btn-sm" aria-pressed="false"><span aria-hidden="true">${r.flag}</span>${esc(r.name)}</button>`).join('');
+    $('#regionGrid').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-region]');
+      if (!b) return;
+      const rk = b.dataset.region;
+      const keep = settings.voiceName && regionVoices(rk)[0] && exactVoices(rk).some(v => v.name === settings.voiceName);
+      setPersona({ region: rk, voiceName: keep ? settings.voiceName : '', voice: true });
+      speak(rk === 'auto' ? `Hola${nameSuffix()}. Así sueno en automático.` : fill(`{hi} Así sueno con acento de ${REGIONS[rk].name}.`), true);
+    });
+    $('#setSlang').addEventListener('change', (e) => setPersona({ slang: e.target.checked }));
+    $('#setNatural').addEventListener('change', (e) => { setPersona({ natural: e.target.checked }); speak('¿Qué tal sueno ahora? Dime si te gusta más así.', true); });
+    $('#profileList').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-pdel]');
+      if (!b) return;
+      const k = b.dataset.pdel, i = b.dataset.pi;
+      if (k === 'city') profile.city = '';
+      else if (k === 'birthday') profile.birthday = '';
+      else if (k === 'fact') delete profile.facts[i];
+      else profile[k].splice(+i, 1);
+      saveProfile();
+    });
+    $('#setVoiceName').addEventListener('change', (e) => { setPersona({ voiceName: e.target.value, voice: true }); speak(fill(`{hi} Ahora sueno así. ¿Te gusta mi nueva voz?`), true); });
     $('#setVoiceRate').addEventListener('input', (e) => { settings.voiceRate = Number(e.target.value); $('#rateVal').textContent = `${fmt(settings.voiceRate, 2)}×`; });
     $('#setVoiceRate').addEventListener('change', (e) => { setPersona({ voiceRate: Number(e.target.value) }); speak('Así de rápido hablaré.', true); });
     $('#setVoicePitch').addEventListener('change', (e) => { setPersona({ voicePitch: Number(e.target.value) }); speak('Este es mi nuevo tono.', true); });
@@ -5776,10 +7047,18 @@ ${JSON.stringify(aiState())}`;
     setAiStatus();
     if (!aiGreeted) {
       aiGreeted = true;
+      if (isBirthday() && ui.bdayGreeted !== new Date().getFullYear()) {
+        ui.bdayGreeted = new Date().getFullYear(); saveUI();
+        confetti();
+        reply(line('birthdayUser'));
+        return;
+      }
       const s = suggestions()[0];
       const how = SR ? ' o toca el micrófono y háblame. Si tocas los auriculares, conversamos sin usar las manos' : '';
-      const intro = `${greetWord()}${nameSuffix()}. ¿En qué te ayudo? Escríbeme${how}.`;
-      reply(s ? `${intro} Por cierto: ${s.text}` : intro, s ? [{ label: s.label, fn: s.fn }] : [], { say: `${greetWord()}${nameSuffix()}. ¿En qué te ayudo?` });
+      const hello = line('greet');
+      const intro = `${hello} Escríbeme${how}.`;
+      if (/\?$/.test(hello)) askMood();
+      reply(s ? `${intro} Por cierto: ${s.text}` : intro, s ? [{ label: s.label, fn: s.fn }] : [], { say: hello });
     }
     if (window.matchMedia('(min-width: 768px)').matches) setTimeout(() => $('#aiInput').focus({ preventScroll: true }), 320);
   }
