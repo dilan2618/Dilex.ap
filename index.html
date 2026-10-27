@@ -744,6 +744,54 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       .icon-btn { width: 2.1rem; height: 2.1rem; }
     }
   </style>
+<style id="agenda-css">
+/* AGENDA-CSS:START */
+.ag-rot90 { transform: rotate(90deg); }
+.ag-rot-90 { transform: rotate(-90deg); }
+.ag-daynav { display: flex; align-items: center; gap: .5rem; }
+.ag-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.ag-stats > div { background: rgb(var(--n100) / .7); border-radius: var(--r-sm); padding: .6rem .75rem; min-width: 0; }
+.ag-k { font-size: .72rem; font-weight: 600; color: rgb(var(--n500)); }
+.ag-v { font-size: 1.05rem; font-weight: 800; letter-spacing: -.01em; margin-top: .1rem; line-height: 1.2; }
+.ag-cap { display: block; height: .5rem; border-radius: 999px; background: rgb(var(--n100)); overflow: hidden; }
+.ag-cap > span { display: block; height: 100%; border-radius: inherit; background: rgb(var(--h-habits)); transition: width .4s ease; }
+.ag-cap-warn > span { background: rgb(var(--h-goals)); }
+.ag-cap-bad > span { background: #ef4444; }
+.chip.ag-ok { background: rgb(var(--h-habits) / .14); color: rgb(var(--h-habits)); }
+.ag-rule { display: inline-flex; align-items: center; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .66rem; font-weight: 700; padding: .05rem .38rem; border-radius: 6px; background: rgb(var(--accent) / .1); color: rgb(var(--accent)); }
+.ag-ico { --h: var(--accent); width: 2rem; height: 2rem; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: rgb(var(--h) / .13); color: rgb(var(--h)); }
+.ag-ico svg { width: 1rem; height: 1rem; }
+.ag-alert { display: flex; align-items: flex-start; gap: .65rem; padding: .75rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--h-goals) / .3); background: rgb(var(--h-goals) / .06); }
+.ag-alert-high { border-color: rgb(239 68 68 / .3); background: rgb(239 68 68 / .05); }
+.ag-card { padding: .9rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--n200)); background: var(--surface); }
+.ag-prop { border-color: rgb(var(--accent) / .35); background: rgb(var(--accent) / .04); box-shadow: 0 0 0 3px rgb(var(--accent) / .06); }
+.ag-changes { margin-top: .6rem; display: grid; gap: .3rem; font-size: .875rem; }
+.ag-changes li { position: relative; padding-left: 1rem; color: rgb(var(--n700)); }
+.ag-changes li::before { content: ''; position: absolute; left: .2rem; top: .55rem; width: .35rem; height: .35rem; border-radius: 999px; background: rgb(var(--accent)); }
+.ag-why { margin-top: .5rem; }
+.ag-why > summary, .ag-more > summary { cursor: pointer; font-size: .8125rem; font-weight: 600; color: rgb(var(--accent)); list-style: none; }
+.ag-why > summary::-webkit-details-marker, .ag-more > summary::-webkit-details-marker { display: none; }
+.ag-why-body { margin-top: .5rem; padding: .7rem .8rem; border-radius: calc(var(--r-sm) - 2px); background: rgb(var(--n100) / .7); font-size: .8125rem; color: rgb(var(--n600)); }
+.ag-why-body ul { display: grid; gap: .2rem; margin-bottom: .45rem; padding-left: 1rem; list-style: disc; }
+.ag-why-h { font-weight: 700; color: rgb(var(--n800)); margin-bottom: .2rem; }
+.ag-list { display: grid; gap: .4rem; }
+.ag-row { width: 100%; display: flex; align-items: stretch; gap: .7rem; padding: .55rem .65rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--n200) / .8); background: var(--surface); transition: background .15s, border-color .15s; }
+.ag-row:hover { background: rgb(var(--n100) / .6); }
+.ag-proposed { border-style: dashed; border-color: rgb(var(--accent) / .45); background: rgb(var(--accent) / .03); }
+.ag-over { border-color: rgb(239 68 68 / .35); background: rgb(239 68 68 / .04); }
+.ag-time { width: 2.9rem; flex-shrink: 0; font-size: .8125rem; font-weight: 700; line-height: 1.25; text-align: left; }
+.ag-time > span { display: block; font-weight: 500; color: rgb(var(--n500)); }
+.ag-bar { width: .25rem; border-radius: 999px; background: rgb(var(--h)); flex-shrink: 0; }
+.chip.ag-chip-prop { background: rgb(var(--accent) / .1); color: rgb(var(--accent)); }
+.ag-week { width: 100%; display: flex; align-items: center; gap: .75rem; padding: .65rem .75rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--n200) / .8); background: var(--surface); }
+.ag-week:hover { background: rgb(var(--n100) / .6); }
+.ag-tbl td { vertical-align: top; font-size: .8125rem; }
+.ag-tbl td:nth-child(3), .ag-tbl td:nth-child(4) { min-width: 11rem; }
+.col-span-2 { grid-column: span 2 / span 2; }
+.ag-rule.mr-1 { margin-right: .25rem; }
+@media (prefers-reduced-motion: reduce) { .ag-cap > span { transition: none; } }
+/* AGENDA-CSS:END */
+</style>
 </head>
 
 <body>
@@ -790,6 +838,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     <nav class="hidden md:block">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 pb-2 flex items-center gap-1 overflow-x-auto" id="topNav">
         <a class="navlink" href="#resumen"><span data-icon="home"></span>Inicio</a>
+        <a class="navlink" href="#agenda"><span data-icon="calendar"></span>Agenda</a>
         <a class="navlink" href="#tareas"><span data-icon="tasks"></span>Tareas</a>
         <a class="navlink" href="#enfoque"><span data-icon="timer"></span>Enfoque</a>
         <a class="navlink" href="#habitos"><span data-icon="repeat"></span>Hábitos</a>
@@ -853,6 +902,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 
       <div id="stats" class="grid grid-cols-2 lg:grid-cols-4 gap-3"></div>
 
+      <div id="agendaStrip" class="card p-4 sm:p-5 hidden"></div>
+
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
         <div class="card p-5 lg:col-span-2" id="planCard">
           <div class="flex items-center gap-3 mb-4">
@@ -892,6 +943,28 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       </div>
     </section>
 
+    <!-- ===================== AGENDA INTELIGENTE ===================== -->
+    <section id="agenda" class="card p-4 sm:p-6">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="tile" style="--h: var(--h-plan)" data-icon="calendar"></span>
+        <div class="flex-1 min-w-[12rem]">
+          <h2 class="sec-title">Agenda inteligente</h2>
+          <p class="hint">Comprueba si todo cabe, detecta choques y te propone soluciones. Nada cambia sin tu permiso.</p>
+        </div>
+        <button class="btn btn-sm btn-accent" id="agAddEventBtn" type="button"><span data-icon="plus"></span>Compromiso</button>
+      </div>
+      <div class="tabs mb-4" data-tabs="agenda">
+        <button data-tab="day" aria-selected="true">Día</button>
+        <button data-tab="week" aria-selected="false">Semana</button>
+        <button data-tab="rules" aria-selected="false">Reglas</button>
+        <button data-tab="history" aria-selected="false">Historial</button>
+      </div>
+      <div data-panel-group="agenda" data-panel="day" id="agDay"></div>
+      <div data-panel-group="agenda" data-panel="week" class="hidden" id="agWeek"></div>
+      <div data-panel-group="agenda" data-panel="rules" class="hidden" id="agRules"></div>
+      <div data-panel-group="agenda" data-panel="history" class="hidden" id="agHistory"></div>
+    </section>
+
     <!-- ===================== TAREAS + ENFOQUE ===================== -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <section id="tareas" class="card p-4 sm:p-6 lg:col-span-2 flex flex-col min-w-0">
@@ -928,6 +1001,15 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
             <label><span class="field-label">Fecha límite (opcional)</span><input id="dueInput" type="date" class="input input-sm w-full" /></label>
             <label><span class="field-label">Categoría (opcional)</span><input id="tagInput" type="text" list="tagList" maxlength="24" placeholder="Trabajo, casa…" class="input input-sm w-full" /></label>
           </div>
+          <details class="mt-3">
+            <summary class="flex items-center justify-between text-sm font-semibold text-neutral-600 py-1">Detalles para la agenda (opcional) <span class="chev" data-icon="chevron"></span></summary>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+              <label><span class="field-label">Duración (min)</span><input id="taskDur" type="number" min="5" max="1440" step="5" class="input input-sm w-full" placeholder="?" /></label>
+              <label><span class="field-label">Área</span><select id="taskArea" class="input input-sm w-full"><option value="">Sin área</option><option value="estudio">Estudio</option><option value="trabajo">Trabajo</option><option value="ejercicio">Ejercicio</option><option value="social">Social</option><option value="hogar">Hogar</option><option value="personal">Personal</option></select></label>
+              <label><span class="field-label">Si se aplaza</span><select id="taskCost" class="input input-sm w-full"><option value="">No lo sé</option><option value="ninguno">Ninguno, puede esperar</option><option value="bajo">Bajo</option><option value="alto">Alto</option><option value="critico">Crítico, no puede esperar</option></select></label>
+              <label><span class="field-label">Importancia</span><select id="taskImp" class="input input-sm w-full"><option value="">No lo sé</option><option value="1">Baja</option><option value="2">Media</option><option value="3">Alta</option></select></label>
+            </div>
+          </details>
           <datalist id="tagList"></datalist>
         </form>
 
@@ -1299,7 +1381,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     <a href="#resumen" data-nav="resumen" class="flex flex-col items-center justify-center gap-0.5"><span data-icon="home"></span>Inicio</a>
     <a href="#tareas" data-nav="tareas" class="flex flex-col items-center justify-center gap-0.5"><span data-icon="tasks"></span>Tareas</a>
     <div class="flex justify-center"><button class="fab" data-open-sheet="aiSheet" aria-label="Hablar con tu asistente"><canvas class="orb" data-orb="mini"></canvas></button></div>
-    <a href="#enfoque" data-nav="enfoque" class="flex flex-col items-center justify-center gap-0.5"><span data-icon="timer"></span>Enfoque</a>
+    <a href="#agenda" data-nav="agenda" class="flex flex-col items-center justify-center gap-0.5"><span data-icon="calendar"></span>Agenda</a>
     <button data-open-sheet="moreSheet" class="flex flex-col items-center justify-center gap-0.5"><span data-icon="grid"></span>Más</button>
   </div>
 </nav>
@@ -1401,6 +1483,63 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       <button class="rounded-app border border-neutral-200 p-3 flex flex-col items-center gap-2 text-sm font-semibold" data-goto="habit"><span class="tile" style="--h: var(--h-habits)" data-icon="repeat"></span>Hábito</button>
       <button class="rounded-app border border-neutral-200 p-3 flex flex-col items-center gap-2 text-sm font-semibold" data-goto="goal"><span class="tile" style="--h: var(--h-goals)" data-icon="flag"></span>Meta</button>
     </div>
+  </div>
+</aside>
+
+<aside id="eventSheet" class="sheet" aria-label="Compromiso">
+  <div class="p-5 space-y-5">
+    <div class="w-10 h-1.5 rounded-full bg-neutral-200 mx-auto md:hidden"></div>
+    <div class="flex items-start justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="tile" style="--h: var(--h-plan)" data-icon="calendar"></span>
+        <div><h2 class="sec-title" id="evSheetTitle">Nuevo compromiso</h2><p class="hint">Clases, turnos, reuniones, planes…</p></div>
+      </div>
+      <button class="icon-btn" type="button" data-close-sheet aria-label="Cerrar"><span data-icon="x"></span></button>
+    </div>
+    <form id="eventForm" class="space-y-3">
+      <label class="block"><span class="field-label">¿Qué es?</span><input id="evTitle" class="input w-full" maxlength="80" autocomplete="off" placeholder="Clase de cálculo, salir con amigos…" required /></label>
+      <div class="grid grid-cols-3 gap-2">
+        <label><span class="field-label">Día</span><input id="evDate" type="date" class="input input-sm w-full" required /></label>
+        <label><span class="field-label">Desde</span><input id="evStart" type="time" class="input input-sm w-full" required /></label>
+        <label><span class="field-label">Hasta</span><input id="evEnd" type="time" class="input input-sm w-full" required /></label>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <label><span class="field-label">Área</span><select id="evArea" class="input input-sm w-full"><option value="estudio">Estudio</option><option value="trabajo">Trabajo</option><option value="ejercicio">Ejercicio</option><option value="social">Social</option><option value="hogar">Hogar</option><option value="personal">Personal</option></select></label>
+        <label><span class="field-label">¿Se puede mover?</span><select id="evFixed" class="input input-sm w-full"><option value="fixed">No, es fijo</option><option value="flexible">Sí, es flexible</option></select></label>
+      </div>
+      <label id="evConfirmedWrap" class="flex items-center gap-2.5 text-sm"><input id="evConfirmed" type="checkbox" class="chk" /> Ya lo confirmé con otras personas (cuenta como fijo)</label>
+      <label id="evCostWrap" class="block"><span class="field-label">Si se aplaza, el costo es</span><select id="evCost" class="input input-sm w-full"><option value="">No lo sé</option><option value="ninguno">Ninguno, puede esperar</option><option value="bajo">Bajo</option><option value="alto">Alto</option><option value="critico">Crítico, no puede esperar</option></select></label>
+      <p id="evTaskNote" class="hint hidden">Es un bloque reservado para una de tus tareas.</p>
+      <div class="flex gap-2 pt-1">
+        <button class="btn btn-accent flex-1" type="submit">Guardar</button>
+        <button id="evDelete" type="button" class="btn text-red-600 hidden"><span data-icon="trash"></span>Borrar</button>
+      </div>
+    </form>
+  </div>
+</aside>
+
+<aside id="taskPlanSheet" class="sheet" aria-label="Planificar tarea">
+  <div class="p-5 space-y-5">
+    <div class="w-10 h-1.5 rounded-full bg-neutral-200 mx-auto md:hidden"></div>
+    <div class="flex items-start justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="tile" style="--h: var(--h-tasks)" data-icon="clock"></span>
+        <div><h2 class="sec-title" id="tpSheetTitle">Planificar tarea</h2><p class="hint">Con la duración y lo que cuesta aplazarla, ordeno mejor tu día.</p></div>
+      </div>
+      <button class="icon-btn" type="button" data-close-sheet aria-label="Cerrar"><span data-icon="x"></span></button>
+    </div>
+    <form id="taskPlanForm" class="space-y-3">
+      <label class="block"><span class="field-label">Tarea</span><input id="tpText" class="input w-full" maxlength="160" autocomplete="off" required /></label>
+      <div class="grid grid-cols-2 gap-2">
+        <label><span class="field-label">Fecha límite</span><input id="tpDue" type="date" class="input input-sm w-full" /></label>
+        <label><span class="field-label">Área</span><select id="tpArea" class="input input-sm w-full"><option value="">Sin área</option><option value="estudio">Estudio</option><option value="trabajo">Trabajo</option><option value="ejercicio">Ejercicio</option><option value="social">Social</option><option value="hogar">Hogar</option><option value="personal">Personal</option></select></label>
+        <label><span class="field-label">Duración (min)</span><input id="tpDur" type="number" min="5" max="1440" step="5" class="input input-sm w-full" placeholder="No lo sé" /></label>
+        <label><span class="field-label">Esa duración es</span><select id="tpSrc" class="input input-sm w-full"><option value="usuario">Segura</option><option value="estimada">Aproximada</option></select></label>
+        <label><span class="field-label">Si se aplaza, el costo es</span><select id="tpCost" class="input input-sm w-full"><option value="">No lo sé</option><option value="ninguno">Ninguno, puede esperar</option><option value="bajo">Bajo</option><option value="alto">Alto</option><option value="critico">Crítico, no puede esperar</option></select></label>
+        <label><span class="field-label">Importancia</span><select id="tpImp" class="input input-sm w-full"><option value="">No lo sé</option><option value="1">Baja</option><option value="2">Media</option><option value="3">Alta</option></select></label>
+      </div>
+      <button class="btn btn-accent w-full" type="submit">Guardar</button>
+    </form>
   </div>
 </aside>
 
@@ -1811,6 +1950,386 @@ function ENGINE() {
   return { analyze, parseCSV, detectDelimiter, parseNum };
 }
 
+/* PLANNER-ENGINE:START */
+/* =====================================================================
+   MOTOR DE REGLAS DE LA AGENDA (R1–R10)
+   Funciones puras: reciben tareas, compromisos y perfil del día, y
+   devuelven conflictos y propuestas con los IDs de las reglas usadas.
+   No guardan nada ni tocan la pantalla, así se pueden probar con casos fijos.
+   Fuente única: planner/engine.js (planner/build.py lo copia a index.html).
+===================================================================== */
+function PLANNER_ENGINE() {
+  'use strict';
+
+  const RULES = [
+    { id: 'R1', name: 'Capacidad', cond: 'La suma de duraciones y márgenes supera el tiempo libre del día', action: 'Marca el plan como inviable; nunca lo acepta así' },
+    { id: 'R2', name: 'Solape', cond: 'Dos compromisos se cruzan en el tiempo', action: 'Crea un conflicto con ambos' },
+    { id: 'R3', name: 'Fijos intocables', cond: 'Un compromiso es fijo o un plan social confirmado', action: 'Nunca lo mueve sin tu autorización; solo avisa' },
+    { id: 'R4', name: 'Urgencia', cond: 'El tiempo libre antes de la fecha límite es menor que la duración × 1,5', action: 'Marca la tarea como urgente' },
+    { id: 'R5', name: 'Imposible a tiempo', cond: 'El tiempo libre antes de la fecha límite es menor que la duración', action: 'Avisa y propone dividir, recortar o renegociar la fecha' },
+    { id: 'R6', name: 'Orden contextual', cond: 'Hay que elegir qué colocar primero', action: 'Ordena por costo de aplazar, luego urgencia, luego importancia, luego antigüedad' },
+    { id: 'R7', name: 'Vida social', cond: 'Una alternativa implicaría cancelar o mover un plan social', action: 'Nunca lo propone por defecto; solo si tú lo pides' },
+    { id: 'R8', name: 'Dato faltante', cond: 'Una tarea sin duración entra en el análisis', action: 'Usa 30 min como estimación, lo declara como incertidumbre y te pide el dato' },
+    { id: 'R9', name: 'División', cond: 'Una tarea de más de 90 min vence en 2 días o más', action: 'Propone repartirla en bloques en varios días' },
+    { id: 'R10', name: 'Autorización', cond: 'Cualquier propuesta del motor', action: 'Queda como "generada" hasta que la aceptes; luego se ejecuta y se registra' },
+  ];
+  const CFG = { defaultEst: 30, urgencyFactor: 1.5, splitMin: 90, blockMin: 60, minShortenPct: 0.6, minDur: 15, horizonDays: 14 };
+  const COST = { critico: 3, alto: 2, bajo: 1, ninguno: 0 };
+  const COST_TXT = { critico: 'crítico', alto: 'alto', bajo: 'bajo', ninguno: 'ninguno' };
+
+  /* ---------- Utilidades de tiempo ---------- */
+  const pad = (n) => String(n).padStart(2, '0');
+  const toMin = (v) => { const m = /^(\d{1,2}):(\d{2})$/.exec(String(v || '').trim()); return m ? Math.min(1440, +m[1] * 60 + +m[2]) : null; };
+  const hm = (min) => { min = Math.max(0, Math.round(min)); return `${pad(Math.floor(min / 60))}:${pad(min % 60)}`; };
+  const keyAdd = (key, n) => { const d = new Date(key + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const daysDiff = (a, b) => Math.round((Date.parse(b + 'T12:00:00Z') - Date.parse(a + 'T12:00:00Z')) / 864e5);
+  const isFixed = (e) => !!(e.fixed || e.confirmed);
+  const listJoin = (xs) => xs.length <= 1 ? (xs[0] || '') : `${xs.slice(0, -1).join(', ')} y ${xs[xs.length - 1]}`;
+  const q = (s) => `"${s}"`;
+  const dur = (m) => (m >= 60 && m % 60 === 0 ? `${m / 60} h` : m > 60 ? `${Math.floor(m / 60)} h ${m % 60} min` : `${m} min`);
+  const sigOf = (kind, changes) => kind + ':' + changes.map(c => [c.type, c.id || c.taskId, c.toDay || '', c.newDur || '', c.date || '', c.start || ''].join('|')).join(';');
+
+  function taskDur(t) {
+    if (+t.durMin > 0) return { dur: Math.round(+t.durMin), est: t.durSrc === 'estimada', missing: false };
+    return { dur: CFG.defaultEst, est: true, missing: true };
+  }
+  function windowOf(day, inp) {
+    const p = inp.profile || {};
+    const s0 = toMin(p.start) ?? 480;
+    let e = toMin(p.end) ?? 1380;
+    const personal = [];
+    for (const r of inp.personalRules || []) {
+      if (r.active === false || (r.area || 'any') !== 'any') continue;
+      const a = toMin(r.after);
+      if (a != null && a < e) { e = a; personal.push(r.id); }
+    }
+    let s = s0;
+    if (day === inp.today && inp.nowMin != null) s = Math.max(s0, Math.ceil(inp.nowMin / 5) * 5);
+    return { s, e: Math.max(s, e), personal };
+  }
+  function areaLimits(inp) {
+    const out = {};
+    for (const r of inp.personalRules || []) {
+      if (r.active === false || !r.area || r.area === 'any') continue;
+      const a = toMin(r.after);
+      if (a != null) out[r.area] = Math.min(out[r.area] ?? 1440, a);
+    }
+    return out;
+  }
+  function freeSegments(win, busy, margin) {
+    const blocks = busy.map(b => [b.s - margin, b.e + margin]).sort((a, b) => a[0] - b[0]);
+    const out = [];
+    let cur = win.s;
+    for (const [bs, be] of blocks) {
+      if (be <= cur) continue;
+      if (bs > cur) out.push({ s: cur, e: Math.min(bs, win.e) });
+      cur = Math.max(cur, be);
+      if (cur >= win.e) break;
+    }
+    if (cur < win.e) out.push({ s: cur, e: win.e });
+    return out.filter(x => x.e - x.s > 0);
+  }
+  function pack(items, segs, margin, limits) {
+    const cur = segs.map(x => ({ s: x.s, e: x.e, c: x.s, last: null }));
+    const placed = [], over = [];
+    for (const it of items) {
+      const lim = limits[it.area] ?? 1440;
+      const g = cur.find(x => x.c + it.dur <= Math.min(x.e, lim));
+      if (!g) { over.push(it); continue; }
+      placed.push(Object.assign({}, it, { start: g.c, end: g.c + it.dur }));
+      g.last = g.c + it.dur;
+      g.c = g.last + margin;
+    }
+    const slack = cur.reduce((a, x) => a + Math.max(0, x.e - (x.last == null ? x.s : x.last + margin)), 0);
+    return { placed, over, slack };
+  }
+  const rankOf = (a, b) =>
+    (COST[b.costo] ?? 1) - (COST[a.costo] ?? 1)
+    || (a.dueDiff - (a.urgent ? 0.5 : 0)) - (b.dueDiff - (b.urgent ? 0.5 : 0))
+    || b.imp - a.imp
+    || String(a.created).localeCompare(String(b.created));
+
+  /* ---------- Tiempo libre de un día, sin contar tareas ---------- */
+  function freeOfDay(day, inp) {
+    const margin = Math.max(0, +(inp.profile?.margin ?? 10));
+    const win = windowOf(day, inp);
+    const busy = (inp.events || []).filter(e => e.date === day && toMin(e.start) != null && toMin(e.end) > toMin(e.start)).map(e => ({ s: toMin(e.start), e: toMin(e.end) }));
+    return freeSegments(win, busy, margin);
+  }
+
+  /* ---------- Análisis de un día ---------- */
+  function analyzeDay(inp) {
+    const day = inp.day;
+    const margin = Math.max(0, +(inp.profile?.margin ?? 10));
+    const used = new Set(['R1', 'R6']);
+    const win = windowOf(day, inp);
+    const limits = areaLimits(inp);
+    const evs = (inp.events || [])
+      .filter(e => e.date === day && toMin(e.start) != null && toMin(e.end) > toMin(e.start))
+      .map(e => Object.assign({}, e, { es: toMin(e.start), ee: toMin(e.end) }))
+      .sort((a, b) => a.es - b.es);
+
+    // R2 / R3: compromisos que se cruzan
+    const conflicts = [];
+    const movable = new Set();
+    for (let i = 0; i < evs.length; i++) {
+      for (let j = i + 1; j < evs.length; j++) {
+        const a = evs[i], b = evs[j];
+        if (!(a.es < b.ee && b.es < a.ee)) continue;
+        if (movable.has(a.id) || movable.has(b.id)) continue;
+        used.add('R2');
+        if (isFixed(a) && isFixed(b)) {
+          used.add('R3');
+          conflicts.push({ rule: ['R2', 'R3'], kind: 'overlap-fixed', severity: 'high', ids: [a.id, b.id],
+            title: 'Dos compromisos fijos se cruzan',
+            msg: `${q(a.title)} (${a.start}–${a.end}) y ${q(b.title)} (${b.start}–${b.end}) se cruzan. Los dos son fijos, así que no muevo ninguno: decide tú cuál cambiar.` });
+        } else {
+          const f = isFixed(a) ? b : isFixed(b) ? a : (b.area === 'social' && a.area !== 'social' ? a : b);
+          movable.add(f.id);
+          conflicts.push({ rule: ['R2'], kind: 'overlap', severity: 'medium', ids: [a.id, b.id], movable: f.id,
+            title: 'Dos compromisos se cruzan',
+            msg: `${q(a.title)} (${a.start}–${a.end}) y ${q(b.title)} (${b.start}–${b.end}) se cruzan. ${q(f.title)} es flexible: propongo moverlo a un hueco libre.` });
+        }
+      }
+    }
+
+    // Qué hay que colocar
+    const blockTasks = new Set(evs.filter(e => e.taskId).map(e => e.taskId));
+    const dayTasks = (inp.tasks || []).filter(t => !t.done && t.due && (t.due === day || (day === inp.today && t.due < day)) && !blockTasks.has(t.id));
+    const items = [
+      ...evs.filter(e => movable.has(e.id)).map(e => ({
+        kind: 'event', id: e.id, title: e.title, area: e.area || 'personal', dur: e.ee - e.es, est: false, missing: false,
+        costo: e.costo || 'bajo', costoKnown: !!e.costo, imp: 2, dueDiff: 0, urgent: false, created: e.createdAt || '', origStart: e.start, origEnd: e.end,
+      })),
+      ...dayTasks.map(t => {
+        const d = taskDur(t);
+        return {
+          kind: 'task', id: t.id, title: t.text, area: t.area || 'personal', dur: d.dur, est: d.est, missing: d.missing,
+          costo: COST[t.costo] != null ? t.costo : (t.priority === 'urgent' ? 'alto' : 'bajo'), costoKnown: COST[t.costo] != null,
+          imp: +t.importancia || 2, dueDiff: daysDiff(day, t.due), urgent: t.priority === 'urgent', created: t.createdAt || '',
+        };
+      }),
+    ].sort(rankOf);
+
+    const uncertain = [];
+    for (const it of items) {
+      if (it.missing) { used.add('R8'); uncertain.push({ rule: 'R8', id: it.id, title: it.title, msg: `${q(it.title)} no tiene duración: uso ${CFG.defaultEst} min como estimación.` }); }
+      else if (it.est) uncertain.push({ rule: null, id: it.id, title: it.title, msg: `La duración de ${q(it.title)} (${dur(it.dur)}) es una estimación tuya.` });
+    }
+    if (win.personal.length) used.add('personal');
+
+    const busy = evs.filter(e => !movable.has(e.id)).map(e => ({ s: e.es, e: e.ee, id: e.id }));
+    const segs = freeSegments(win, busy, margin);
+    const freeMin = segs.reduce((a, g) => a + g.e - g.s, 0);
+    const needMin = items.length ? items.reduce((a, i) => a + i.dur, 0) + margin * (items.length - 1) : 0;
+    const base = pack(items, segs, margin, limits);
+    const fits = base.over.length === 0;
+    const deficit = Math.max(0, needMin - freeMin);
+    const hasSocial = items.some(i => i.area === 'social') || evs.some(e => e.area === 'social');
+    const tomorrow = keyAdd(day, 1);
+
+    const data = [
+      `Tiempo libre: ${dur(freeMin)} entre ${hm(win.s)} y ${hm(win.e)}, con ${margin} min de margen entre actividades`,
+      `Tiempo necesario: ${dur(needMin)} para ${items.length} ${items.length === 1 ? 'actividad' : 'actividades'}`,
+      `Compromisos fijos: ${evs.filter(isFixed).length}`,
+    ];
+    const proposals = [];
+    const relocations = (placed) => placed.filter(p => p.kind === 'event').map(p => ({ type: 'moveEvent', id: p.id, title: p.title, toDay: day, start: hm(p.start), end: hm(p.end) }));
+
+    if (!fits) {
+      conflicts.unshift({ rule: ['R1'], kind: 'capacity', severity: 'high', ids: base.over.map(i => i.id),
+        title: 'No cabe todo',
+        msg: deficit > 0
+          ? `Las actividades necesitan ${dur(needMin)} y tienes ${dur(freeMin)} libres: faltan ${dur(deficit)}. Podemos mover algo flexible, recortarlo o repartirlo entre varios días.`
+          : `El tiempo total alcanza, pero los huecos libres son demasiado cortos para ${listJoin(base.over.map(i => q(i.title)))}.` });
+
+      const alts = [];
+      const candidates = items.filter(i => i.area !== 'social' && i.costo !== 'critico').slice().reverse();
+      if (hasSocial) used.add('R7');
+      // a) aplazar: primero una sola cosa, luego varias
+      let moved = null, res = null;
+      for (const c of candidates) {
+        const r = pack(items.filter(i => i !== c), segs, margin, limits);
+        if (!r.over.length) { moved = [c]; res = r; break; }
+      }
+      if (!moved) {
+        const acc = [];
+        for (const c of candidates) {
+          acc.push(c);
+          const r = pack(items.filter(i => !acc.includes(i)), segs, margin, limits);
+          if (!r.over.length) { moved = acc.slice(); res = r; break; }
+        }
+        // Devuelve al día lo que no hacía falta mover
+        if (moved) {
+          for (const c of moved.slice()) {
+            const keep = moved.filter(x => x !== c);
+            const r = pack(items.filter(i => !keep.includes(i)), segs, margin, limits);
+            if (!r.over.length) { moved = keep; res = r; }
+          }
+        }
+      }
+      if (moved) {
+        alts.push({ kind: 'postpone', res, changes: [
+          ...moved.map(i => ({ type: i.kind === 'task' ? 'moveTask' : 'moveEvent', id: i.id, title: i.title, toDay: tomorrow, start: i.origStart, end: i.origEnd })),
+          ...relocations(res.placed),
+        ], title: `Aplazar ${listJoin(moved.map(i => q(i.title)))} al día siguiente`,
+        why: [`Se elige lo que tiene menor costo de aplazar (${listJoin(moved.map(i => COST_TXT[i.costo] + (i.costoKnown ? '' : ', sin dato')))}) según el orden de R6.`, 'No toca compromisos fijos (R3).'] });
+      }
+      // b) recortar
+      for (const c of candidates) {
+        if (c.dur < 45) continue;
+        const floor = Math.max(CFG.minDur, Math.ceil(c.dur * CFG.minShortenPct));
+        let ok = null;
+        for (let nd = c.dur - 5; nd >= floor; nd -= 5) {
+          const r = pack(items.map(i => (i === c ? Object.assign({}, i, { dur: nd }) : i)), segs, margin, limits);
+          if (!r.over.length) { ok = { nd, r }; break; }
+        }
+        if (ok) {
+          alts.push({ kind: 'shorten', res: ok.r, changes: [{ type: 'shorten', id: c.id, kind: c.kind, title: c.title, from: c.dur, newDur: ok.nd }, ...relocations(ok.r.placed)],
+            title: `Recortar ${q(c.title)} a ${dur(ok.nd)}`, why: [`Recortar ${dur(c.dur - ok.nd)} basta para que todo quepa.`, `Es de las actividades con menor prioridad según R6.`] });
+          break;
+        }
+      }
+      // c) dividir entre hoy y mañana (solo tareas que no vencen hoy)
+      for (const c of base.over) {
+        if (c.kind !== 'task' || c.dueDiff < 1 || c.dur < 60) continue;
+        let ok = null;
+        for (let part = c.dur - 15; part >= 30; part -= 5) {
+          const r = pack(items.map(i => (i === c ? Object.assign({}, i, { dur: part }) : i)), segs, margin, limits);
+          if (!r.over.length) { ok = { part, r }; break; }
+        }
+        if (ok) {
+          used.add('R9');
+          alts.push({ kind: 'split', res: ok.r, changes: [{ type: 'split', id: c.id, title: c.title, todayDur: ok.part, restDur: c.dur - ok.part, restDay: tomorrow }, ...relocations(ok.r.placed)],
+            title: `Dividir ${q(c.title)}: ${dur(ok.part)} este día y ${dur(c.dur - ok.part)} el siguiente`, why: ['Vence después de hoy, así que se puede repartir (R9).'] });
+          break;
+        }
+      }
+      const real = (a) => a.changes.filter(c => c.type !== 'moveEvent' || c.toDay !== day).length;
+      alts.sort((a, b) => real(a) - real(b) || b.res.slack - a.res.slack);
+      alts.forEach((a, i) => {
+        const rules = ['R1', 'R6', 'R10'];
+        if (a.kind === 'postpone') rules.push('R3');
+        if (a.kind === 'split') rules.push('R9');
+        if (hasSocial) rules.push('R7');
+        if (uncertain.some(u => u.rule === 'R8')) rules.push('R8');
+        if (a.changes.some(c => c.type === 'moveEvent' && c.toDay === day)) rules.push('R2');
+        proposals.push({
+          id: sigOf(a.kind, a.changes), kind: a.kind, primary: i === 0, title: a.title, rules,
+          changes: a.changes, schedule: a.res.placed.map(p => ({ kind: p.kind, id: p.id, title: p.title, area: p.area, start: hm(p.start), end: hm(p.end), est: p.est })),
+          slack: a.res.slack,
+          why: [...a.why, `Comprobado: con este cambio todo cabe y te quedan ${dur(a.res.slack)} libres.`, ...(hasSocial ? ['Cancelar o mover planes sociales no se propone; solo si tú lo pides (R7).'] : [])],
+          data, uncertain: uncertain.map(u => u.msg),
+        });
+      });
+      if (!alts.length) {
+        conflicts[0].msg += ' No encontré una alternativa que quepa sin tocar compromisos fijos: puedes cambiar uno tú, pedir más tiempo o repartir el trabajo en otro día.';
+      }
+    } else if (items.some(i => i.kind === 'event')) {
+      const changes = relocations(base.placed);
+      used.add('R2');
+      proposals.push({
+        id: sigOf('relocate', changes), kind: 'relocate', primary: true, title: changes.length === 1 ? `Mover ${q(changes[0].title)} a las ${changes[0].start}` : 'Reubicar los compromisos flexibles que se cruzan',
+        rules: ['R2', 'R3', 'R6', 'R10'], changes,
+        schedule: base.placed.map(p => ({ kind: p.kind, id: p.id, title: p.title, area: p.area, start: hm(p.start), end: hm(p.end), est: p.est })),
+        slack: base.slack, why: ['Se mueve solo lo flexible; lo fijo se queda donde está (R3).', `Comprobado: todo cabe y te quedan ${dur(base.slack)} libres.`], data, uncertain: uncertain.map(u => u.msg),
+      });
+    }
+    if (fits && base.placed.some(p => p.kind === 'task')) {
+      const changes = base.placed.filter(p => p.kind === 'task').map(p => ({ type: 'schedule', id: p.id, title: p.title, area: p.area, date: day, start: hm(p.start), end: hm(p.end) }));
+      proposals.push({
+        id: sigOf('schedule', changes), kind: 'schedule', primary: !proposals.length, optional: true, title: 'Reservar horario para tus tareas',
+        rules: ['R1', 'R6', 'R10'], changes,
+        schedule: base.placed.map(p => ({ kind: p.kind, id: p.id, title: p.title, area: p.area, start: hm(p.start), end: hm(p.end), est: p.est })),
+        slack: base.slack, why: ['Todo cabe en tu día. Si quieres, reservo estos bloques en tu calendario en el orden de R6.', `Te quedan ${dur(base.slack)} libres.`],
+        data, uncertain: uncertain.map(u => u.msg),
+      });
+    }
+
+    const schedule = [
+      ...evs.filter(e => !movable.has(e.id)).map(e => ({ kind: 'event', id: e.id, title: e.title, area: e.area || 'personal', start: e.start, end: e.end, fixed: isFixed(e), taskId: e.taskId || null })),
+      ...base.placed.map(p => ({ kind: p.kind, id: p.id, title: p.title, area: p.area, start: hm(p.start), end: hm(p.end), est: p.est, proposed: true })),
+    ].sort((a, b) => toMin(a.start) - toMin(b.start));
+
+    return {
+      day, window: { start: hm(win.s), end: hm(win.e) }, margin, freeMin, needMin, deficit, fits,
+      schedule, overflow: base.over.map(i => ({ kind: i.kind, id: i.id, title: i.title, area: i.area, dur: i.dur, est: i.est })),
+      conflicts, proposals, uncertain, rulesUsed: [...used].filter(r => /^R\d+$/.test(r)).sort((a, b) => +a.slice(1) - +b.slice(1)),
+      personalRules: win.personal, itemCount: items.length, fixedCount: evs.filter(isFixed).length,
+    };
+  }
+
+  /* ---------- R4 / R5: fechas límite ---------- */
+  function deadlineWarnings(inp) {
+    const out = [];
+    const today = inp.today;
+    for (const t of inp.tasks || []) {
+      if (t.done || !t.due || !(+t.durMin > 0)) continue;
+      const dd = daysDiff(today, t.due);
+      if (dd < 0 || dd > CFG.horizonDays) continue;
+      const booked = (inp.events || []).filter(e => e.taskId === t.id && e.date >= today).reduce((a, e) => a + Math.max(0, toMin(e.end) - toMin(e.start)), 0);
+      const need = +t.durMin - booked;
+      if (need <= 0) continue;
+      let free = 0;
+      for (let k = 0; k <= dd; k++) free += freeOfDay(keyAdd(today, k), inp).reduce((a, g) => a + g.e - g.s, 0);
+      if (free < need) out.push({ rule: 'R5', taskId: t.id, severity: 'high', title: 'No da tiempo antes de la fecha límite',
+        msg: `${q(t.text)} necesita ${dur(need)} y solo tienes ${dur(free)} libres hasta el ${t.due}, sin contar otras tareas. Opciones: dividirla, recortarla o renegociar la fecha.` });
+      else if (free < need * CFG.urgencyFactor) out.push({ rule: 'R4', taskId: t.id, severity: 'medium', title: 'Tarea urgente',
+        msg: `${q(t.text)} necesita ${dur(need)} y tienes ${dur(free)} libres hasta el ${t.due}: hay poco margen, conviene empezar pronto.` });
+    }
+    return out;
+  }
+
+  /* ---------- R9: repartir tareas largas en bloques ---------- */
+  function splitSuggestions(inp, max = 3) {
+    const out = [];
+    const today = inp.today;
+    const margin = Math.max(0, +(inp.profile?.margin ?? 10));
+    const extra = [];
+    for (const t of inp.tasks || []) {
+      if (out.length >= max) break;
+      if (t.done || !t.due || !(+t.durMin > CFG.splitMin)) continue;
+      const dd = daysDiff(today, t.due);
+      if (dd < 2 || dd > CFG.horizonDays) continue;
+      if ((inp.events || []).some(e => e.taskId === t.id)) continue;
+      let left = Math.round(+t.durMin);
+      const blocks = [];
+      for (let k = 0; k < dd && left > 0; k++) {
+        const day = keyAdd(today, k);
+        const win = windowOf(day, inp);
+        const busy = [...(inp.events || []), ...extra].filter(e => e.date === day && toMin(e.start) != null).map(e => ({ s: toMin(e.start), e: toMin(e.end) }));
+        const len = Math.min(CFG.blockMin, left);
+        const lim = areaLimits(inp)[t.area] ?? 1440;
+        const g = freeSegments(win, busy, margin).find(x => x.s + len <= Math.min(x.e, lim));
+        if (!g) continue;
+        const b = { type: 'block', taskId: t.id, title: t.text, area: t.area || 'personal', date: day, start: hm(g.s), end: hm(g.s + len) };
+        blocks.push(b); extra.push(b); left -= len;
+      }
+      if (!blocks.length) continue;
+      out.push({
+        id: sigOf('blocks', blocks), kind: 'blocks', title: `Repartir ${q(t.text)} en ${blocks.length} ${blocks.length === 1 ? 'bloque' : 'bloques'}`,
+        rules: ['R9', 'R10'], changes: blocks, taskId: t.id,
+        why: [`Dura ${dur(+t.durMin)} y vence el ${t.due}: repartirla reduce el riesgo de dejarla para el final (R9).`,
+          left > 0 ? `Solo encontré hueco para ${dur(+t.durMin - left)}; faltarían ${dur(left)}.` : 'Cada bloque está en un hueco libre comprobado.'],
+        data: [`Bloques de hasta ${CFG.blockMin} min entre hoy y el día antes de la fecha límite`], uncertain: t.durSrc === 'estimada' ? ['La duración total es una estimación tuya.'] : [],
+      });
+    }
+    return out;
+  }
+
+  function weekLoad(inp, startDay, n = 7) {
+    const out = [];
+    for (let k = 0; k < n; k++) {
+      const day = keyAdd(startDay, k);
+      const a = analyzeDay(Object.assign({}, inp, { day }));
+      out.push({ day, freeMin: a.freeMin, needMin: a.needMin, fits: a.fits, conflicts: a.conflicts.length, items: a.itemCount, fixed: a.fixedCount });
+    }
+    return out;
+  }
+
+  return { RULES, CFG, analyzeDay, deadlineWarnings, splitSuggestions, weekLoad, freeOfDay, toMin, hm, keyAdd, daysDiff, dur };
+}
+/* PLANNER-ENGINE:END */
 /* =====================================================================
    APLICACIÓN
 ===================================================================== */
@@ -1819,6 +2338,8 @@ function ENGINE() {
 
   /* ---------- Iconos ---------- */
   const ICONS = {
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
     home: '<path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1v-9z"/>',
     tasks: '<path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
     timer: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/>',
@@ -2026,6 +2547,7 @@ function ENGINE() {
   $('#backdrop').addEventListener('click', closeSheets);
 
   const MORE = [
+    ['#enfoque', 'timer', '--h-focus', 'Enfoque', 'Concentración'],
     ['#habitos', 'repeat', '--h-habits', 'Hábitos', 'Rachas diarias'],
     ['#metas', 'flag', '--h-goals', 'Metas', 'Objetivos con avance'],
     ['#notas', 'note', '--h-notes', 'Notas', 'Ideas y listas'],
@@ -2055,7 +2577,7 @@ function ENGINE() {
   document.addEventListener('click', (e) => { const g = e.target.closest('[data-goto]'); if (g) { e.preventDefault(); goto(g.dataset.goto); } });
 
   /* ---------- Navegación activa ---------- */
-  const sectionIds = ['resumen', 'tareas', 'enfoque', 'habitos', 'metas', 'notas', 'progreso', 'analizador', 'descargas'];
+  const sectionIds = ['resumen', 'agenda', 'tareas', 'enfoque', 'habitos', 'metas', 'notas', 'progreso', 'analizador', 'descargas'];
   if ('IntersectionObserver' in window) {
     const visible = new Map();
     const io = new IntersectionObserver((entries) => {
@@ -2722,9 +3244,10 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   const isOverdue = (t) => !t.done && t.due && t.due < todayKey();
   const todaysTasks = () => { const tk = todayKey(); return tasks.filter(t => t.due && (t.due === tk || (t.due < tk && (!t.done || (t.completedAt && dayKey(t.completedAt) === tk))))); };
 
-  function addTask({ text, priority = 'normal', due = null, tag = '', done = false }) {
+  function addTask({ text, priority = 'normal', due = null, tag = '', done = false, ...plan }) {
     const now = new Date().toISOString();
     const t = { id: uid(), text: text.slice(0, 160), priority, due: due || null, tag: (tag || '').trim().slice(0, 24), done, createdAt: now, completedAt: done ? now : null, pomos: 0 };
+    Object.assign(t, cleanPlanFields(plan));
     tasks.unshift(t);
     return t;
   }
@@ -2733,9 +3256,9 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     e.preventDefault();
     const text = $('#taskInput').value.trim();
     if (!text) { $('#taskInput').focus(); return; }
-    addTask({ text, priority: $('#prioritySelect').value, due: $('#dueInput').value, tag: $('#tagInput').value });
+    addTask({ text, priority: $('#prioritySelect').value, due: $('#dueInput').value, tag: $('#tagInput').value, ...taskPlanForm() });
     saveTasks();
-    $('#taskInput').value = ''; $('#prioritySelect').value = 'normal'; $('#dueInput').value = ''; $('#tagInput').value = '';
+    $('#taskInput').value = ''; $('#prioritySelect').value = 'normal'; $('#dueInput').value = ''; $('#tagInput').value = ''; taskPlanFormReset();
     if (taskFilter === 'done' || taskFilter === 'overdue') { taskFilter = 'pending'; activateTab('filter', 'pending'); }
     onTasksChanged(true);
     $('#taskInput').focus();
@@ -2779,6 +3302,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     const t = tasks.find(x => x.id === li.dataset.id);
     if (!t) return;
     if (e.target.closest('.del-btn')) return removeTask(t);
+    if (e.target.closest('.plan-btn')) return openTaskPlan(t.id);
     if (e.target.closest('.prio-btn')) { t.priority = t.priority === 'urgent' ? 'normal' : 'urgent'; saveTasks(); onTasksChanged(); toast(t.priority === 'urgent' ? 'Marcada como urgente' : 'Ya no es urgente'); return; }
     if (e.target.closest('.edit-btn')) {
       const v = prompt('Cambiar el texto de la tarea', t.text);
@@ -2850,6 +3374,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
         dueChip(t),
         t.tag ? `<span class="chip">${ic('tag')}${esc(t.tag)}</span>` : '',
         t.pomos ? `<span class="chip" style="background: rgb(var(--h-focus) / .1); color: rgb(var(--h-focus))">${ic('timer')}${plural(t.pomos, 'sesión', 'sesiones')}</span>` : '',
+        planChips(t),
       ].filter(Boolean).join('');
       return `<li data-id="${t.id}" class="group flex items-start gap-3 py-3 ${t.id === firstId ? 'fade-in' : ''}">
         <input type="checkbox" class="chk mt-0.5" data-task-chk="${t.id}" ${t.done ? 'checked' : ''} aria-label="Marcar como hecha: ${esc(t.text)}" />
@@ -2860,6 +3385,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
         <div class="flex items-center shrink-0 sm:opacity-0 sm:group-hover:opacity-100 focus-within:opacity-100 transition">
           ${t.done ? '' : `<button class="focus-btn icon-btn" title="Concentrarme en esta tarea" aria-label="Concentrarme en esta tarea">${ic('target')}</button>
           <button class="prio-btn icon-btn hidden sm:grid" title="${urgent ? 'Quitar urgencia' : 'Marcar como urgente'}" aria-label="Cambiar urgencia">${ic('alert')}</button>`}
+          <button class="plan-btn icon-btn" title="Planificar: duración, área, fecha" aria-label="Planificar tarea">${ic('clock')}</button>
           <button class="edit-btn icon-btn hidden sm:grid" title="Editar" aria-label="Editar tarea">${ic('pencil')}</button>
           <button class="del-btn icon-btn danger" title="Borrar" aria-label="Borrar tarea">${ic('trash')}</button>
         </div>
@@ -2873,7 +3399,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     const tags = [...new Set(tasks.map(t => t.tag).filter(Boolean))];
     $('#tagList').innerHTML = tags.map(t => `<option value="${esc(t)}">`).join('');
   }
-  function onTasksChanged(animate) { renderTasks(animate); renderTaskSelect(); renderToday(); renderDay(); renderStats(); renderWelcome(); renderAnalytics(); }
+  function onTasksChanged(animate) { renderTasks(animate); renderTaskSelect(); renderToday(); renderDay(); renderStats(); renderWelcome(); renderAnalytics(); renderAgenda(); }
 
   function importTasksFromText(text, name) {
     const isTable = /\.(csv|tsv)$/i.test(name) || (() => {
@@ -3705,24 +4231,30 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   }
   function backupObject() {
     flushNote();
-    return { app: 'dilex.exe', version: 4, exportedAt: new Date().toISOString(), tasks, pomodoro: pomoHistory, pomoSettings, habits, goals, notes, plan, files: fileHistory, settings, profile };
+    return { app: 'dilex.exe', version: 5, exportedAt: new Date().toISOString(), tasks, pomodoro: pomoHistory, pomoSettings, habits, goals, notes, plan, files: fileHistory, settings, profile, events, dayProfile, personalRules: prules, recs, changelog };
   }
   async function importBackup(file) {
     try {
       const data = JSON.parse(await readFileText(file));
       if (!isObj(data)) throw new Error('el archivo no tiene el formato correcto');
-      const keys = ['tasks', 'pomodoro', 'habits', 'goals', 'notes', 'files'].filter(k => Array.isArray(data[k]));
+      const keys = ['tasks', 'pomodoro', 'habits', 'goals', 'notes', 'files', 'events'].filter(k => Array.isArray(data[k]));
       if (!keys.length) throw new Error('ese archivo no es una copia de dilex.exe');
       if (!confirm('Vas a reemplazar tus datos actuales por los de la copia. ¿Continuar?')) return;
       if (Array.isArray(data.tasks)) tasks = data.tasks.filter(t => t && typeof t.text === 'string').map(t => ({
         id: t.id || uid(), text: t.text.slice(0, 160), priority: t.priority === 'urgent' ? 'urgent' : 'normal', done: !!t.done,
         due: t.due || null, tag: t.tag || '', pomos: t.pomos || 0, createdAt: t.createdAt || new Date().toISOString(), completedAt: t.completedAt || null,
+        ...cleanPlanFields(t),
       }));
       if (Array.isArray(data.pomodoro)) pomoHistory = data.pomodoro.filter(s => s && s.at);
       if (Array.isArray(data.habits)) habits = data.habits.filter(h => h && h.name).map(h => ({ id: h.id || uid(), name: h.name, days: isObj(h.days) ? h.days : {}, createdAt: h.createdAt || new Date().toISOString() }));
       if (Array.isArray(data.goals)) goals = data.goals.filter(g => g && g.name && g.target > 0).map(g => Object.assign({ step: 1, current: 0 }, g));
       if (Array.isArray(data.notes)) notes = data.notes.filter(n => n && typeof n.body === 'string').map(n => ({ id: n.id || uid(), title: n.title || '', body: n.body, pinned: !!n.pinned, createdAt: n.createdAt || new Date().toISOString(), updatedAt: n.updatedAt || new Date().toISOString() }));
       if (Array.isArray(data.files)) fileHistory = data.files.filter(f => f && f.name).slice(0, 30);
+      if (Array.isArray(data.events)) { events = data.events.filter(e => e && e.title).map(cleanEvent); saveEvents(); }
+      if (isObj(data.dayProfile)) { dayProfile = Object.assign({ start: '08:00', end: '23:00', margin: 10 }, data.dayProfile); saveProfile2(); }
+      if (Array.isArray(data.personalRules)) { prules = data.personalRules.filter(r => r && r.after); savePrules(); }
+      if (Array.isArray(data.recs)) { recs = data.recs.filter(isObj); saveRecs(); }
+      if (Array.isArray(data.changelog)) { changelog = data.changelog.filter(isObj).slice(0, 300); store.set(KEYS.changelog, changelog); }
       if (isObj(data.plan)) plan = data.plan;
       if (isObj(data.pomoSettings)) pomoSettings = Object.assign(pomoSettings, data.pomoSettings);
       store.set(KEYS.tasks, tasks); store.set(KEYS.pomodoro, pomoHistory); store.set(KEYS.habits, habits); store.set(KEYS.goals, goals);
@@ -3816,6 +4348,597 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     }
   });
 
+/* AGENDA-UI:START */
+  /* =====================================================================
+     AGENDA INTELIGENTE: calendario, motor de reglas y conflictos
+     Fuente: planner/agenda.js (planner/build.py lo copia a index.html).
+     El motor (PLANNER_ENGINE) decide; esta parte solo muestra, pide
+     autorización (R10), ejecuta lo aceptado y lo deja registrado.
+  ===================================================================== */
+  var agReady = false;
+  var AG_AREAS = { estudio: ['Estudio', '--h-files'], trabajo: ['Trabajo', '--h-tasks'], ejercicio: ['Ejercicio', '--h-focus'], social: ['Social', '--h-habits'], hogar: ['Hogar', '--h-plan'], personal: ['Personal', '--h-stats'] };
+  var AG_COSTS = { ninguno: 'Ninguno', bajo: 'Bajo', alto: 'Alto', critico: 'Crítico' };
+  var AG_IMPS = { 1: 'Baja', 2: 'Media', 3: 'Alta' };
+  const PE = PLANNER_ENGINE();
+  Object.assign(KEYS, { events: 'dilex.events', dayProfile: 'dilex.dayProfile', recs: 'dilex.recs', changelog: 'dilex.changelog', prules: 'dilex.prules' });
+
+  /* ---------- Datos ---------- */
+  const cleanEvent = (e) => ({
+    id: e.id || uid(), title: String(e.title || '').trim().slice(0, 80), area: AG_AREAS[e.area] ? e.area : 'personal',
+    date: /^\d{4}-\d{2}-\d{2}$/.test(e.date) ? e.date : todayKey(), start: PE.toMin(e.start) != null ? PE.hm(PE.toMin(e.start)) : '09:00',
+    end: PE.toMin(e.end) != null ? PE.hm(PE.toMin(e.end)) : '10:00', fixed: !!e.fixed, confirmed: !!e.confirmed,
+    costo: AG_COSTS[e.costo] ? e.costo : undefined, taskId: e.taskId || null, createdAt: e.createdAt || new Date().toISOString(),
+  });
+  let events = arr(store.get(KEYS.events, [])).filter(e => e && e.title).map(cleanEvent);
+  let dayProfile = Object.assign({ start: '08:00', end: '23:00', margin: 10 }, isObj(store.get(KEYS.dayProfile, null)) ? store.get(KEYS.dayProfile, {}) : {});
+  let recs = arr(store.get(KEYS.recs, []));
+  let changelog = arr(store.get(KEYS.changelog, []));
+  let prules = arr(store.get(KEYS.prules, []));
+  let agDay = todayKey(), agTab = 'day', agProps = [], agEditing = null, agTaskEditing = null;
+  const saveEvents = () => store.set(KEYS.events, events);
+  const saveProfile2 = () => store.set(KEYS.dayProfile, dayProfile);
+  const saveRecs = () => { recs = recs.slice(0, 200); store.set(KEYS.recs, recs); };
+  const savePrules = () => store.set(KEYS.prules, prules);
+  function logChange(entity, ref, title, before, after, reason, by = 'usuario') {
+    changelog.unshift({ id: uid(), at: new Date().toISOString(), entity, ref, title, before, after, by, reason });
+    changelog = changelog.slice(0, 300);
+    store.set(KEYS.changelog, changelog);
+  }
+
+  /* Campos de planificación de una tarea (los usa también "Tareas"). */
+  function cleanPlanFields(x) {
+    const o = {};
+    if (!x) return o;
+    if (+x.durMin > 0) { o.durMin = Math.min(1440, Math.round(+x.durMin)); o.durSrc = x.durSrc === 'estimada' ? 'estimada' : 'usuario'; }
+    if (['estudio', 'trabajo', 'ejercicio', 'social', 'hogar', 'personal'].includes(x.area)) o.area = x.area;
+    if (['ninguno', 'bajo', 'alto', 'critico'].includes(x.costo)) o.costo = x.costo;
+    if ([1, 2, 3].includes(+x.importancia)) o.importancia = +x.importancia;
+    return o;
+  }
+  function planChips(t) {
+    if (t.done) return '';
+    return [
+      t.durMin ? `<span class="chip">${ic('clock')}${PE.dur(t.durMin)}${t.durSrc === 'estimada' ? ' aprox.' : ''}</span>` : '',
+      t.area && AG_AREAS[t.area] ? agAreaChip(t.area) : '',
+      t.costo === 'critico' || t.costo === 'alto' ? `<span class="chip chip-amber">Aplazar: ${AG_COSTS[t.costo].toLowerCase()}</span>` : '',
+    ].join('');
+  }
+  function taskPlanForm() {
+    return cleanPlanFields({ durMin: $('#taskDur')?.value, durSrc: 'usuario', area: $('#taskArea')?.value, costo: $('#taskCost')?.value, importancia: $('#taskImp')?.value });
+  }
+  function taskPlanFormReset() { ['#taskDur', '#taskArea', '#taskCost', '#taskImp'].forEach(s => { const el = $(s); if (el) el.value = ''; }); }
+
+  /* ---------- Utilidades de vista ---------- */
+  const agAreaChip = (a) => (AG_AREAS[a] ? `<span class="chip" style="background: rgb(var(${AG_AREAS[a][1]}) / .12); color: rgb(var(${AG_AREAS[a][1]}))">${AG_AREAS[a][0]}</span>` : '');
+  const ruleName = (r) => (PE.RULES.find(x => x.id === r) || {}).name || r;
+  const ruleChip = (r) => `<span class="ag-rule" title="${esc(r + ' · ' + ruleName(r))}">${esc(r)}</span>`;
+  const dayWord = (k) => {
+    const d = daysBetween(todayKey(), k);
+    if (d === 0) return 'hoy';
+    if (d === 1) return 'mañana';
+    if (d === -1) return 'ayer';
+    return keyToDate(k).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' });
+  };
+  const dayTitle = (k) => {
+    const d = daysBetween(todayKey(), k);
+    const long = keyToDate(k).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+    return d === 0 ? `Hoy, ${long}` : d === 1 ? `Mañana, ${long}` : d === -1 ? `Ayer, ${long}` : long;
+  };
+  function engineInput(day) {
+    const now = new Date();
+    return { day, today: todayKey(), nowMin: day === todayKey() ? now.getHours() * 60 + now.getMinutes() : null, profile: dayProfile, events, tasks, personalRules: prules };
+  }
+  const isRejected = (p, day) => recs.some(r => r.sig === p.id && r.day === day && r.estado === 'rechazada');
+  function changeText(c, day) {
+    const t = `"${esc(c.title)}"`;
+    switch (c.type) {
+      case 'moveTask': return `Pasar ${t} a ${dayWord(c.toDay)}`;
+      case 'moveEvent': return c.toDay === day ? `Mover ${t} a las ${c.start}–${c.end}` : `Pasar ${t} a ${dayWord(c.toDay)}`;
+      case 'shorten': return `Recortar ${t} de ${PE.dur(c.from)} a ${PE.dur(c.newDur)}`;
+      case 'split': return `Dejar ${PE.dur(c.todayDur)} de ${t} para ${dayWord(day)} y crear la parte 2 (${PE.dur(c.restDur)}) para ${dayWord(c.restDay)}`;
+      case 'schedule': return `${c.start}–${c.end} · ${esc(c.title)}`;
+      case 'block': return `${dayWord(c.date)}, ${c.start}–${c.end} · ${esc(c.title)}`;
+      default: return esc(c.title || '');
+    }
+  }
+
+  /* ---------- Ejecutar lo aceptado (R10) ---------- */
+  function applyChanges(changes, reason) {
+    for (const c of changes) {
+      if (c.type === 'moveTask') {
+        const t = tasks.find(x => x.id === c.id); if (!t) continue;
+        logChange('tarea', t.id, t.text, { due: t.due }, { due: c.toDay }, reason, 'sistema');
+        t.due = c.toDay;
+      } else if (c.type === 'moveEvent') {
+        const e = events.find(x => x.id === c.id); if (!e) continue;
+        const before = { date: e.date, start: e.start, end: e.end };
+        e.date = c.toDay || e.date;
+        if (c.start && c.end) { e.start = c.start; e.end = c.end; }
+        logChange('compromiso', e.id, e.title, before, { date: e.date, start: e.start, end: e.end }, reason, 'sistema');
+      } else if (c.type === 'shorten') {
+        if (c.kind === 'event') {
+          const e = events.find(x => x.id === c.id); if (!e) continue;
+          const before = { end: e.end };
+          e.end = PE.hm(PE.toMin(e.start) + c.newDur);
+          logChange('compromiso', e.id, e.title, before, { end: e.end }, reason, 'sistema');
+        } else {
+          const t = tasks.find(x => x.id === c.id); if (!t) continue;
+          logChange('tarea', t.id, t.text, { durMin: t.durMin || null }, { durMin: c.newDur }, reason, 'sistema');
+          t.durMin = c.newDur; t.durSrc = t.durSrc || 'usuario';
+        }
+      } else if (c.type === 'split') {
+        const t = tasks.find(x => x.id === c.id); if (!t) continue;
+        logChange('tarea', t.id, t.text, { durMin: t.durMin || null }, { durMin: c.todayDur }, reason, 'sistema');
+        t.durMin = c.todayDur;
+        const part = addTask({ text: `${t.text} (parte 2)`.slice(0, 160), priority: t.priority, due: c.restDay, tag: t.tag, durMin: c.restDur, durSrc: t.durSrc, area: t.area, costo: t.costo, importancia: t.importancia });
+        logChange('tarea', part.id, part.text, null, { due: c.restDay, durMin: c.restDur }, reason, 'sistema');
+      } else if (c.type === 'schedule' || c.type === 'block') {
+        const id = c.type === 'block' ? c.taskId : c.id;
+        const t = tasks.find(x => x.id === id);
+        const e = cleanEvent({ title: c.type === 'block' ? `Bloque: ${c.title}` : c.title, area: (t && t.area) || c.area, date: c.date, start: c.start, end: c.end, fixed: false, taskId: id, costo: t && t.costo });
+        events.push(e);
+        logChange('compromiso', e.id, e.title, null, { date: e.date, start: e.start, end: e.end }, reason, 'sistema');
+      }
+    }
+    saveTasks(); saveEvents();
+  }
+  function snapshotOf(p, day) {
+    const a = PE.analyzeDay(engineInput(day));
+    return { libre_min: a.freeMin, necesario_min: a.needMin, cabe: a.fits, compromisos_fijos: a.fixedCount, actividades: a.itemCount, conflictos: a.conflicts.map(c => c.title), incertidumbres: p.uncertain || [] };
+  }
+  function recordRec(p, day, estado) {
+    let r = recs.find(x => x.sig === p.id && x.day === day && x.estado === 'generada');
+    if (!r) { r = { id: uid(), sig: p.id, day, at: new Date().toISOString(), title: p.title, kind: p.kind, rules: p.rules, changes: p.changes, situacion: snapshotOf(p, day), estado: 'generada', resultado: null }; recs.unshift(r); }
+    r.estado = estado; r.decidedAt = new Date().toISOString();
+    saveRecs();
+    return r;
+  }
+  function acceptProposal(p, day) {
+    const snap = { tasks: JSON.parse(JSON.stringify(tasks)), events: JSON.parse(JSON.stringify(events)) };
+    const rec = recordRec(p, day, 'aceptada');
+    applyChanges(p.changes, `Propuesta aceptada: ${p.title}`);
+    rec.estado = 'ejecutada'; saveRecs();
+    onTasksChanged();
+    toast('Hecho: apliqué la propuesta.', 'ok', { label: 'Deshacer', fn: () => {
+      tasks = snap.tasks; events = snap.events; saveTasks(); saveEvents();
+      rec.estado = 'deshecha'; saveRecs();
+      logChange('propuesta', rec.id, p.title, null, null, 'Deshecha por ti', 'usuario');
+      onTasksChanged();
+    } });
+  }
+  function rejectProposal(p, day) {
+    recordRec(p, day, 'rechazada');
+    renderAgenda();
+    toast('Descartada. No cambié nada.');
+  }
+
+  /* ---------- Vista: día ---------- */
+  function propCard(p, idx, day, primary) {
+    const rules = (p.rules || []).map(ruleChip).join('');
+    return `<div class="ag-card ${primary ? 'ag-prop' : ''}">
+      <div class="flex items-start gap-2.5">
+        <span class="ag-ico" style="--h: var(--accent)">${ic(p.kind === 'blocks' ? 'calendar' : 'sparkle')}</span>
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold leading-snug">${esc(p.title)}</p>
+          <p class="text-xs text-neutral-500 mt-0.5 flex flex-wrap items-center gap-1">${p.optional ? 'Opcional' : 'Propuesta'} · ${rules}</p>
+        </div>
+      </div>
+      <ul class="ag-changes">${p.changes.map(c => `<li>${changeText(c, day)}</li>`).join('')}</ul>
+      <details class="ag-why"><summary>¿Por qué?</summary>
+        <div class="ag-why-body">
+          <p class="ag-why-h">Motivos</p><ul>${(p.why || []).map(w => `<li>${esc(w)}</li>`).join('')}</ul>
+          <p class="ag-why-h">Datos usados</p><ul>${(p.data || []).map(w => `<li>${esc(w)}</li>`).join('') || '<li>Los compromisos y tareas de este día</li>'}</ul>
+          <p class="ag-why-h">Incertidumbres</p><ul>${(p.uncertain || []).length ? p.uncertain.map(w => `<li>${esc(w)}</li>`).join('') : '<li>Ninguna: todos los datos los indicaste tú.</li>'}</ul>
+          <p class="ag-why-h">Reglas aplicadas</p><ul>${(p.rules || []).map(r => `<li><b>${esc(r)}</b> ${esc(ruleName(r))}</li>`).join('')}</ul>
+        </div>
+      </details>
+      <div class="flex flex-wrap gap-2 mt-3">
+        <button class="btn btn-accent btn-sm" data-ag-accept="${idx}">${ic('check')}Aceptar</button>
+        <button class="btn btn-sm" data-ag-reject="${idx}">Rechazar</button>
+      </div>
+    </div>`;
+  }
+  function renderAgDay(a) {
+    const day = agDay, tk = todayKey();
+    const inp = engineInput(day);
+    const warnings = day === tk ? PE.deadlineWarnings(inp) : [];
+    const splits = day === tk ? PE.splitSuggestions(inp) : [];
+    const props = [...a.proposals, ...splits].filter(p => !isRejected(p, day));
+    agProps = props;
+    const pct = a.freeMin ? Math.min(100, Math.round(a.needMin / a.freeMin * 100)) : (a.needMin ? 100 : 0);
+    const status = !a.itemCount && !a.fixedCount ? ['Día libre', ''] : a.fits && !a.conflicts.length ? ['Todo cabe', 'ag-ok'] : a.fits ? ['Revisa los avisos', 'chip-amber'] : [`Faltan ${PE.dur(Math.max(a.deficit, 5))}`, 'chip-red'];
+    const primary = props.filter(p => p.primary && !p.optional && p.kind !== 'blocks');
+    const others = props.filter(p => !primary.includes(p));
+    const missing = a.uncertain.filter(u => u.rule === 'R8');
+    const rows = a.schedule.map(s => {
+      const area = AG_AREAS[s.area] ? s.area : 'personal';
+      const tags = [
+        s.kind === 'event' && s.fixed ? `<span class="chip">${ic('lock')}Fijo</span>` : '',
+        s.kind === 'event' && !s.fixed && !s.proposed ? '<span class="chip">Flexible</span>' : '',
+        s.proposed ? `<span class="chip ag-chip-prop">${s.kind === 'task' ? 'Tarea · hueco sugerido' : 'Nuevo horario sugerido'}</span>` : '',
+        s.est ? '<span class="chip">Duración estimada</span>' : '',
+        agAreaChip(area),
+      ].join('');
+      const ref = s.kind === 'event' ? `data-ag-ev="${esc(s.id)}"` : `data-ag-task="${esc(s.id)}"`;
+      return `<li><button class="ag-row ${s.proposed ? 'ag-proposed' : ''}" ${ref}>
+        <span class="ag-time digits">${esc(s.start)}<span>${esc(s.end)}</span></span>
+        <span class="ag-bar" style="--h: var(${AG_AREAS[area][1]})"></span>
+        <span class="flex-1 min-w-0 text-left"><span class="block font-medium truncate">${esc(s.title)}</span><span class="flex flex-wrap gap-1.5 mt-1">${tags}</span></span>
+      </button></li>`;
+    }).join('');
+    const over = a.overflow.map(o => `<li><button class="ag-row ag-over" ${o.kind === 'event' ? `data-ag-ev="${esc(o.id)}"` : `data-ag-task="${esc(o.id)}"`}>
+        <span class="ag-time">—<span>${PE.dur(o.dur)}</span></span><span class="ag-bar" style="--h: 239 68 68"></span>
+        <span class="flex-1 min-w-0 text-left"><span class="block font-medium truncate">${esc(o.title)}</span><span class="flex flex-wrap gap-1.5 mt-1"><span class="chip chip-red">No cabe</span>${agAreaChip(o.area)}</span></span></button></li>`).join('');
+    $('#agDay').innerHTML = `
+      <div class="ag-daynav">
+        <button class="icon-btn" data-ag-step="-1" aria-label="Día anterior">${ic('chevron', 'ag-rot90')}</button>
+        <div class="flex-1 min-w-0 text-center">
+          <p class="font-bold first-letter:uppercase leading-snug">${esc(dayTitle(day))}</p>
+          <p class="text-xs text-neutral-500">Tu día de ${esc(a.window.start)} a ${esc(dayProfile.end)} · ${a.margin} min entre actividades</p>
+        </div>
+        <button class="icon-btn" data-ag-step="1" aria-label="Día siguiente">${ic('chevron', 'ag-rot-90')}</button>
+      </div>
+      ${day !== tk ? '<div class="text-center mt-1"><button class="btn btn-ghost btn-sm" data-ag-step="0">Volver a hoy</button></div>' : ''}
+      <div class="ag-stats mt-4">
+        <div><p class="ag-k">Tiempo libre</p><p class="ag-v digits">${PE.dur(a.freeMin)}</p></div>
+        <div><p class="ag-k">Necesitas</p><p class="ag-v digits">${PE.dur(a.needMin)}</p></div>
+        <div><p class="ag-k">Estado</p><p class="mt-1"><span class="chip ${status[1]}">${esc(status[0])}</span></p></div>
+      </div>
+      <div class="ag-cap mt-3 ${!a.fits ? 'ag-cap-bad' : pct >= 85 ? 'ag-cap-warn' : ''}" role="img" aria-label="Ocupación del tiempo libre: ${pct}%"><span style="width:${pct}%"></span></div>
+      ${a.conflicts.length || warnings.length ? `<div class="space-y-2 mt-4">${[...a.conflicts, ...warnings].map(c => `
+        <div class="ag-alert ${c.severity === 'high' ? 'ag-alert-high' : ''}">
+          <span class="ag-ico" style="--h: ${c.severity === 'high' ? '239 68 68' : 'var(--h-goals)'}">${ic('alert')}</span>
+          <div class="flex-1 min-w-0"><p class="font-semibold text-sm flex flex-wrap items-center gap-1.5">${esc(c.title)} ${[].concat(c.rule).map(ruleChip).join('')}</p><p class="text-sm text-neutral-600 mt-0.5 leading-relaxed">${esc(c.msg)}</p>
+          ${c.taskId ? `<button class="btn btn-ghost btn-sm mt-1 !px-0 text-accent" data-ag-task="${esc(c.taskId)}">Ajustar la tarea</button>` : ''}</div>
+        </div>`).join('')}</div>` : ''}
+      ${missing.length ? `<div class="ag-alert mt-3"><span class="ag-ico" style="--h: var(--h-stats)">${ic('clock')}</span><div class="flex-1 min-w-0">
+        <p class="font-semibold text-sm flex items-center gap-1.5">Faltan duraciones ${ruleChip('R8')}</p>
+        <p class="text-sm text-neutral-600 mt-0.5">Uso 30 min de estimación. Dime cuánto dura para afinar el plan:</p>
+        <div class="flex flex-wrap gap-1.5 mt-2">${missing.map(u => `<button class="btn btn-sm" data-ag-task="${esc(u.id)}">${ic('clock')}${esc(u.title)}</button>`).join('')}</div></div></div>` : ''}
+      ${primary.length ? `<div class="space-y-3 mt-4">${primary.map(p => propCard(p, props.indexOf(p), day, true)).join('')}</div>` : ''}
+      ${others.length ? `<details class="mt-3 ag-more" ${primary.length ? '' : 'open'}><summary>${primary.length ? `Otras opciones (${others.length})` : `Sugerencias (${others.length})`}</summary><div class="space-y-3 mt-3">${others.map(p => propCard(p, props.indexOf(p), day, false)).join('')}</div></details>` : ''}
+      <div class="flex items-center justify-between gap-2 mt-6 mb-2">
+        <p class="field-label !mb-0">Tu día</p>
+        <div class="flex gap-1.5">
+          <button class="btn btn-sm" data-ag-new-event>${ic('plus')}Compromiso</button>
+          <button class="btn btn-sm" data-ag-new-task>${ic('plus')}Tarea</button>
+        </div>
+      </div>
+      ${rows || over ? `<ul class="ag-list">${rows}${over}</ul>` : `<div class="text-center py-8 rounded-app border-2 border-dashed border-neutral-200">
+        <p class="font-semibold">Nada planificado para ${esc(dayWord(day))}</p>
+        <p class="hint mt-1 max-w-sm mx-auto px-4">Añade tus compromisos (clases, turnos, reuniones, planes) y tareas con fecha. Yo compruebo si todo cabe y te propongo cómo ordenarlo.</p></div>`}
+      <p class="text-xs text-neutral-500 mt-3">Lo sugerido no se guarda en tu calendario hasta que aceptes una propuesta.</p>`;
+  }
+
+  /* ---------- Vista: semana ---------- */
+  function renderAgWeek() {
+    const start = agDay;
+    const w = PE.weekLoad(engineInput(start), start, 7);
+    $('#agWeek').innerHTML = `<p class="hint mb-3">Siete días desde ${esc(dayWord(start))}. Toca un día para revisarlo.</p>
+      <ul class="space-y-2">${w.map(d => {
+        const pct = d.freeMin ? Math.min(100, Math.round(d.needMin / d.freeMin * 100)) : (d.needMin ? 100 : 0);
+        const st = !d.items && !d.fixed ? '<span class="chip">Libre</span>' : !d.fits ? '<span class="chip chip-red">No cabe</span>' : d.conflicts ? `<span class="chip chip-amber">${plural(d.conflicts, 'aviso', 'avisos')}</span>` : '<span class="chip ag-ok">Cabe</span>';
+        return `<li><button class="ag-week" data-ag-goto="${d.day}">
+          <span class="w-24 shrink-0 text-left"><span class="block font-semibold text-sm first-letter:uppercase">${esc(keyToDate(d.day).toLocaleDateString('es-ES', { weekday: 'long' }))}</span><span class="block text-xs text-neutral-500">${esc(shortDate(d.day))}</span></span>
+          <span class="flex-1 min-w-0"><span class="ag-cap ${!d.fits ? 'ag-cap-bad' : pct >= 85 ? 'ag-cap-warn' : ''}"><span style="width:${pct}%"></span></span>
+          <span class="block text-xs text-neutral-500 mt-1 text-left">${PE.dur(d.needMin)} de ${PE.dur(d.freeMin)} libres · ${plural(d.fixed, 'fijo', 'fijos')}</span></span>
+          <span class="shrink-0">${st}</span></button></li>`;
+      }).join('')}</ul>`;
+  }
+
+  /* ---------- Vista: reglas ---------- */
+  function renderAgRules() {
+    const areaOpts = (sel) => `<option value="any" ${sel === 'any' ? 'selected' : ''}>cualquier cosa</option>` + Object.entries(AG_AREAS).map(([k, [n]]) => `<option value="${k}" ${sel === k ? 'selected' : ''}>${n.toLowerCase()}</option>`).join('');
+    $('#agRules').innerHTML = `
+      <div class="rounded-app p-4 bg-neutral-50 border border-neutral-200/70">
+        <p class="font-bold">Tu día</p>
+        <p class="hint mb-3">Entre qué horas planifico y cuánto margen dejo entre actividades (traslados, pausas).</p>
+        <form id="agProfileForm" class="grid grid-cols-2 gap-2">
+          <label><span class="field-label">Empieza</span><input id="agpStart" type="time" class="input input-sm w-full" value="${esc(dayProfile.start)}" required /></label>
+          <label><span class="field-label">Termina</span><input id="agpEnd" type="time" class="input input-sm w-full" value="${esc(dayProfile.end)}" required /></label>
+          <label class="col-span-2"><span class="field-label">Margen entre actividades (min)</span><input id="agpMargin" type="number" min="0" max="60" step="5" class="input input-sm w-full" value="${esc(dayProfile.margin)}" /></label>
+          <button class="btn btn-sm btn-accent col-span-2 mt-1" type="submit">Guardar</button>
+        </form>
+      </div>
+      <div class="rounded-app p-4 bg-neutral-50 border border-neutral-200/70 mt-4">
+        <p class="font-bold">Tus reglas personales</p>
+        <p class="hint mb-3">Límites que el motor respeta siempre.</p>
+        <ul class="space-y-1.5 mb-3">${prules.length ? prules.map(r => `<li class="flex items-center gap-2.5 text-sm">
+          <input type="checkbox" class="chk" data-ag-prule-toggle="${esc(r.id)}" ${r.active !== false ? 'checked' : ''} aria-label="Activar regla" />
+          <span class="flex-1 ${r.active === false ? 'text-neutral-400 line-through' : ''}">No programar ${r.area && r.area !== 'any' ? esc(AG_AREAS[r.area][0].toLowerCase()) : 'nada'} después de las ${esc(r.after)}</span>
+          <button class="icon-btn danger" data-ag-prule-del="${esc(r.id)}" aria-label="Borrar regla">${ic('trash')}</button></li>`).join('') : '<li class="text-sm text-neutral-500">Aún no tienes reglas personales.</li>'}</ul>
+        <form id="agPruleForm" class="grid grid-cols-2 gap-2">
+          <label><span class="field-label">No programar</span><select id="agprArea" class="input input-sm w-full">${areaOpts('any')}</select></label>
+          <label><span class="field-label">después de</span><input id="agprAfter" type="time" class="input input-sm w-full" value="22:00" required /></label>
+          <button class="btn btn-sm col-span-2" type="submit">${ic('plus')}Añadir</button>
+        </form>
+      </div>
+      <div class="mt-4">
+        <p class="font-bold mb-2">Reglas del motor</p>
+        <ul class="space-y-2">${PE.RULES.map(r => `<li class="ag-card"><p class="text-sm"><span class="ag-rule mr-1">${r.id}</span> <b>${esc(r.name)}</b></p><p class="text-sm text-neutral-600 mt-1"><span class="text-neutral-500">Cuándo:</span> ${esc(r.cond)}.</p><p class="text-sm text-neutral-600"><span class="text-neutral-500">Qué hace:</span> ${esc(r.action)}.</p></li>`).join('')}</ul>
+      </div>`;
+  }
+
+  /* ---------- Vista: historial ---------- */
+  const REC_STATE = { generada: ['Generada', ''], aceptada: ['Aceptada', ''], ejecutada: ['Aplicada', 'ag-ok'], rechazada: ['Rechazada', ''], deshecha: ['Deshecha', 'chip-amber'] };
+  const REC_RESULT = { '': 'Sin evaluar', exitosa: 'Funcionó', parcial: 'Ayudó en parte', fallida: 'No funcionó', no_evaluable: 'No se puede evaluar' };
+  function renderAgHistory() {
+    const done = recs.filter(r => r.estado === 'ejecutada');
+    const ok = done.filter(r => r.resultado === 'exitosa').length;
+    $('#agHistory').innerHTML = `
+      <p class="hint mb-3">Cada propuesta que aceptas o rechazas queda aquí, con los datos que tenía el motor. Aceptar no significa que funcionó: márcalo después para que el sistema aprenda con evidencia.</p>
+      ${done.length ? `<p class="text-sm mb-3"><b>${ok}</b> de ${plural(done.length, 'propuesta aplicada', 'propuestas aplicadas')} marcadas como "funcionó".</p>` : ''}
+      <ul class="space-y-2">${recs.slice(0, 40).map(r => `<li class="ag-card">
+        <div class="flex items-start justify-between gap-2">
+          <div class="min-w-0"><p class="font-semibold text-sm leading-snug">${esc(r.title)}</p>
+          <p class="text-xs text-neutral-500 mt-0.5">${esc(new Date(r.decidedAt || r.at).toLocaleString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }))} · para ${esc(dayWord(r.day))} · ${(r.rules || []).map(ruleChip).join(' ')}</p></div>
+          <span class="chip ${REC_STATE[r.estado]?.[1] || ''} shrink-0">${esc(REC_STATE[r.estado]?.[0] || r.estado)}</span>
+        </div>
+        ${r.situacion ? `<p class="text-xs text-neutral-500 mt-2">Situación: ${PE.dur(r.situacion.necesario_min || 0)} necesarios, ${PE.dur(r.situacion.libre_min || 0)} libres${r.situacion.incertidumbres?.length ? `, ${plural(r.situacion.incertidumbres.length, 'incertidumbre', 'incertidumbres')}` : ''}.</p>` : ''}
+        ${r.estado === 'ejecutada' ? `<label class="flex items-center gap-2 mt-2 text-sm"><span class="text-neutral-500">Resultado</span><select class="input input-sm" data-ag-result="${esc(r.id)}">${Object.entries(REC_RESULT).map(([k, v]) => `<option value="${k}" ${(r.resultado || '') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>` : ''}
+      </li>`).join('') || '<li class="text-sm text-neutral-500">Todavía no has aceptado ni rechazado propuestas.</li>'}</ul>
+      <details class="mt-5 ag-more"><summary>Registro de cambios (${changelog.length})</summary>
+        <ul class="mt-2 divide-y divide-neutral-100 text-sm">${changelog.slice(0, 60).map(c => `<li class="py-2">
+          <p><span class="font-semibold">${esc(c.title || c.entity)}</span> <span class="text-neutral-500">· ${c.by === 'sistema' ? 'el motor, con tu permiso' : 'tú'}</span></p>
+          <p class="text-xs text-neutral-500">${esc(new Date(c.at).toLocaleString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }))} · ${esc(c.reason || '')}${c.before || c.after ? ` · ${esc(diffText(c.before, c.after))}` : ''}</p></li>`).join('') || '<li class="py-2 text-neutral-500">Sin cambios todavía.</li>'}</ul>
+      </details>`;
+  }
+  function diffText(b, a) {
+    const L = { due: 'fecha', durMin: 'duración', date: 'día', start: 'inicio', end: 'fin', fixed: 'fijo', title: 'título', area: 'área' };
+    const v = (k, x) => (x == null ? '—' : k === 'durMin' ? `${x} min` : typeof x === 'boolean' ? (x ? 'sí' : 'no') : String(x));
+    if (!b) return 'creado';
+    if (!a) return 'borrado';
+    return Object.keys(a).filter(k => String(b[k]) !== String(a[k])).map(k => `${L[k] || k}: ${v(k, b[k])} → ${v(k, a[k])}`).join(', ') || 'sin cambios';
+  }
+
+  /* ---------- Tarjeta en Inicio (centro de control) ---------- */
+  function renderAgStrip() {
+    const el = $('#agendaStrip');
+    if (!el) return;
+    const tk = todayKey();
+    const a = PE.analyzeDay(engineInput(tk));
+    const warns = PE.deadlineWarnings(engineInput(tk));
+    if (!a.itemCount && !a.fixedCount && !warns.length && !events.length) { el.classList.add('hidden'); return; }
+    el.classList.remove('hidden');
+    const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+    const next = a.schedule.filter(s => !s.proposed && PE.toMin(s.end) > nowMin)[0];
+    const n = a.conflicts.length + warns.length;
+    const st = !a.fits ? `<span class="chip chip-red">${ic('alert')}No cabe todo</span>` : n ? `<span class="chip chip-amber">${ic('alert')}${plural(n, 'aviso', 'avisos')}</span>` : `<span class="chip ag-ok">${ic('check')}Todo cabe</span>`;
+    el.innerHTML = `<div class="flex flex-wrap items-center gap-3">
+      <span class="tile" style="--h: var(--h-plan)">${ic('calendar')}</span>
+      <div class="flex-1 min-w-[12rem]">
+        <p class="font-bold flex flex-wrap items-center gap-2">Agenda de hoy ${st}</p>
+        <p class="hint">${PE.dur(a.freeMin)} libres · necesitas ${PE.dur(a.needMin)}${next ? ` · Próximo: ${esc(next.start)} ${esc(next.title)}` : ''}</p>
+      </div>
+      <a href="#agenda" class="btn btn-sm ${n || !a.fits ? 'btn-accent' : ''}" data-ag-open-today>${n || !a.fits ? 'Resolver' : 'Ver agenda'}</a>
+    </div>`;
+  }
+
+  /* ---------- Render general ---------- */
+  function renderAgenda() {
+    if (!agReady) return;
+    try {
+      if (agTab === 'day') renderAgDay(PE.analyzeDay(engineInput(agDay)));
+      else if (agTab === 'week') renderAgWeek();
+      else if (agTab === 'rules') renderAgRules();
+      else renderAgHistory();
+      renderAgStrip();
+    } catch (err) { console.error('Agenda', err); }
+  }
+  function scrollToAgenda(day) {
+    if (day) agDay = day;
+    agTab = 'day'; activateTab('agenda', 'day'); renderAgenda();
+    document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ---------- Hoja: compromiso ---------- */
+  function openEventSheet(id, preset = {}) {
+    const e = id ? events.find(x => x.id === id) : null;
+    agEditing = e ? e.id : null;
+    const v = e || Object.assign({ title: '', date: agDay, start: '18:00', end: '19:00', area: 'personal', fixed: true, confirmed: false }, preset);
+    $('#evSheetTitle').textContent = e ? 'Editar compromiso' : 'Nuevo compromiso';
+    $('#evTitle').value = v.title; $('#evDate').value = v.date; $('#evStart').value = v.start; $('#evEnd').value = v.end;
+    $('#evArea').value = v.area || 'personal'; $('#evFixed').value = v.fixed ? 'fixed' : 'flexible'; $('#evConfirmed').checked = !!v.confirmed;
+    $('#evCost').value = v.costo || '';
+    $('#evDelete').classList.toggle('hidden', !e);
+    $('#evTaskNote').classList.toggle('hidden', !(e && e.taskId));
+    syncEventSheet();
+    openSheet('eventSheet');
+    setTimeout(() => { if (!e) $('#evTitle').focus(); }, 300);
+  }
+  function syncEventSheet() {
+    const flex = $('#evFixed').value === 'flexible';
+    $('#evCostWrap').classList.toggle('hidden', !flex);
+    $('#evConfirmedWrap').classList.toggle('hidden', $('#evArea').value !== 'social');
+  }
+  function saveEventFromSheet(ev) {
+    ev.preventDefault();
+    const title = $('#evTitle').value.trim();
+    if (!title) { $('#evTitle').focus(); return; }
+    const s = PE.toMin($('#evStart').value), en = PE.toMin($('#evEnd').value);
+    if (s == null || en == null || en <= s) { toast('La hora de fin debe ser posterior a la de inicio.', 'warn'); return; }
+    const data = cleanEvent({ title, date: $('#evDate').value || agDay, start: $('#evStart').value, end: $('#evEnd').value, area: $('#evArea').value, fixed: $('#evFixed').value === 'fixed', confirmed: $('#evArea').value === 'social' && $('#evConfirmed').checked, costo: $('#evFixed').value === 'flexible' ? ($('#evCost').value || undefined) : undefined });
+    const e = agEditing ? events.find(x => x.id === agEditing) : null;
+    if (e) {
+      const before = { title: e.title, date: e.date, start: e.start, end: e.end, fixed: e.fixed, area: e.area };
+      Object.assign(e, data, { id: e.id, taskId: e.taskId, createdAt: e.createdAt });
+      logChange('compromiso', e.id, e.title, before, { title: e.title, date: e.date, start: e.start, end: e.end, fixed: e.fixed, area: e.area }, 'Editado por ti');
+    } else {
+      events.push(data);
+      logChange('compromiso', data.id, data.title, null, { date: data.date, start: data.start, end: data.end, fixed: data.fixed }, 'Creado por ti');
+    }
+    saveEvents(); closeSheets();
+    agDay = data.date;
+    const a = PE.analyzeDay(engineInput(agDay));
+    renderAgenda();
+    if (a.conflicts.length) toast(`Guardado. Ojo: ${a.conflicts[0].title.toLowerCase()} ese día.`, 'warn', { label: 'Ver', fn: () => scrollToAgenda(agDay) });
+    else toast('Compromiso guardado', 'ok');
+  }
+  function deleteEvent(id) {
+    const i = events.findIndex(x => x.id === id);
+    if (i < 0) return;
+    const e = events[i];
+    if (e.fixed && !confirm(`"${e.title}" es un compromiso fijo. ¿Seguro que quieres borrarlo?`)) return;
+    events.splice(i, 1); saveEvents();
+    logChange('compromiso', e.id, e.title, { date: e.date, start: e.start, end: e.end }, null, 'Borrado por ti');
+    closeSheets(); renderAgenda();
+    toast('Compromiso borrado', 'info', { label: 'Deshacer', fn: () => { events.splice(Math.min(i, events.length), 0, e); saveEvents(); logChange('compromiso', e.id, e.title, null, { date: e.date, start: e.start, end: e.end }, 'Restaurado por ti'); renderAgenda(); } });
+  }
+
+  /* ---------- Hoja: planificar una tarea ---------- */
+  function openTaskPlan(id, presetDue) {
+    const t = id ? tasks.find(x => x.id === id) : null;
+    agTaskEditing = t ? t.id : null;
+    $('#tpSheetTitle').textContent = t ? 'Planificar tarea' : 'Nueva tarea';
+    $('#tpText').value = t ? t.text : '';
+    $('#tpDue').value = t ? (t.due || '') : (presetDue || agDay);
+    $('#tpDur').value = t && t.durMin ? t.durMin : '';
+    $('#tpSrc').value = t && t.durSrc === 'estimada' ? 'estimada' : 'usuario';
+    $('#tpArea').value = (t && t.area) || '';
+    $('#tpCost').value = (t && t.costo) || '';
+    $('#tpImp').value = (t && t.importancia) || '';
+    openSheet('taskPlanSheet');
+    setTimeout(() => (t ? $('#tpDur') : $('#tpText')).focus(), 300);
+  }
+  function saveTaskPlan(ev) {
+    ev.preventDefault();
+    const text = $('#tpText').value.trim();
+    if (!text) { $('#tpText').focus(); return; }
+    const fields = cleanPlanFields({ durMin: $('#tpDur').value, durSrc: $('#tpSrc').value, area: $('#tpArea').value, costo: $('#tpCost').value, importancia: $('#tpImp').value });
+    const due = $('#tpDue').value || null;
+    const t = agTaskEditing ? tasks.find(x => x.id === agTaskEditing) : null;
+    if (t) {
+      const before = { title: t.text, due: t.due, durMin: t.durMin || null, area: t.area || null };
+      t.text = text.slice(0, 160); t.due = due;
+      ['durMin', 'durSrc', 'area', 'costo', 'importancia'].forEach(k => { delete t[k]; });
+      Object.assign(t, fields);
+      logChange('tarea', t.id, t.text, before, { title: t.text, due: t.due, durMin: t.durMin || null, area: t.area || null }, 'Editada por ti');
+      saveTasks();
+    } else {
+      const nt = addTask(Object.assign({ text, due }, fields));
+      logChange('tarea', nt.id, nt.text, null, { due, durMin: nt.durMin || null }, 'Creada por ti');
+      saveTasks();
+    }
+    closeSheets(); onTasksChanged(!t);
+    toast(t ? 'Tarea actualizada' : 'Tarea añadida', 'ok');
+  }
+
+  /* ---------- Eventos de la interfaz ---------- */
+  $$('[data-tabs="agenda"] [data-tab]').forEach(b => b.addEventListener('click', () => { agTab = b.dataset.tab; renderAgenda(); }));
+  document.addEventListener('click', (e) => {
+    const t = e.target;
+    let el;
+    if ((el = t.closest('[data-ag-step]'))) { const n = +el.dataset.agStep; agDay = n === 0 ? todayKey() : PE.keyAdd(agDay, n); renderAgenda(); return; }
+    if ((el = t.closest('[data-ag-goto]'))) { scrollToAgenda(el.dataset.agGoto); return; }
+    if ((el = t.closest('[data-ag-open-today]'))) { e.preventDefault(); scrollToAgenda(todayKey()); return; }
+    if ((el = t.closest('[data-ag-accept]'))) { const p = agProps[+el.dataset.agAccept]; if (p) acceptProposal(p, agDay); return; }
+    if ((el = t.closest('[data-ag-reject]'))) { const p = agProps[+el.dataset.agReject]; if (p) rejectProposal(p, agDay); return; }
+    if ((el = t.closest('[data-ag-ev]'))) { openEventSheet(el.dataset.agEv); return; }
+    if ((el = t.closest('[data-ag-task]'))) { openTaskPlan(el.dataset.agTask); return; }
+    if (t.closest('[data-ag-new-event]')) { openEventSheet(null, { date: agDay }); return; }
+    if (t.closest('[data-ag-new-task]')) { openTaskPlan(null, agDay); return; }
+    if ((el = t.closest('[data-ag-prule-del]'))) {
+      const r = prules.find(x => x.id === el.dataset.agPruleDel);
+      prules = prules.filter(x => x !== r); savePrules();
+      logChange('regla personal', r.id, `Después de las ${r.after}`, { activa: r.active !== false }, null, 'Borrada por ti');
+      renderAgenda(); return;
+    }
+  });
+  document.addEventListener('change', (e) => {
+    const t = e.target;
+    if (t.matches('[data-ag-prule-toggle]')) {
+      const r = prules.find(x => x.id === t.dataset.agPruleToggle); if (!r) return;
+      r.active = t.checked; savePrules();
+      logChange('regla personal', r.id, `Después de las ${r.after}`, { activa: !t.checked }, { activa: t.checked }, 'Cambiada por ti');
+      renderAgenda();
+    } else if (t.matches('[data-ag-result]')) {
+      const r = recs.find(x => x.id === t.dataset.agResult); if (!r) return;
+      r.resultado = t.value || null; r.evaluatedAt = new Date().toISOString(); saveRecs();
+      renderAgenda();
+      toast('Resultado guardado', 'ok');
+    }
+  });
+  document.addEventListener('submit', (e) => {
+    if (e.target.id === 'agProfileForm') {
+      e.preventDefault();
+      const s = $('#agpStart').value, en = $('#agpEnd').value;
+      if (PE.toMin(en) <= PE.toMin(s)) { toast('La hora de fin debe ser posterior a la de inicio.', 'warn'); return; }
+      const before = { ...dayProfile };
+      dayProfile = { start: s, end: en, margin: Math.max(0, Math.min(60, Math.round(+$('#agpMargin').value || 0))) };
+      saveProfile2();
+      logChange('perfil del día', 'perfil', 'Tu día', before, { ...dayProfile }, 'Cambiado por ti');
+      renderAgenda(); toast('Guardado', 'ok');
+    } else if (e.target.id === 'agPruleForm') {
+      e.preventDefault();
+      const r = { id: uid(), area: $('#agprArea').value, after: $('#agprAfter').value, active: true };
+      if (PE.toMin(r.after) == null) return;
+      prules.push(r); savePrules();
+      logChange('regla personal', r.id, `Después de las ${r.after}`, null, { area: r.area, after: r.after }, 'Creada por ti');
+      renderAgenda(); toast('Regla añadida', 'ok');
+    }
+  });
+  $('#eventForm').addEventListener('submit', saveEventFromSheet);
+  $('#evFixed').addEventListener('change', syncEventSheet);
+  $('#evArea').addEventListener('change', syncEventSheet);
+  $('#evDelete').addEventListener('click', () => { if (agEditing) deleteEvent(agEditing); });
+  $('#taskPlanForm').addEventListener('submit', saveTaskPlan);
+  $('#agAddEventBtn').addEventListener('click', () => openEventSheet(null, { date: agDay }));
+  setInterval(() => { if (document.visibilityState === 'visible') renderAgenda(); }, 60000);
+
+  /* ---------- Para el asistente ---------- */
+  function agendaReply(day = todayKey()) {
+    const inp = engineInput(day);
+    const a = PE.analyzeDay(inp);
+    const w = day === todayKey() ? PE.deadlineWarnings(inp) : [];
+    const p = a.proposals.find(x => x.primary && !x.optional && !isRejected(x, day));
+    const when = dayWord(day);
+    let text;
+    if (!a.itemCount && !a.fixedCount) text = `Para ${when} no tienes compromisos ni tareas con fecha. Si me cuentas qué tienes, compruebo si todo cabe.`;
+    else if (a.fits && !a.conflicts.length) text = `Todo cabe ${when}: necesitas ${PE.dur(a.needMin)} y tienes ${PE.dur(a.freeMin)} libres.`;
+    else text = a.conflicts.map(c => c.msg).join(' ');
+    if (p) text += ` Mi propuesta: ${p.title.charAt(0).toLowerCase() + p.title.slice(1)}. No cambio nada hasta que la aceptes.`;
+    if (w.length) text += ' ' + w[0].msg;
+    const actions = [];
+    if (p) actions.push({ label: 'Aceptar propuesta', fn: () => { acceptProposal(p, day); reply('Hecho, apliqué la propuesta. Puedes deshacerlo desde el aviso.'); } });
+    actions.push({ label: 'Ver agenda', fn: () => { closeSheets(); scrollToAgenda(day); } });
+    return { text, actions };
+  }
+  function agendaAiState() {
+    const tk = todayKey();
+    const a = PE.analyzeDay(engineInput(tk));
+    return {
+      perfil: dayProfile, libre_min: a.freeMin, necesario_min: a.needMin, cabe_todo: a.fits,
+      compromisos_hoy: events.filter(e => e.date === tk).map(e => ({ id: sid(e), titulo: e.title, inicio: e.start, fin: e.end, fijo: e.fixed || e.confirmed, area: e.area })),
+      proximos_compromisos: events.filter(e => e.date > tk && e.date <= PE.keyAdd(tk, 7)).slice(0, 20).map(e => ({ id: sid(e), titulo: e.title, fecha: e.date, inicio: e.start, fin: e.end, fijo: e.fixed || e.confirmed })),
+      conflictos: a.conflicts.map(c => c.msg),
+    };
+  }
+  function agendaAnalysisForAi(day) {
+    const inp = engineInput(day);
+    const a = PE.analyzeDay(inp);
+    return {
+      dia: day, libre_min: a.freeMin, necesario_min: a.needMin, cabe_todo: a.fits,
+      conflictos: a.conflicts.map(c => ({ reglas: c.rule, mensaje: c.msg })),
+      avisos_fecha_limite: day === todayKey() ? PE.deadlineWarnings(inp).map(w => ({ regla: w.rule, mensaje: w.msg })) : [],
+      propuestas: a.proposals.map(p => ({ titulo: p.title, principal: !!p.primary, opcional: !!p.optional, reglas: p.rules, motivos: p.why, incertidumbres: p.uncertain })),
+      nota: 'Las propuestas solo se aplican cuando la persona pulsa Aceptar en la Agenda.',
+    };
+  }
+  function addEventFromAi(i) {
+    const s = PE.toMin(i.start), en = PE.toMin(i.end);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(i.date || '')) || s == null || en == null || en <= s) return { error: 'Faltan fecha (AAAA-MM-DD) u horas válidas (HH:MM, fin después de inicio)' };
+    const e = cleanEvent({ title: i.title, date: i.date, start: i.start, end: i.end, area: i.area, fixed: i.fixed !== false, confirmed: i.area === 'social' && i.fixed !== false });
+    if (!e.title) return { error: 'Falta el título' };
+    events.push(e); saveEvents();
+    logChange('compromiso', e.id, e.title, null, { date: e.date, start: e.start, end: e.end, fixed: e.fixed }, 'Creado por el asistente a petición tuya', 'asistente');
+    agDay = e.date; renderAgenda();
+    pushUndo(`añadir el compromiso "${e.title}"`, () => { events = events.filter(x => x !== e); saveEvents(); renderAgenda(); });
+    const a = PE.analyzeDay(engineInput(e.date));
+    return { ok: true, id: sid(e), conflictos_ese_dia: a.conflicts.map(c => c.msg) };
+  }
+
+  agReady = true;
+/* AGENDA-UI:END */
   /* =====================================================================
      ASISTENTE · utilidades comunes
   ===================================================================== */
@@ -4138,8 +5261,8 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
 
   /* ---------- Acciones (las usan el cerebro local y la IA) ---------- */
   const A = {
-    addTask({ text, due = null, priority = 'normal', tag = '' }) {
-      const t = addTask({ text: cap(String(text).trim()).slice(0, 160), due: due || null, priority: priority === 'urgent' ? 'urgent' : 'normal', tag: tag || '' });
+    addTask({ text, due = null, priority = 'normal', tag = '', ...plan }) {
+      const t = addTask({ text: cap(String(text).trim()).slice(0, 160), due: due || null, priority: priority === 'urgent' ? 'urgent' : 'normal', tag: tag || '', ...plan });
       saveTasks(); onTasksChanged(true);
       remember('task', t);
       pushUndo(`añadir "${t.text}"`, () => { const i = tasks.indexOf(t); if (i >= 0) { tasks.splice(i, 1); saveTasks(); onTasksChanged(); } });
@@ -4589,7 +5712,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   }
 
   /* ---------- Reglas del intérprete ---------- */
-  const SECTIONS = { tareas: 'tareas', habitos: 'habitos', metas: 'metas', notas: 'notas', progreso: 'progreso', graficas: 'progreso', estadisticas: 'progreso', analizador: 'analizador', archivos: 'analizador', descargas: 'descargas', enfoque: 'enfoque', pomodoro: 'enfoque', temporizador: 'enfoque', inicio: 'resumen', plan: 'planCard' };
+  const SECTIONS = { tareas: 'tareas', habitos: 'habitos', metas: 'metas', notas: 'notas', progreso: 'progreso', graficas: 'progreso', estadisticas: 'progreso', analizador: 'analizador', archivos: 'analizador', descargas: 'descargas', enfoque: 'enfoque', pomodoro: 'enfoque', temporizador: 'enfoque', inicio: 'resumen', plan: 'planCard', agenda: 'agenda', calendario: 'agenda' };
   const COLORS = { azul: '#2563eb', celeste: '#0891b2', turquesa: '#0891b2', verde: '#059669', lima: '#65a30d', amarillo: '#d97706', naranja: '#ea580c', rojo: '#e11d48', rosa: '#db2777', morado: '#7c3aed', violeta: '#7c3aed', indigo: '#4f46e5' };
   const SHAPE_RE = 'orbe|esfera|burbuja|gota|ondas|onda|ecualizador|cristal|diamante|poliedro|galaxia|espiral|atomo';
   const SHAPE_ALIAS = { orbe: 'orbe', esfera: 'orbe', burbuja: 'burbuja', gota: 'burbuja', ondas: 'ondas', onda: 'ondas', ecualizador: 'ondas', cristal: 'cristal', diamante: 'cristal', poliedro: 'cristal', galaxia: 'galaxia', espiral: 'galaxia', atomo: 'atomo' };
@@ -4605,7 +5728,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   const notFound = (q, what = 'tus tareas') => ({ text: `No encontré nada parecido a "${q}" en ${what}.` });
 
   function helpReply() {
-    const ex = ['qué tengo para hoy', 'añade llamar al banco mañana a las 10 urgente', 'recuérdame en 20 minutos sacar la ropa', 'cuál es mi próxima tarea', 'planifica mi día', 'márcala como hecha', 'muévela al viernes', 'empieza a concentrarme 25 minutos', 'crea el hábito leer 20 minutos', 'meta correr 50 km', 'cuánto es 15% de 240', 'convierte 10 millas a km', 'resumen de la semana', 'deshaz'];
+    const ex = ['qué tengo para hoy', 'añade llamar al banco mañana a las 10 urgente', 'recuérdame en 20 minutos sacar la ropa', 'cuál es mi próxima tarea', 'planifica mi día', 'me da tiempo hoy', 'revisa mi agenda', 'márcala como hecha', 'muévela al viernes', 'empieza a concentrarme 25 minutos', 'crea el hábito leer 20 minutos', 'meta correr 50 km', 'cuánto es 15% de 240', 'convierte 10 millas a km', 'resumen de la semana', 'deshaz'];
     return { text: 'Puedo organizar tus tareas, hábitos, metas, notas y recordatorios, cuidar tu tiempo de concentración, hacer cálculos y contarte cómo vas. Puedes pedirme varias cosas a la vez y referirte a lo último con "esa" o "la segunda". Toca un ejemplo:', say: 'Te dejo algunos ejemplos en pantalla. Toca uno para probarlo.', actions: ex.map(c => ({ label: c, fn: () => handleCommand(c) })) };
   }
 
@@ -4616,6 +5739,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
     return { text: `Listo, deshice: ${u.label}.` };
   });
   rule('help', /^(ayuda|que puedes hacer|que sabes hacer|como funcionas|comandos|que haces|como te uso)\b/, () => helpReply());
+  rule('agendaCheck', /(conflictos?|choques?|se (me )?(cruzan|solapan|chocan)|me da (el )?tiempo|cabe todo|(revisa|analiza|como esta|como va|organiza|planifica|ordena) (mi |la )?(agenda|calendario|horario))/, (m, o) => agendaReply(/\bmanana\b/.test(o.n) ? PE.keyAdd(todayKey(), 1) : todayKey()));
   rule('aiName', /^(te llamaras|tu nombre sera|cambia tu nombre a|te voy a llamar|llamate)\s+(.+)$/, (m, o) => { const v = cap(tailOf(o, m[2]).trim().slice(0, 20)); setPersona({ aiName: v }); return { text: `Me gusta. A partir de ahora soy ${v}.` }; });
   rule('userName', /^(llamame|mi nombre es|me llamo)\s+(.+)$/, (m, o) => { const v = cap(tailOf(o, m[2]).trim().slice(0, 30)); setPersona({ userName: v }); return { text: `Entendido. Desde ahora te llamo ${v}.` }; });
   rule('time', /^(dime\s+)?que hora es/, () => ({ text: `Son las ${new Date().toLocaleTimeString('es-ES', { hour: 'numeric', minute: '2-digit' })}.` }));
@@ -4655,7 +5779,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
   rule('report', /^((dame|genera|generar|descarga|descargar|crea|crear|haz|hazme|quiero)\s+(el\s+|un\s+|mi\s+)?)?(informe|reporte)\b/, () => { clickExport('reportPdf'); return { text: 'Estoy preparando tu informe de progreso en PDF. Lo encontrarás en tus descargas.' }; });
   rule('install', /^(como\s+)?(te\s+)?(instalo|instala|instalar|instalacion)\b|funcionas sin internet|^(modo\s+)?(sin internet|offline)$/, () => { setTimeout(() => openSheet('installSheet'), 900); return { text: 'Te muestro cómo instalarme en tu teléfono. Una vez instalada, funciono sin internet.' }; });
   rule('settings', /^(abre|abrir|muestrame|ve a)\s+(los\s+)?(ajustes|configuracion|colores)\b/, () => { setTimeout(() => openSheet('themeSheet'), 600); return { text: 'Aquí tienes los ajustes.' }; });
-  rule('navigate', /^(abre|abrir|ve a|vamos a|muestrame|mostrar|ensename|ir a|llevame a|quiero ver)\s+(la seccion de\s+|el\s+|la\s+|las\s+|los\s+|mis\s+)?(tareas|habitos|metas|notas|progreso|graficas|estadisticas|analizador|archivos|descargas|enfoque|pomodoro|temporizador|inicio|plan)\b/, (m) => { closeSoon(); scrollToId(SECTIONS[m[3]]); return { text: `Te llevo a ${m[3]}.` }; });
+  rule('navigate', /^(abre|abrir|ve a|vamos a|muestrame|mostrar|ensename|ir a|llevame a|quiero ver)\s+(la seccion de\s+|el\s+|la\s+|las\s+|los\s+|mis\s+)?(tareas|habitos|metas|notas|progreso|graficas|estadisticas|analizador|archivos|descargas|enfoque|pomodoro|temporizador|inicio|plan|agenda|calendario)\b/, (m) => { closeSoon(); scrollToId(SECTIONS[m[3]]); return { text: `Te llevo a ${m[3]}.` }; });
 
   // Recordatorios y temporizadores
   rule('timer', /^((pon|ponme|inicia|activa|crea|programa)\s+)?(un\s+)?(temporizador|cronometro|timer|alarma)\s+(de\s+|para\s+|en\s+)?(\d+(?:[.,]\d+)?|un|una|media)\s*(minutos?|min|segundos?|seg|horas?|hora)\b/, (m) => {
@@ -6154,6 +7278,7 @@ catch(err){self.postMessage({id,ok:false,error:String(err&&err.message||err)});}
       enfoque: { corriendo: running, modo: { focus: 'concentración', short: 'descanso corto', long: 'descanso largo' }[mode] || mode, minutos_restantes: Math.ceil(remaining / 60), minutos_de_enfoque_hoy: focusMinutesOn(today) },
       recordatorios: reminders.filter(r => !r.done).map(r => ({ cuando: whenText(r.at), texto: r.text })),
       apariencia: { tema: settings.theme, figura: currentShape() },
+      agenda: agendaAiState(),
     });
   }
   function aiSystem() {
@@ -6173,6 +7298,8 @@ Cómo respondes:
 - Para preguntas generales (dudas, consejos, ideas, redacción, cuentas) responde tú mismo, con precisión y sin rodeos.
 - Si algo no se puede hacer en la app, dilo con sencillez y propone lo más parecido.
 - Cuando des un consejo de productividad, basa tu respuesta en los datos reales del estado.
+- La agenda tiene un motor de reglas (R1 a R10) que decide si el día cabe y qué proponer. Para choques de horario o saber si algo cabe, usa analyze_day y explica su resultado; no inventes horarios ni des por aplicada una propuesta: la persona la acepta en la Agenda.
+- Para clases, turnos, reuniones o planes con hora usa add_event. Si al crearlo el resultado trae conflictos, cuéntalos.
 - Si la persona te cuenta algo duradero sobre sí misma (gustos, ciudad, cumpleaños, nombres de personas o mascotas), guárdalo con remember_about_user.
 - Si expresa ideas de hacerse daño o de quitarse la vida, responde con calidez, anímala a hablar hoy con alguien de confianza o con una línea de ayuda en crisis y, si hay peligro inmediato, a llamar a emergencias.
 
@@ -6185,10 +7312,10 @@ ${JSON.stringify(aiState())}`;
   const tStr = (description) => ({ type: 'string', description });
   const tNum = (description) => ({ type: 'number', description });
   const tBool = (description) => ({ type: 'boolean', description });
-  const AI_SECTIONS = ['inicio', 'plan', 'tareas', 'enfoque', 'habitos', 'metas', 'notas', 'progreso', 'analizador', 'descargas', 'ajustes', 'instalar', 'respaldo'];
+  const AI_SECTIONS = ['inicio', 'agenda', 'plan', 'tareas', 'enfoque', 'habitos', 'metas', 'notas', 'progreso', 'analizador', 'descargas', 'ajustes', 'instalar', 'respaldo'];
   const AI_EXPORTS = { backup: 'copia de seguridad', reportPdf: 'informe PDF', dashPdf: 'panel en PDF', dashPng: 'panel en imagen', tasksCsv: 'tareas en CSV', tasksMd: 'tareas en Markdown', tasksTxt: 'tareas en texto', notesMd: 'notas en Markdown', habitsCsv: 'hábitos en CSV', goalsCsv: 'metas en CSV', chartsPng: 'gráficas en imagen' };
   const AI_TOOLS = [
-    { name: 'add_task', description: 'Crea una tarea nueva.', input_schema: S({ text: tStr('Texto de la tarea, empezando por un verbo si es posible'), due: tStr('Fecha AAAA-MM-DD (opcional)'), urgent: tBool('true si es urgente'), tag: tStr('Etiqueta corta sin # (opcional)') }, ['text']) },
+    { name: 'add_task', description: 'Crea una tarea nueva.', input_schema: S({ text: tStr('Texto de la tarea, empezando por un verbo si es posible'), due: tStr('Fecha AAAA-MM-DD (opcional)'), urgent: tBool('true si es urgente'), tag: tStr('Etiqueta corta sin # (opcional)'), duration_min: tNum('Duración en minutos, solo si la persona la dijo'), area: { type: 'string', enum: ['estudio', 'trabajo', 'ejercicio', 'social', 'hogar', 'personal'] }, cost: { type: 'string', enum: ['ninguno', 'bajo', 'alto', 'critico'], description: 'Costo de aplazarla, solo si la persona lo dijo' } }, ['text']) },
     { name: 'update_task', description: 'Cambia una tarea existente: texto, fecha, urgencia, etiqueta, o la completa / reabre.', input_schema: S({ id: tStr('id de la tarea'), text: tStr('Nuevo texto'), due: tStr('Nueva fecha AAAA-MM-DD, o "none" para quitarla'), urgent: tBool('Urgente o no'), tag: tStr('Nueva etiqueta, o "" para quitarla'), done: tBool('true = completar, false = reabrir') }, ['id']) },
     { name: 'delete_task', description: 'Borra una tarea.', input_schema: S({ id: tStr('id de la tarea') }, ['id']) },
     { name: 'add_habit', description: 'Crea un hábito diario.', input_schema: S({ name: tStr('Nombre corto del hábito') }, ['name']) },
@@ -6206,6 +7333,8 @@ ${JSON.stringify(aiState())}`;
     { name: 'change_appearance', description: 'Cambia el aspecto: tema de color, color principal o la figura del asistente.', input_schema: S({ theme: { type: 'string', enum: Object.keys(THEMES) }, accent: tStr('Color principal #rrggbb'), shape: { type: 'string', enum: Object.keys(SHAPES), description: 'Figura animada del asistente' } }) },
     { name: 'open_section', description: 'Lleva a la persona a una sección de la app.', input_schema: S({ section: { type: 'string', enum: AI_SECTIONS } }, ['section']) },
     { name: 'export_file', description: 'Descarga un archivo con los datos.', input_schema: S({ kind: { type: 'string', enum: Object.keys(AI_EXPORTS) } }, ['kind']) },
+    { name: 'add_event', description: 'Crea un compromiso con hora en la agenda (clase, turno, reunión, plan). Por defecto es fijo.', input_schema: S({ title: tStr('Qué es'), date: tStr('Fecha AAAA-MM-DD'), start: tStr('Hora de inicio HH:MM'), end: tStr('Hora de fin HH:MM'), area: { type: 'string', enum: ['estudio', 'trabajo', 'ejercicio', 'social', 'hogar', 'personal'] }, fixed: tBool('false si se puede mover') }, ['title', 'date', 'start', 'end']) },
+    { name: 'analyze_day', description: 'Pide al motor de reglas de la agenda que revise un día: tiempo libre, si todo cabe, conflictos y propuestas. No cambia nada.', input_schema: S({ date: tStr('Fecha AAAA-MM-DD (por defecto hoy)') }) },
     { name: 'undo', description: 'Deshace la última acción hecha en la app.', input_schema: S({}) },
     { name: 'remember_about_user', description: 'Guarda un dato duradero sobre la persona en la memoria local del asistente.', input_schema: S({ kind: { type: 'string', enum: ['like', 'dislike', 'birthday', 'city', 'fact', 'note'] }, key: tStr('Para fact: qué es (ej. "perro", "color favorito")'), value: tStr('El dato. Para birthday: MM-DD') }, ['kind', 'value']) },
     { name: 'forget_about_user', description: 'Olvida datos guardados sobre la persona que contengan este texto.', input_schema: S({ query: tStr('Texto a olvidar') }, ['query']) },
@@ -6213,7 +7342,9 @@ ${JSON.stringify(aiState())}`;
 
   const okDate = (d) => (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : null);
   const AI_RUN = {
-    add_task(i) { const t = A.addTask({ text: i.text, due: okDate(i.due), priority: i.urgent ? 'urgent' : 'normal', tag: String(i.tag || '').replace(/^#/, '') }); return { ok: true, id: sid(t) }; },
+    add_task(i) { const t = A.addTask({ text: i.text, due: okDate(i.due), priority: i.urgent ? 'urgent' : 'normal', tag: String(i.tag || '').replace(/^#/, ''), durMin: i.duration_min, durSrc: 'estimada', area: i.area, costo: i.cost }); return { ok: true, id: sid(t) }; },
+    add_event(i) { return addEventFromAi(i); },
+    analyze_day(i) { return agendaAnalysisForAi(okDate(i.date) || todayKey()); },
     update_task(i) {
       const t = findBy(tasks, i.id); if (!t) return { error: 'No existe una tarea con ese id' };
       const patch = {};
@@ -6797,9 +7928,9 @@ ${JSON.stringify(aiState())}`;
   }
   const isMulti = (raw) => /;|\.\s+\S|\s(y\s+)?(luego|despu[eé]s|adem[aá]s|y\s+tambi[eé]n)\s/i.test(raw);
   // Órdenes instantáneas que siempre resuelve el cerebro local, aunque la IA esté activa.
-  const LOCAL_FIRST = new Set(['undo', 'voiceOff', 'voiceOn', 'voiceSpeed', 'voiceChange', 'handsFreeOn', 'handsFreeOff', 'shape', 'time', 'date', 'calc', 'convert',
+  const LOCAL_FIRST = new Set(['agendaCheck', 'undo', 'voiceOff', 'voiceOn', 'voiceSpeed', 'voiceChange', 'handsFreeOn', 'handsFreeOff', 'shape', 'time', 'date', 'calc', 'convert',
     'timer', 'pause', 'resume', 'timeLeft', 'break', 'color', 'dark', 'light', 'theme', 'install', 'settings', 'navigate', 'backup', 'report', 'weather', 'currency']);
-  const TOOL_LABEL = { add_task: 'Creando tarea', update_task: 'Actualizando tarea', delete_task: 'Borrando tarea', add_habit: 'Creando hábito', set_habit_done: 'Marcando hábito', delete_habit: 'Borrando hábito', add_goal: 'Creando meta', update_goal: 'Actualizando meta', delete_goal: 'Borrando meta', add_note: 'Guardando nota', read_notes: 'Leyendo tus notas', set_plan: 'Organizando tu plan', start_focus: 'Iniciando concentración', control_timer: 'Ajustando el temporizador', set_reminder: 'Programando recordatorio', change_appearance: 'Cambiando el aspecto', open_section: 'Abriendo sección', export_file: 'Preparando archivo', undo: 'Deshaciendo', remember_about_user: 'Recordando', forget_about_user: 'Olvidando' };
+  const TOOL_LABEL = { add_event: 'Añadiendo a la agenda', analyze_day: 'Revisando tu agenda', add_task: 'Creando tarea', update_task: 'Actualizando tarea', delete_task: 'Borrando tarea', add_habit: 'Creando hábito', set_habit_done: 'Marcando hábito', delete_habit: 'Borrando hábito', add_goal: 'Creando meta', update_goal: 'Actualizando meta', delete_goal: 'Borrando meta', add_note: 'Guardando nota', read_notes: 'Leyendo tus notas', set_plan: 'Organizando tu plan', start_focus: 'Iniciando concentración', control_timer: 'Ajustando el temporizador', set_reminder: 'Programando recordatorio', change_appearance: 'Cambiando el aspecto', open_section: 'Abriendo sección', export_file: 'Preparando archivo', undo: 'Deshaciendo', remember_about_user: 'Recordando', forget_about_user: 'Olvidando' };
 
   async function askAi(raw) {
     busy = true; showStop();
@@ -7303,7 +8434,7 @@ ${JSON.stringify(aiState())}`;
   ===================================================================== */
   function renderAll() {
     renderTasks(); renderTaskSelect(); renderHabits(); renderGoals(); renderNotesList(); renderEditor();
-    renderPlan(); renderToday(); renderDay(); renderStats(); renderWelcome(); renderFileHistory(); renderAnalytics(); renderThemeSheet(); renderFocusInfo();
+    renderPlan(); renderToday(); renderDay(); renderStats(); renderWelcome(); renderFileHistory(); renderAnalytics(); renderThemeSheet(); renderFocusInfo(); renderAgenda();
   }
   renderAll();
   setMode('focus');

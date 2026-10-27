@@ -1,0 +1,46 @@
+/* AGENDA-CSS:START */
+.ag-rot90 { transform: rotate(90deg); }
+.ag-rot-90 { transform: rotate(-90deg); }
+.ag-daynav { display: flex; align-items: center; gap: .5rem; }
+.ag-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.ag-stats > div { background: rgb(var(--n100) / .7); border-radius: var(--r-sm); padding: .6rem .75rem; min-width: 0; }
+.ag-k { font-size: .72rem; font-weight: 600; color: rgb(var(--n500)); }
+.ag-v { font-size: 1.05rem; font-weight: 800; letter-spacing: -.01em; margin-top: .1rem; line-height: 1.2; }
+.ag-cap { display: block; height: .5rem; border-radius: 999px; background: rgb(var(--n100)); overflow: hidden; }
+.ag-cap > span { display: block; height: 100%; border-radius: inherit; background: rgb(var(--h-habits)); transition: width .4s ease; }
+.ag-cap-warn > span { background: rgb(var(--h-goals)); }
+.ag-cap-bad > span { background: #ef4444; }
+.chip.ag-ok { background: rgb(var(--h-habits) / .14); color: rgb(var(--h-habits)); }
+.ag-rule { display: inline-flex; align-items: center; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .66rem; font-weight: 700; padding: .05rem .38rem; border-radius: 6px; background: rgb(var(--accent) / .1); color: rgb(var(--accent)); }
+.ag-ico { --h: var(--accent); width: 2rem; height: 2rem; border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; background: rgb(var(--h) / .13); color: rgb(var(--h)); }
+.ag-ico svg { width: 1rem; height: 1rem; }
+.ag-alert { display: flex; align-items: flex-start; gap: .65rem; padding: .75rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--h-goals) / .3); background: rgb(var(--h-goals) / .06); }
+.ag-alert-high { border-color: rgb(239 68 68 / .3); background: rgb(239 68 68 / .05); }
+.ag-card { padding: .9rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--n200)); background: var(--surface); }
+.ag-prop { border-color: rgb(var(--accent) / .35); background: rgb(var(--accent) / .04); box-shadow: 0 0 0 3px rgb(var(--accent) / .06); }
+.ag-changes { margin-top: .6rem; display: grid; gap: .3rem; font-size: .875rem; }
+.ag-changes li { position: relative; padding-left: 1rem; color: rgb(var(--n700)); }
+.ag-changes li::before { content: ''; position: absolute; left: .2rem; top: .55rem; width: .35rem; height: .35rem; border-radius: 999px; background: rgb(var(--accent)); }
+.ag-why { margin-top: .5rem; }
+.ag-why > summary, .ag-more > summary { cursor: pointer; font-size: .8125rem; font-weight: 600; color: rgb(var(--accent)); list-style: none; }
+.ag-why > summary::-webkit-details-marker, .ag-more > summary::-webkit-details-marker { display: none; }
+.ag-why-body { margin-top: .5rem; padding: .7rem .8rem; border-radius: calc(var(--r-sm) - 2px); background: rgb(var(--n100) / .7); font-size: .8125rem; color: rgb(var(--n600)); }
+.ag-why-body ul { display: grid; gap: .2rem; margin-bottom: .45rem; padding-left: 1rem; list-style: disc; }
+.ag-why-h { font-weight: 700; color: rgb(var(--n800)); margin-bottom: .2rem; }
+.ag-list { display: grid; gap: .4rem; }
+.ag-row { width: 100%; display: flex; align-items: stretch; gap: .7rem; padding: .55rem .65rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--n200) / .8); background: var(--surface); transition: background .15s, border-color .15s; }
+.ag-row:hover { background: rgb(var(--n100) / .6); }
+.ag-proposed { border-style: dashed; border-color: rgb(var(--accent) / .45); background: rgb(var(--accent) / .03); }
+.ag-over { border-color: rgb(239 68 68 / .35); background: rgb(239 68 68 / .04); }
+.ag-time { width: 2.9rem; flex-shrink: 0; font-size: .8125rem; font-weight: 700; line-height: 1.25; text-align: left; }
+.ag-time > span { display: block; font-weight: 500; color: rgb(var(--n500)); }
+.ag-bar { width: .25rem; border-radius: 999px; background: rgb(var(--h)); flex-shrink: 0; }
+.chip.ag-chip-prop { background: rgb(var(--accent) / .1); color: rgb(var(--accent)); }
+.ag-week { width: 100%; display: flex; align-items: center; gap: .75rem; padding: .65rem .75rem; border-radius: var(--r-sm); border: 1px solid rgb(var(--n200) / .8); background: var(--surface); }
+.ag-week:hover { background: rgb(var(--n100) / .6); }
+.ag-tbl td { vertical-align: top; font-size: .8125rem; }
+.ag-tbl td:nth-child(3), .ag-tbl td:nth-child(4) { min-width: 11rem; }
+.col-span-2 { grid-column: span 2 / span 2; }
+.ag-rule.mr-1 { margin-right: .25rem; }
+@media (prefers-reduced-motion: reduce) { .ag-cap > span { transition: none; } }
+/* AGENDA-CSS:END */
