@@ -996,6 +996,70 @@ html.locked .cx-micfab, .cx-micfab[hidden] { display: none; }
 .cx-perm::before { content: '✓'; color: rgb(var(--h-habits)); font-weight: 800; }
 .cx-perm.no::before { content: '✕'; color: #ef4444; }
 .cx-pre { white-space: pre-wrap; font-size: .82rem; line-height: 1.45; max-height: 14rem; overflow-y: auto; background: rgb(var(--n100)); border-radius: var(--r-sm); padding: .75rem; }
+
+/* ===== Modo programa: pantallas fijas con pestañas ===== */
+html.cx-app, html.cx-app body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+html.cx-app #app { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+html.cx-app #app > header { flex: none; }
+html.cx-app #app > main { flex: 1; min-height: 0; width: 100%; overflow: hidden; padding-top: .75rem !important; padding-bottom: calc(4.25rem + env(safe-area-inset-bottom)) !important; }
+@media (min-width: 768px) { html.cx-app #app > main { padding-top: 1rem !important; padding-bottom: 1rem !important; } }
+html.cx-app #app > main > footer { display: none; }
+html.cx-app main > .cx-view { margin: 0 !important; }
+.cx-view { height: 100%; display: flex; flex-direction: column; gap: .7rem; min-height: 0; }
+.cx-vhead { display: flex; align-items: center; gap: .6rem; flex: none; min-width: 0; }
+.cx-vh1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; flex: none; }
+.cx-back { width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; background: rgb(var(--n100)); color: rgb(var(--n700)); flex: none; }
+.cx-back svg { width: 1.1rem; height: 1.1rem; transform: rotate(90deg); }
+.cx-ptabs { flex: 1; min-width: 0; display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; padding: 2px; margin-left: auto; justify-content: flex-start; }
+.cx-ptabs::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) { .cx-ptabs { justify-content: flex-end; } }
+.cx-ptabs button { display: inline-flex; align-items: center; gap: .35rem; flex: none; padding: .45rem .8rem; border-radius: 999px; font-size: .82rem; font-weight: 700; color: rgb(var(--n500)); background: rgb(var(--n100)); transition: background .15s, color .15s; white-space: nowrap; }
+.cx-ptabs button svg { width: 1rem; height: 1rem; }
+.cx-ptabs button[aria-selected="true"] { background: rgb(var(--accent)); color: var(--on-accent); box-shadow: 0 4px 12px -6px rgb(var(--accent) / .7); }
+@media (max-width: 420px) { .cx-ptabs button:not([aria-selected="true"]) span { display: none; } .cx-ptabs button:not([aria-selected="true"]) { padding: .45rem .6rem; } .cx-vh1 { font-size: 1.2rem; } }
+.cx-vbody { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; border-radius: var(--r); scrollbar-width: thin; }
+.cx-panel { display: flex; flex-direction: column; gap: 1rem; min-height: 100%; padding-bottom: .5rem; }
+.cx-panel[hidden] { display: none !important; }
+.cx-panel.enter { animation: cxPanR .24s ease-out; }
+.cx-panel.enter.from-l { animation-name: cxPanL; }
+@keyframes cxPanR { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes cxPanL { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+.cx-panel > .cx-fill:only-child { flex: 1; }
+.cx-stack { display: flex !important; flex-direction: column; gap: 1rem; }
+.cx-stack > * { width: 100%; }
+html.cx-app #tareas #taskList { max-height: none; }
+html.cx-app #resumen { gap: 1rem; display: flex; flex-direction: column; }
+html.cx-app #resumen > * + * { margin-top: 0 !important; }
+@media (max-width: 767px) {
+  html.cx-app #resumen > .card:first-child { padding: 1.1rem; }
+  html.cx-app #resumen > .card:first-child .w-44 { width: 7.5rem; height: 7.5rem; }
+  html.cx-app #resumen > .card:first-child #dayPct { font-size: 1.4rem; }
+  html.cx-app #dayLegend { display: none; }
+  html.cx-app #greeting { font-size: 1.45rem; }
+}
+.cx-hubtile { min-height: 6.4rem; padding: .85rem; }
+html.cx-app .ai-fab { display: none; }
+@media (min-width: 768px) { html.cx-app .ai-fab { display: block; } }
+.cx-voicelink { margin-left: auto; color: rgb(var(--accent)) !important; background: rgb(var(--accent) / .1); }
+
+/* ===== Barra de comando de voz ===== */
+#cxCmd { position: fixed; left: 0; right: 0; bottom: calc(4.6rem + env(safe-area-inset-bottom)); z-index: 66; display: flex; justify-content: center; padding: 0 10px; pointer-events: none; opacity: 0; transform: translateY(16px); transition: opacity .2s, transform .2s; }
+#cxCmd.open { opacity: 1; transform: none; }
+#cxCmd.open .cx-cmdbox { pointer-events: auto; }
+@media (min-width: 768px) { #cxCmd { bottom: 104px; } }
+.cx-cmdbox { width: 100%; max-width: 34rem; max-height: 62vh; overflow-y: auto; background: var(--surface); border: 1px solid rgb(var(--n200)); border-radius: 22px; padding: .9rem 1rem 1rem; box-shadow: 0 18px 50px -12px rgba(0,0,0,.35), 0 0 0 4px rgb(var(--accent) / .08); }
+.cx-cmddot { width: .7rem; height: .7rem; border-radius: 999px; background: rgb(var(--n400)); flex: none; }
+.cx-cmddot[data-mode="listen"] { background: #ef4444; animation: pulse 1s ease-in-out infinite; }
+.cx-cmddot[data-mode="think"] { background: rgb(var(--accent)); animation: pulse .7s ease-in-out infinite; }
+.cx-cmddot[data-mode="err"] { background: #f59e0b; }
+.cx-cmdsaid { margin-top: .45rem; font-size: 1.05rem; font-weight: 650; min-height: 1.4rem; overflow-wrap: anywhere; }
+.cx-cmdsaid:empty::before { content: 'Di lo que necesites: "abre mis metas", "añade…", "organízame el día"'; font-weight: 500; font-size: .88rem; color: rgb(var(--n400)); }
+.cx-cmdreply { margin-top: .6rem; padding: .7rem .8rem; border-radius: 14px; background: rgb(var(--n100)); font-size: .92rem; line-height: 1.45; }
+.cx-cmdtxt { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cx-cmdhelp { margin-top: .4rem; }
+.cx-loop { display: inline-flex; align-items: center; gap: .3rem; font-size: .75rem; font-weight: 700; color: rgb(var(--n500)); flex: none; cursor: pointer; }
+.cx-loop input { accent-color: rgb(var(--accent)); width: 1rem; height: 1rem; }
+html.cx-cmd-open .bnav .fab { box-shadow: 0 0 0 4px rgb(239 68 68 / .35), 0 8px 22px -6px rgb(var(--accent) / .55); }
 /* COACH-CSS:END */
 </style>
 </head>
@@ -2919,28 +2983,50 @@ function PLANNER_ENGINE() {
   }
 
   /* ---------- Confeti para celebrar ---------- */
+  let confettiGen = 0;
+  function confettiClear() {
+    const cv = $('#confetti');
+    if (!cv) return;
+    cv.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+    cv.width = 0; cv.height = 0; // borra todo el lienzo, mida lo que mida la pantalla ahora
+    cv.style.visibility = 'hidden';
+  }
   function confetti() {
     if (typeof orbsCelebrate === 'function') orbsCelebrate();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.hidden) return;
+    const gen = ++confettiGen;
     const cv = $('#confetti'), ctx = cv.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
-    cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const W = innerWidth, H = innerHeight;
+    cv.width = Math.ceil(W * dpr); cv.height = Math.ceil(H * dpr);
+    cv.style.visibility = 'visible';
     const colors = ['#f97316', '#3b82f6', '#10b981', '#f43f5e', '#f59e0b', '#8b5cf6', C.accent];
     const parts = Array.from({ length: 110 }, () => ({
-      x: innerWidth / 2 + (Math.random() - 0.5) * 120, y: innerHeight * 0.35,
+      x: W / 2 + (Math.random() - 0.5) * 120, y: H * 0.35,
       vx: (Math.random() - 0.5) * 12, vy: -Math.random() * 11 - 4, r: Math.random() * 6 + 4,
       c: colors[Math.floor(Math.random() * colors.length)], a: Math.random() * Math.PI, va: (Math.random() - 0.5) * 0.3,
     }));
-    const t0 = performance.now();
+    const DUR = 2200, t0 = performance.now();
+    let last = t0;
+    // Corte de seguridad: aunque el navegador pause la animación, el confeti desaparece.
+    setTimeout(() => { if (gen === confettiGen) confettiClear(); }, DUR + 400);
     (function frame(t) {
-      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      if (gen !== confettiGen) return;
+      if (t - t0 >= DUR || document.hidden) { confettiClear(); return; }
+      const k = Math.min(3, Math.max(0.25, (t - last) / 16.67)); // misma velocidad a 30, 60 o 120 fps
+      last = t;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = Math.min(1, (DUR - (t - t0)) / 500);
       parts.forEach(p => {
-        p.vy += 0.35; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.a += p.va;
+        p.vy += 0.35 * k; p.vx *= Math.pow(0.99, k); p.x += p.vx * k; p.y += p.vy * k; p.a += p.va * k;
+        if (p.y > H + 20) return;
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c;
         ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); ctx.restore();
       });
-      if (t - t0 < 2200) requestAnimationFrame(frame); else ctx.clearRect(0, 0, innerWidth, innerHeight);
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(frame);
     })(t0);
   }
 
@@ -8989,64 +9075,82 @@ ${JSON.stringify(aiState())}`;
   const coma = () => (firstName() ? `, ${firstName()}` : '');
 
   /* =====================================================================
-     VISTAS: Hoy · Plan · Progreso · Más
+     VISTAS tipo programa: cada sección es una pantalla fija con sus
+     propias pestañas (paneles). La página no se desliza: solo el panel
+     activo tiene su contenido, y si es largo se desplaza por dentro.
   ===================================================================== */
   const VIEW_DEF = {
-    hoy: { title: 'Hoy', icon: 'home' },
-    plan: { title: 'Plan', icon: 'compass' },
-    progreso: { title: 'Progreso', icon: 'chart' },
-    mas: { title: 'Más', icon: 'grid' },
+    hoy: { title: 'Hoy', icon: 'home', panels: [['resumen', 'Resumen', 'sun'], ['midia', 'Mi día', 'clock'], ['tareas', 'Tareas', 'tasks'], ['prioridades', 'Prioridades', 'target'], ['enfoque', 'Enfoque', 'timer']] },
+    plan: { title: 'Plan', icon: 'compass', panels: [['miplan', 'Mi plan', 'compass'], ['agenda', 'Agenda', 'calendar'], ['habitos', 'Hábitos', 'repeat'], ['metas', 'Metas', 'flag']] },
+    progreso: { title: 'Progreso', icon: 'chart', panels: [['semana', 'Mi semana', 'flame'], ['graficas', 'Gráficas', 'chart']] },
+    mas: { title: 'Más', icon: 'grid', panels: [['hub', 'Secciones', 'grid'], ['perfil', 'Perfil y PIN', 'user']] },
     notas: { title: 'Notas', icon: 'note', parent: 'mas', hue: '--h-notes', desc: 'Ideas, listas y apuntes' },
     recordatorios: { title: 'Recordatorios', icon: 'bell', parent: 'mas', hue: '--h-goals', desc: 'Avisos, repeticiones y lo que Dilex te preguntará' },
     conexiones: { title: 'Conexiones', icon: 'plug', parent: 'mas', hue: '--h-files', desc: 'Calendario, correo, WhatsApp, IA y avisos' },
     analizador: { title: 'Analizador', icon: 'search', parent: 'mas', hue: '--h-stats', desc: 'Revisa archivos y datos' },
     descargas: { title: 'Descargas', icon: 'download', parent: 'mas', hue: '--h-dl', desc: 'PDF, imágenes y Excel' },
   };
-  const SECTION_VIEW = { resumen: 'hoy', tareas: 'hoy', enfoque: 'hoy', planCard: 'hoy', cxAskCard: 'hoy', cxDayCard: 'hoy', agenda: 'plan', habitos: 'plan', metas: 'plan', coachPlan: 'plan', progreso: 'progreso', cxWeek: 'progreso', notas: 'notas', analizador: 'analizador', descargas: 'descargas', recordatorios: 'recordatorios', conexiones: 'conexiones' };
+  // Dónde vive cada bloque: [vista, panel]
+  const SECTION_AT = { resumen: ['hoy', 'resumen'], cxAskCard: ['hoy', 'resumen'], cxDayCard: ['hoy', 'midia'], tareas: ['hoy', 'tareas'], planCard: ['hoy', 'prioridades'], enfoque: ['hoy', 'enfoque'],
+    coachPlan: ['plan', 'miplan'], agenda: ['plan', 'agenda'], habitos: ['plan', 'habitos'], metas: ['plan', 'metas'], cxWeek: ['progreso', 'semana'], stats: ['progreso', 'semana'], progreso: ['progreso', 'graficas'],
+    cxHub: ['mas', 'hub'], cxAccount: ['mas', 'perfil'], notas: ['notas', 'main'], recordatorios: ['recordatorios', 'main'], conexiones: ['conexiones', 'main'], analizador: ['analizador', 'main'], descargas: ['descargas', 'main'] };
   let curView = 'hoy';
+  const curPanel = {};
   const viewEl = (v) => document.querySelector(`.cx-view[data-view="${v}"]`);
+  const panelsOf = (v) => VIEW_DEF[v].panels || [['main', VIEW_DEF[v].title, VIEW_DEF[v].icon]];
 
   function buildViews() {
     const main = $('main');
     if (!main || viewEl('hoy')) return;
+    document.documentElement.classList.add('cx-app');
     const footer = main.querySelector(':scope > footer');
-    const mk = (v) => { const d = document.createElement('div'); d.className = 'cx-view'; d.dataset.view = v; d.hidden = v !== 'hoy'; main.insertBefore(d, footer); return d; };
-    const views = Object.fromEntries(Object.keys(VIEW_DEF).map(v => [v, mk(v)]));
-    const head = (v) => {
-      const d = VIEW_DEF[v];
-      const h = document.createElement('div');
-      h.innerHTML = `${d.parent ? `<button type="button" class="cx-back" data-view-go="${d.parent}">${ic('chevron')}Más</button>` : ''}`;
-      return h.firstChild ? h : null;
-    };
-    const move = (id, v) => { const el = document.getElementById(id); if (el) views[v].appendChild(el); return el; };
-    const moveParent = (id, v) => { const el = document.getElementById(id); if (el && el.parentElement) views[v].appendChild(el.parentElement); };
-
-    // Hoy
-    const res = move('resumen', 'hoy');
-    const ask = document.createElement('section'); ask.id = 'cxAskCard'; ask.className = 'card cx-pad cx-ask hidden';
-    const day = document.createElement('section'); day.id = 'cxDayCard'; day.className = 'card cx-pad';
-    const hero = res && res.firstElementChild;
-    if (hero) { hero.after(ask); ask.after(day); } else { views.hoy.appendChild(ask); views.hoy.appendChild(day); }
-    const stats = $('#stats'); if (stats && res) res.appendChild(stats);
-    moveParent('tareas', 'hoy');
-    // Plan
-    const cp = document.createElement('section'); cp.id = 'coachPlan'; cp.className = 'card cx-pad'; views.plan.appendChild(cp);
-    move('agenda', 'plan');
-    moveParent('habitos', 'plan');
-    // Progreso
-    const wk = document.createElement('section'); wk.id = 'cxWeek'; wk.className = 'card cx-pad'; views.progreso.appendChild(wk);
-    move('progreso', 'progreso');
-    // Más
-    views.mas.innerHTML = `<div class="cx-vtitle"><span class="tile" style="--h: var(--accent)">${ic('grid')}</span><div><h1>Más</h1><p class="hint">Todo lo demás, ordenado</p></div></div><div class="cx-hub" id="cxHub"></div><div id="cxAccount"></div>`;
-    ['notas', 'recordatorios', 'conexiones', 'analizador', 'descargas'].forEach(v => {
-      const h = head(v); if (h) views[v].appendChild(h.firstChild);
-      if (v === 'recordatorios' || v === 'conexiones') { const s = document.createElement('section'); s.id = v; s.className = 'card cx-pad'; views[v].appendChild(s); }
-      else move(v, v);
+    const panels = {};
+    Object.keys(VIEW_DEF).forEach(v => {
+      const d = VIEW_DEF[v], list = panelsOf(v);
+      const el = document.createElement('div');
+      el.className = 'cx-view'; el.dataset.view = v; el.hidden = v !== 'hoy';
+      const back = d.parent ? `<button type="button" class="cx-back" data-view-go="${d.parent}" aria-label="Volver a Más">${ic('chevron')}</button>` : '';
+      el.innerHTML = `<div class="cx-vhead">${back}<h1 class="cx-vh1">${esc(d.title)}</h1>${list.length > 1 ? `<div class="cx-ptabs" role="tablist">${list.map(([p, t, i]) => `<button type="button" role="tab" data-panel-go="${v}/${p}">${ic(i)}<span>${esc(t)}</span></button>`).join('')}</div>` : ''}</div><div class="cx-vbody"></div>`;
+      main.insertBefore(el, footer);
+      const body = el.querySelector('.cx-vbody');
+      list.forEach(([p]) => { const pe = document.createElement('div'); pe.className = 'cx-panel'; pe.dataset.panel = p; pe.hidden = p !== list[0][0]; body.appendChild(pe); panels[`${v}/${p}`] = pe; });
+      curPanel[v] = (ui.cxPanels && ui.cxPanels[v] && list.some(x => x[0] === ui.cxPanels[v])) ? ui.cxPanels[v] : list[0][0];
     });
-    // Ajustes del bloque de enfoque dentro del grid de tareas: sin cambios.
-    // Planes del día (3 prioridades) siguen en "Hoy".
+    const put = (el, where) => { if (el && panels[where]) panels[where].appendChild(el); return el; };
+    const $id = (id) => document.getElementById(id);
+    const res = $id('resumen');
+    const planGrid = $id('planCard') && $id('planCard').parentElement;
+    const tasksGrid = $id('tareas') && $id('tareas').parentElement;
+    const hmGrid = $id('habitos') && $id('habitos').parentElement;
+    // Hoy
+    put(res, 'hoy/resumen');
+    const ask = document.createElement('section'); ask.id = 'cxAskCard'; ask.className = 'card cx-pad cx-ask hidden';
+    const hero = res && res.firstElementChild;
+    if (hero) hero.after(ask); else put(ask, 'hoy/resumen');
+    const day = document.createElement('section'); day.id = 'cxDayCard'; day.className = 'card cx-pad'; put(day, 'hoy/midia');
+    put($id('tareas'), 'hoy/tareas');
+    if (planGrid) { planGrid.classList.add('cx-stack'); put(planGrid, 'hoy/prioridades'); }
+    put($id('enfoque'), 'hoy/enfoque');
+    // Plan
+    const cp = document.createElement('section'); cp.id = 'coachPlan'; cp.className = 'card cx-pad'; put(cp, 'plan/miplan');
+    put($id('agenda'), 'plan/agenda');
+    put($id('habitos'), 'plan/habitos');
+    put($id('metas'), 'plan/metas');
+    // Progreso
+    put($id('stats'), 'progreso/semana');
+    const wk = document.createElement('section'); wk.id = 'cxWeek'; wk.className = 'card cx-pad'; put(wk, 'progreso/semana');
+    put($id('progreso'), 'progreso/graficas');
+    // Más
+    panels['mas/hub'].innerHTML = '<div class="cx-hub" id="cxHub"></div>';
+    panels['mas/perfil'].innerHTML = '<div id="cxAccount"></div>';
+    ['notas', 'analizador', 'descargas'].forEach(v => put($id(v), `${v}/main`));
+    ['recordatorios', 'conexiones'].forEach(v => { const s = document.createElement('section'); s.id = v; s.className = 'card cx-pad'; put(s, `${v}/main`); });
+    [tasksGrid, hmGrid].forEach(g => { if (g && !g.children.length) g.remove(); });
+    // Cada panel ocupa la pantalla: los títulos internos sobran
+    $$('.cx-panel > .card, .cx-panel > section').forEach(c => c.classList.add('cx-fill'));
     buildNav();
     renderHub();
+    initSwipe();
   }
 
   function buildNav() {
@@ -9055,14 +9159,16 @@ ${JSON.stringify(aiState())}`;
       b.innerHTML = `<div class="cx-nav5">
         <a href="#hoy" data-view-go="hoy">${ic('home')}Hoy</a>
         <a href="#plan" data-view-go="plan">${ic('compass')}Plan</a>
-        <div class="flex justify-center"><button class="fab" data-open-sheet="aiSheet" aria-label="Hablar con tu asistente"><canvas class="orb" data-orb="mini"></canvas></button></div>
+        <div class="flex justify-center"><button class="fab" data-cx-act="voice" aria-label="Comando de voz" title="Comando de voz"><canvas class="orb" data-orb="mini"></canvas></button></div>
         <a href="#progreso" data-view-go="progreso">${ic('chart')}Progreso</a>
         <a href="#mas" data-view-go="mas" id="cxNavMore">${ic('grid')}Más</a></div>`;
     }
     const top = $('#topNav');
     if (top) top.innerHTML = ['hoy', 'plan', 'progreso', 'notas', 'recordatorios', 'conexiones', 'analizador', 'descargas']
-      .map(v => `<a class="navlink" href="#${v}" data-view-go="${v}">${ic(VIEW_DEF[v].icon)}${VIEW_DEF[v].title}</a>`).join('');
+      .map(v => `<a class="navlink" href="#${v}" data-view-go="${v}">${ic(VIEW_DEF[v].icon)}${VIEW_DEF[v].title}</a>`).join('')
+      + `<button type="button" class="navlink cx-voicelink" data-cx-act="voice">${ic('mic')}Voz</button>`;
     const brand = $('header a[href="#resumen"]'); if (brand) { brand.setAttribute('href', '#hoy'); brand.dataset.viewGo = 'hoy'; }
+    const fab = $('.ai-fab'); if (fab) { fab.removeAttribute('data-open-sheet'); fab.dataset.cxAct = 'voice'; fab.title = 'Comando de voz'; fab.setAttribute('aria-label', 'Comando de voz'); }
   }
 
   function renderHub() {
@@ -9071,56 +9177,85 @@ ${JSON.stringify(aiState())}`;
     const plugs = Object.values(coach.plugins).filter(p => p && p.on).length;
     const tiles = [
       ...['notas', 'recordatorios', 'conexiones', 'analizador', 'descargas'].map(v => ({ go: v, icon: VIEW_DEF[v].icon, hue: VIEW_DEF[v].hue, t: VIEW_DEF[v].title, d: VIEW_DEF[v].desc, badge: v === 'recordatorios' && pend ? pend : v === 'conexiones' && plugs ? `${plugs} activas` : '' })),
-      { sheet: 'themeSheet', icon: 'sliders', hue: '--accent', t: 'Ajustes', d: 'Asistente, voz, colores, PIN y perfil' },
-      { act: 'params', icon: 'wand', hue: '--h-plan', t: 'Mis parámetros', d: 'Horario, nivel de metiche y automatización' },
+      { act: 'voiceHelp', icon: 'mic', hue: '--accent', t: 'Comandos de voz', d: 'Todo lo que puedes pedirme hablando' },
+      { sheet: 'aiSheet', icon: 'chat', hue: '--h-tasks', t: 'Chat con Dilex', d: 'Escríbeme o conversa por voz' },
+      { sheet: 'themeSheet', icon: 'sliders', hue: '--accent', t: 'Ajustes', d: 'Asistente, voz y colores' },
+      { act: 'params', icon: 'wand', hue: '--h-plan', t: 'Mis reglas', d: 'Horario, nivel de metiche y automatización' },
       { sheet: 'backupSheet', icon: 'shield', hue: '--h-dl', t: 'Respaldo', d: 'Guarda o restaura tus datos' },
       { sheet: 'installSheet', icon: 'phone', hue: '--accent', t: 'Instalar', d: 'Como app y sin internet' },
       { act: 'wizard', icon: 'question', hue: '--h-focus', t: 'Repetir diagnóstico', d: 'Vuelve a hacer el test inicial' },
     ];
     hub.innerHTML = tiles.map(x => `<button type="button" class="card cx-hubtile" ${x.go ? `data-view-go="${x.go}"` : x.sheet ? `data-open-sheet="${x.sheet}"` : `data-cx-act="${x.act}"`}>
-      <span class="cx-row" style="justify-content:space-between;width:100%"><span class="tile" style="--h: var(${x.hue})">${ic(x.icon)}</span>${x.badge ? `<span class="chip">${esc(String(x.badge))}</span>` : ''}</span>
+      <span class="cx-row" style="justify-content:space-between;width:100%"><span class="tile tile-sm" style="--h: var(${x.hue})">${ic(x.icon)}</span>${x.badge ? `<span class="chip">${esc(String(x.badge))}</span>` : ''}</span>
       <span><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span></button>`).join('');
   }
 
   function viewOfEl(el) { const v = el && el.closest && el.closest('.cx-view'); return v ? v.dataset.view : null; }
+  function panelOfEl(el) { const p = el && el.closest && el.closest('.cx-panel'); return p ? p.dataset.panel : null; }
+  function onPanelShown(v, p) {
+    if (v === 'progreso') requestAnimationFrame(() => { if (p === 'graficas') { try { Object.values(charts).forEach(c => c.resize()); } catch { /* sin gráficas */ } } else renderWeek(); });
+    if (v === 'plan') { if (p === 'miplan') renderCoachPlan(); if (p === 'agenda') { try { renderAgenda(); } catch { /* agenda */ } } }
+    if (v === 'hoy' && p === 'midia') renderDayCard();
+    if (v === 'recordatorios') renderReminders();
+    if (v === 'conexiones') renderPlugins();
+    if (v === 'mas') { renderHub(); renderAccountBox(); }
+  }
+  function showPanel(v, p, opts = {}) {
+    const list = panelsOf(v);
+    if (!list.some(x => x[0] === p)) p = list[0][0];
+    const vEl = viewEl(v); if (!vEl) return;
+    const changed = curPanel[v] !== p;
+    curPanel[v] = p;
+    ui.cxPanels = Object.assign({}, ui.cxPanels, { [v]: p }); saveUI();
+    vEl.querySelectorAll('.cx-panel').forEach(el => {
+      const on = el.dataset.panel === p; el.hidden = !on;
+      if (on && changed && !motionMin()) { el.classList.remove('enter', 'from-l', 'from-r'); void el.offsetWidth; el.classList.add('enter', opts.dir === 'l' ? 'from-l' : 'from-r'); }
+    });
+    vEl.querySelectorAll('[data-panel-go]').forEach(b => { const on = b.dataset.panelGo === `${v}/${p}`; b.setAttribute('aria-selected', String(on)); if (on && changed) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: motionMin() ? 'auto' : 'smooth' }); });
+    if (!opts.keepScroll) { const body = vEl.querySelector('.cx-vbody'); if (body) body.scrollTop = 0; }
+    if (v === curView && !opts.noHash) { try { history.replaceState(null, '', `#${v}${list.length > 1 ? '/' + p : ''}`); } catch { /* sin historial */ } }
+    onPanelShown(v, p);
+  }
   function showView(v, opts = {}) {
     if (!VIEW_DEF[v]) v = 'hoy';
     const changed = v !== curView;
     curView = v;
     $$('.cx-view').forEach(el => { const on = el.dataset.view === v; el.hidden = !on; if (on && changed && !motionMin()) { el.classList.remove('enter'); void el.offsetWidth; el.classList.add('enter'); } });
     const navKey = VIEW_DEF[v].parent || v;
-    $$('[data-view-go]').forEach(a => a.classList.toggle('on', a.dataset.viewGo === v || (a.closest('.cx-nav5') && a.dataset.viewGo === navKey)));
-    if (changed && !opts.keepScroll) window.scrollTo({ top: 0, behavior: 'auto' });
-    if (v === 'progreso') requestAnimationFrame(() => { try { Object.values(charts).forEach(c => c.resize()); } catch { /* sin gráficas */ } renderWeek(); });
-    if (v === 'plan') { renderCoachPlan(); try { renderAgenda(); } catch { /* agenda */ } }
-    if (v === 'recordatorios') renderReminders();
-    if (v === 'conexiones') renderPlugins();
-    if (v === 'mas') { renderHub(); renderAccountBox(); }
-    if (!opts.noHash) { try { history.replaceState(null, '', `#${v}`); } catch { /* sin historial */ } }
+    $$('[data-view-go]').forEach(a => a.classList.toggle('on', a.dataset.viewGo === v || (!!a.closest('.cx-nav5') && a.dataset.viewGo === navKey)));
+    showPanel(v, opts.panel || curPanel[v], { keepScroll: opts.keepScroll, noHash: true });
+    if (!opts.noHash) { const list = panelsOf(v); try { history.replaceState(null, '', `#${v}${list.length > 1 ? '/' + curPanel[v] : ''}`); } catch { /* sin historial */ } }
   }
   function revealEl(el) {
-    const v = viewOfEl(el);
-    if (v && v !== curView) showView(v, { keepScroll: true });
+    const v = viewOfEl(el), p = panelOfEl(el);
+    if (!v) return false;
+    if (v !== curView) showView(v, { panel: p, keepScroll: true });
+    else if (p && p !== curPanel[v]) showPanel(v, p, { keepScroll: true });
+    return true;
   }
   const _siv = Element.prototype.scrollIntoView;
   Element.prototype.scrollIntoView = function (o) {
-    const v = viewOfEl(this);
-    if (v && v !== curView) { showView(v, { keepScroll: true }); const el = this; requestAnimationFrame(() => _siv.call(el, o)); return; }
+    const v = viewOfEl(this), p = panelOfEl(this);
+    if (v && (v !== curView || (p && p !== curPanel[v]))) { revealEl(this); const el = this; requestAnimationFrame(() => _siv.call(el, o)); return; }
     return _siv.call(this, o);
   };
   function goHash(h, smooth = true) {
     const id = String(h || '').replace(/^#/, '');
     if (!id) return false;
-    if (VIEW_DEF[id]) { showView(id); return true; }
+    const [v, p] = id.split('/');
+    if (VIEW_DEF[v]) { showView(v, { panel: p }); return true; }
     const el = document.getElementById(id);
     if (!el) return false;
-    const v = viewOfEl(el) || SECTION_VIEW[id];
-    if (v) showView(v, { keepScroll: true, noHash: true });
+    const at = SECTION_AT[id];
+    if (viewOfEl(el)) revealEl(el); else if (at) showView(at[0], { panel: at[1] });
     requestAnimationFrame(() => _siv.call(el, { behavior: smooth ? 'smooth' : 'auto', block: 'start' }));
-    try { history.replaceState(null, '', `#${v || id}`); } catch { /* sin historial */ }
     return true;
   }
+  /** Ir a una sección por nombre (la usan los botones y la voz). */
+  function goTo(v, p) { closeSheets(); showView(v, { panel: p }); }
   document.addEventListener('click', (e) => {
+    const pg = e.target.closest('[data-panel-go]');
+    if (pg) { e.preventDefault(); const [v, p] = pg.dataset.panelGo.split('/'); const list = panelsOf(v).map(x => x[0]); showPanel(v, p, { dir: list.indexOf(p) < list.indexOf(curPanel[v]) ? 'l' : 'r' }); return; }
     const g = e.target.closest('[data-view-go]');
     if (g) { e.preventDefault(); closeSheets(); showView(g.dataset.viewGo); return; }
     const a = e.target.closest('a[href^="#"]');
@@ -9132,14 +9267,36 @@ ${JSON.stringify(aiState())}`;
   }, true);
   window.addEventListener('hashchange', () => goHash(location.hash, false));
 
+  /* Deslizar de lado para cambiar de pestaña, como en una app */
+  function initSwipe() {
+    let x0 = null, y0 = 0, t0 = 0, skip = false;
+    const main = $('main');
+    main.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      skip = !!e.target.closest('input, textarea, select, canvas, .tabs, .cx-ptabs, .cx-months, table, .overflow-x-auto, [contenteditable], .cx-noswipe');
+      x0 = t.clientX; y0 = t.clientY; t0 = Date.now();
+    }, { passive: true });
+    main.addEventListener('touchend', (e) => {
+      if (x0 == null || skip) { x0 = null; return; }
+      const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.6 || Date.now() - t0 > 600) return;
+      const list = panelsOf(curView).map(x => x[0]), i = list.indexOf(curPanel[curView]);
+      const j = i + (dx < 0 ? 1 : -1);
+      if (j >= 0 && j < list.length) showPanel(curView, list[j], { dir: dx < 0 ? 'r' : 'l' });
+    }, { passive: true });
+  }
+
   function coachAction(what, el) {
     closeSheets();
-    if (what === 'params') { showView('plan'); planTab = 'params'; renderCoachPlan(); setTimeout(() => $('#coachPlan')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60); }
+    if (what === 'params') openPlanTab('params');
     else if (what === 'wizard') runWizard({ again: true });
     else if (what === 'organize') organizeDayUI();
     else if (what === 'morning') runMorningQuiz(true);
     else if (what === 'evening') runEveningQuiz(true);
     else if (what === 'voiceAdd') voiceAdd();
+    else if (what === 'voice') voiceCmd();
+    else if (what === 'voiceHelp') voiceCmd({ help: true });
     else if (what === 'push') enablePush();
     else if (what === 'lock') window.DilexLock && DilexLock.lockNow();
   }
@@ -9686,8 +9843,7 @@ ${JSON.stringify(aiState())}`;
     const r = organizeDay({ silent: true });
     void r;
     coachRender();
-    showView('plan');
-    planTab = 'dia'; renderCoachPlan();
+    openPlanTab('dia');
     confetti();
     const msg = `Listo${coma()}. Tu problema principal es ${PROBLEMS[coach.diagnosis.main].name.toLowerCase()}, y tu plan ya está armado. Te preguntaré por cada tarea cuando le toque.`;
     if (settings.voice) speak(msg);
@@ -9917,6 +10073,7 @@ ${JSON.stringify(aiState())}`;
 
   /* ---------- Vista "Plan" ---------- */
   let planTab = 'dia', planDay = todayKey();
+  function openPlanTab(tab) { planTab = tab; closeSheets(); showView('plan', { panel: 'miplan' }); renderCoachPlan(); }
   function renderCoachPlan() {
     const box = $('#coachPlan');
     if (!box) return;
@@ -10054,6 +10211,8 @@ ${JSON.stringify(aiState())}`;
     el = document.createElement('aside');
     el.id = 'cxNudge'; el.className = 'sheet'; el.setAttribute('aria-label', 'Pregunta de tu asistente');
     document.body.appendChild(el);
+    // Al cerrar la pregunta (con la X, el fondo o Escape) se puede volver a preguntar después.
+    new MutationObserver(() => { if (!el.classList.contains('open')) nudgeOpen = null; }).observe(el, { attributes: true, attributeFilter: ['class'] });
     return el;
   }
   function openNudge(t, ck) {
@@ -10989,14 +11148,14 @@ ${JSON.stringify(aiState())}`;
     const add = (name, re, fn) => { mine.push([name, re, fn]); LOCAL_FIRST.add(name); };
     add('coachOrganize', /^(organizame|organiza(me)? (mi|el) dia|ordena(me)? (mi|el) dia|arma(me)? (mi|el) dia|hazme el (dia|horario)|ponle hora a (mis|las) tareas|organiza todo)\b/, () => {
       const r = organizeDay();
-      return { text: organizeSummary(r), actions: [{ label: 'Ver mi día', fn: () => { closeSheets(); showView('plan'); planTab = 'dia'; renderCoachPlan(); } }, undoAction()] };
+      return { text: organizeSummary(r), actions: [{ label: 'Ver mi día', fn: () => { openPlanTab('dia'); } }, undoAction()] };
     });
     add('coachMorning', /\b(preguntas de la manana|empecemos (el|mi) dia|empezar (el|mi) dia|organicemos (el|mi) dia|cuestionario de la manana)\b/, () => ({ text: 'Vamos. Te hago unas preguntas rápidas.', after: () => { closeSheets(); runMorningQuiz(true); } }));
     add('coachEvening', /\b(cierre del dia|cerr(ar|emos) (el|mi) dia|cierra (el|mi) dia|terminar (el|mi) dia|cuestionario de la noche)\b/, () => ({ text: 'Hagamos el cierre del día.', after: () => { closeSheets(); runEveningQuiz(true); } }));
     add('coachDiag', /\b(mi diagnostico|cual es mi problema|que me frena|haz(me)? el (test|diagnostico)|repit(e|amos) el (test|diagnostico|wizard)|hacer el diagnostico)\b/, (m, o) => {
       if (!coach.wizardDone || /(haz|repit|hacer)/.test(o.n)) return { text: 'Hagamos el diagnóstico. Son unas preguntas rápidas.', after: () => { closeSheets(); runWizard({ again: coach.wizardDone }); } };
       const p = prob();
-      return { text: `Lo que más te frena es ${p.name.toLowerCase()}: ${p.short} Mi estrategia: ${p.plan[0]} ${p.plan[1]}`, actions: [{ label: 'Ver diagnóstico', fn: () => { closeSheets(); showView('plan'); planTab = 'diag'; renderCoachPlan(); } }] };
+      return { text: `Lo que más te frena es ${p.name.toLowerCase()}: ${p.short} Mi estrategia: ${p.plan[0]} ${p.plan[1]}`, actions: [{ label: 'Ver diagnóstico', fn: () => { openPlanTab('diag'); } }] };
     });
     add('coachPlan', /\b(mi plan (del|de|de este|para el) (mes|ano|dia|semana)|plan (mensual|anual|del mes|del ano|de la semana)|que toca este (mes|ano))\b/, (m, o) => {
       const tab = /\bmes|semana|mensual\b/.test(o.n) ? 'mes' : /\bano|anual\b/.test(o.n) ? 'anio' : 'dia';
@@ -11006,7 +11165,7 @@ ${JSON.stringify(aiState())}`;
       if (tab === 'mes') { const w = coach.plan.month.weeks.find(x => todayKey() >= x.start && todayKey() <= x.end) || coach.plan.month.weeks[0]; text = `Este mes tu enfoque es ${coach.monthFocus || 'tu rutina'}. Esta semana toca "${w.title}": ${w.items.slice(0, 2).join('; ')}.`; }
       else if (tab === 'anio') text = `Tu meta del año: ${coach.plan.year.goal}. Este trimestre: ${coach.plan.year.quarters[0].title.toLowerCase()}, ${coach.plan.year.quarters[0].items[0].toLowerCase()}.`;
       else { const nx = tasksOn(todayKey()).filter(t => !t.done && t.time && tMin(t.time) >= nowM()).sort((a, b) => tMin(a.time) - tMin(b.time)); text = nx.length ? `Lo próximo: ${nx.slice(0, 3).map(t => `${t.text} a las ${hm12(t.time)}`).join(', ')}.` : 'No tienes tareas con hora por delante. ¿Te organizo el día?'; }
-      return { text, actions: [{ label: 'Abrir mi plan', fn: () => { closeSheets(); showView('plan'); planTab = tab; renderCoachPlan(); } }] };
+      return { text, actions: [{ label: 'Abrir mi plan', fn: () => { openPlanTab(tab); } }] };
     });
     add('coachNosy', /\b((se|ser|sea|seas) (mas|menos) (metiche|insistente|intenso)|no seas tan (metiche|insistente|intenso)|(deja de|no me) (insistir|insistas|molestar|molestes)|insiste mas|ponte (mas )?(metiche|intenso))\b/, (m, o) => {
       const up = /(mas|insiste|ponte)/.test(o.n) && !/(menos|no seas|deja|no me)/.test(o.n);
@@ -11062,6 +11221,250 @@ ${JSON.stringify(aiState())}`;
       },
     });
     Object.assign(TOOL_LABEL, { organize_day: 'Organizando tu día', open_coach: 'Abriendo', share_plan: 'Preparando para compartir', set_task_time: 'Poniendo hora' });
+  }
+
+  /* =====================================================================
+     COMANDO DE VOZ: una barra que escucha y hace casi todo
+     (navegar, tareas, hábitos, metas, enfoque, recordatorios, ajustes,
+     responder al asistente metiche…). Usa el mismo cerebro del asistente.
+  ===================================================================== */
+  const VOICE_HELP = [
+    ['Moverte por la app', ['abre mis tareas', 've a recordatorios', 'muéstrame el plan del mes', 'abre las metas', 'siguiente pestaña', 'abre los ajustes']],
+    ['Tareas', ['añade llamar al banco mañana a las 3', 'qué tengo para hoy', 'marca pagar la luz como hecha', 'cuál es mi próxima tarea', 'borra la última tarea']],
+    ['Responderle a Dilex', ['sí, ya la hice', 'voy en eso', 'dame 30 minutos', 'pásala a mañana', 'no la haré']],
+    ['Organizar tu día', ['organízame el día', 'empecemos el día', 'cierre del día', 'mi plan del año', 'cuál es mi problema']],
+    ['Hábitos, metas y enfoque', ['crea el hábito leer 20 minutos', 'ya hice el hábito leer', 'suma 2 a la meta correr', 'concéntrame 25 minutos', 'pausa']],
+    ['Recordatorios', ['recuérdame tomar agua en 30 minutos', 'recuérdame la reunión el viernes a las 9']],
+    ['Ajustes y conexiones', ['sé más metiche', 'modo oscuro', 'activa los avisos', 'manda mi plan por WhatsApp', 'bloquea la app']],
+  ];
+  const STOP_RE = /^(eso es todo|nada mas|ya esta|gracias eso es todo|para|detente|cierra|cerrar|adios|chao|hasta luego|termina(r)?)$/;
+  const vc = { el: null, rec: null, listening: false, loop: false, busy: false, obs: null, lastWrap: null };
+
+  function voiceShell() {
+    if (vc.el) return vc.el;
+    const el = document.createElement('div');
+    el.id = 'cxCmd'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Comando de voz');
+    el.innerHTML = `<div class="cx-cmdbox">
+      <div class="cx-row" style="gap:.5rem"><span class="cx-cmddot" id="cxCmdDot"></span><p class="cx-b flex-1 min-w-0" id="cxCmdStatus">Te escucho…</p>
+        <button type="button" class="icon-btn" id="cxCmdHelp" title="¿Qué puedo decir?" aria-label="Qué puedo decir">${ic('question')}</button>
+        <button type="button" class="icon-btn" id="cxCmdChat" title="Abrir el chat" aria-label="Abrir el chat">${ic('chat')}</button>
+        <button type="button" class="icon-btn" id="cxCmdX" aria-label="Cerrar">${ic('x')}</button></div>
+      <p class="cx-cmdsaid" id="cxCmdSaid"></p>
+      <div class="cx-cmdreply hidden" id="cxCmdReply"></div>
+      <div class="cx-cmdhelp hidden" id="cxCmdHelpBox"></div>
+      <div class="cx-row" style="gap:.6rem;margin-top:.7rem">
+        <button type="button" class="cx-mic" id="cxCmdMic" aria-label="Hablar">${ic('mic')}</button>
+        <form id="cxCmdForm" class="flex gap-2 flex-1 min-w-0"><input id="cxCmdInput" class="input flex-1 min-w-0" placeholder="…o escríbelo" autocomplete="off" aria-label="Escribe un comando" /></form>
+        <label class="cx-loop" title="Seguir escuchando después de cada respuesta"><input type="checkbox" id="cxCmdLoop" /><span>Seguir</span></label>
+      </div></div>`;
+    document.body.appendChild(el);
+    vc.el = el;
+    el.querySelector('#cxCmdX').onclick = () => voiceClose();
+    el.querySelector('#cxCmdMic').onclick = () => (vc.listening ? voiceStop() : voiceListen());
+    el.querySelector('#cxCmdChat').onclick = () => { voiceClose(); openSheet('aiSheet'); };
+    el.querySelector('#cxCmdHelp').onclick = () => toggleVoiceHelp();
+    el.querySelector('#cxCmdForm').onsubmit = (e) => { e.preventDefault(); const v = $('#cxCmdInput').value.trim(); if (v) { $('#cxCmdInput').value = ''; voiceRun(v); } };
+    const loop = el.querySelector('#cxCmdLoop');
+    loop.checked = !!coach.voiceLoop;
+    loop.onchange = () => { coach.voiceLoop = loop.checked; saveCoach(); };
+    if (!SR) { el.querySelector('#cxCmdMic').style.display = 'none'; el.querySelector('.cx-loop').style.display = 'none'; }
+    return el;
+  }
+  function voiceStatus(t, mode) {
+    const s = $('#cxCmdStatus'); if (s) s.textContent = t;
+    const d = $('#cxCmdDot'); if (d) d.dataset.mode = mode || '';
+  }
+  function toggleVoiceHelp(force) {
+    const box = $('#cxCmdHelpBox');
+    const show = force ?? box.classList.contains('hidden');
+    box.classList.toggle('hidden', !show);
+    if (show) {
+      box.innerHTML = VOICE_HELP.map(([t, ex]) => `<p class="field-label mt-2">${esc(t)}</p><div class="cx-wrap">${ex.map(x => `<button type="button" class="cx-chipsel cx-small" data-say="${esc(x)}">“${esc(x)}”</button>`).join('')}</div>`).join('');
+      box.querySelectorAll('[data-say]').forEach(b => b.onclick = () => voiceRun(b.dataset.say));
+    }
+  }
+  function voiceCmd(opts = {}) {
+    const el = voiceShell();
+    el.classList.add('open');
+    document.documentElement.classList.add('cx-cmd-open');
+    $('#cxCmdSaid').textContent = '';
+    $('#cxCmdReply').classList.add('hidden');
+    toggleVoiceHelp(!!opts.help || !SR);
+    if (opts.help || !SR) { voiceStatus(SR ? 'Toca el micrófono o un ejemplo' : 'Escribe una orden o toca un ejemplo'); if (!SR) setTimeout(() => $('#cxCmdInput').focus(), 100); return; }
+    voiceListen();
+  }
+  function voiceClose() {
+    voiceStop(); vc.loop = false;
+    vc.el && vc.el.classList.remove('open');
+    document.documentElement.classList.remove('cx-cmd-open');
+    if (vc.obs) { vc.obs.disconnect(); vc.obs = null; }
+  }
+  const voiceOpen = () => !!(vc.el && vc.el.classList.contains('open'));
+  function voiceStop() { const r = vc.rec; vc.rec = null; vc.listening = false; $('#cxCmdMic')?.classList.remove('on'); if (r) { try { r.abort(); } catch { /* ya detenido */ } } }
+  function voiceListen() {
+    if (!SR) return;
+    voiceStop(); stopSpeaking();
+    const r = new SR();
+    r.lang = /^es/i.test(navigator.language || '') ? navigator.language : 'es-ES';
+    r.interimResults = true; r.continuous = false;
+    let fin = '', mid = '', failed = false;
+    r.onstart = () => { vc.listening = true; $('#cxCmdMic')?.classList.add('on'); voiceStatus('Te escucho…', 'listen'); if (navigator.vibrate) navigator.vibrate(12); };
+    r.onresult = (e) => { fin = ''; mid = ''; for (let i = 0; i < e.results.length; i++) { if (e.results[i].isFinal) fin += e.results[i][0].transcript; else mid += e.results[i][0].transcript; } $('#cxCmdSaid').textContent = `“${(fin + ' ' + mid).trim()}”`; };
+    r.onerror = (e) => {
+      if (e.error === 'no-speech' || e.error === 'aborted') return;
+      failed = true;
+      voiceStatus(e.error === 'network' ? 'Para entender tu voz necesito internet. Puedes escribir abajo.' : e.error === 'not-allowed' || e.error === 'service-not-allowed' ? 'Sin permiso para el micrófono. Actívalo en el navegador.' : 'No pude escucharte. Toca el micrófono otra vez.', 'err');
+    };
+    r.onend = () => {
+      vc.listening = false; $('#cxCmdMic')?.classList.remove('on');
+      if (vc.rec !== r) return;
+      vc.rec = null;
+      const t = (fin || mid).trim();
+      if (t) { voiceRun(t); return; }
+      if (!failed) voiceStatus(vc.loop ? 'No te oí. Toca el micrófono cuando quieras.' : 'Toca el micrófono para hablar', '');
+      vc.loop = false;
+    };
+    vc.rec = r;
+    try { r.start(); } catch { /* ya activo */ }
+  }
+
+  function mirrorReply() {
+    const log = $('#aiLog'), box = $('#cxCmdReply');
+    if (!log || !box) return;
+    const wraps = [...log.children].filter(w => w.querySelector('.ai-msg.bot'));
+    const w = wraps[wraps.length - 1];
+    if (!w || w === vc.before) return;
+    const txt = w.querySelector('.ai-msg.bot').textContent.trim();
+    const btns = [...w.querySelectorAll('button')];
+    box.classList.remove('hidden');
+    box.innerHTML = `<p class="cx-cmdtxt"></p>${btns.length ? `<div class="cx-wrap mt-2">${btns.map((b, i) => `<button type="button" class="btn btn-sm btn-soft" data-i="${i}">${esc(b.textContent)}</button>`).join('')}</div>` : ''}`;
+    box.querySelector('.cx-cmdtxt').textContent = txt || '…';
+    box.querySelectorAll('[data-i]').forEach(b => b.onclick = () => { const o = btns[+b.dataset.i]; if (o && o.isConnected) o.click(); setTimeout(mirrorReply, 400); });
+  }
+  async function voiceRun(text) {
+    text = String(text || '').trim();
+    if (!text || vc.busy) return;
+    const f = fold(text).replace(/[.!?¡¿,]/g, '').trim();
+    $('#cxCmdSaid').textContent = `“${text}”`;
+    toggleVoiceHelp(false);
+    if (STOP_RE.test(f)) { voiceStatus('Hasta luego 👋'); speak('Hasta luego.'); setTimeout(voiceClose, 700); return; }
+    if (/^(que puedo decir|que (le )?puedo pedir|ayuda con la voz|comandos de voz|que comandos hay)$/.test(f)) { voiceStatus('Esto es lo que puedes decirme'); $('#cxCmdReply').classList.add('hidden'); toggleVoiceHelp(true); return; }
+    vc.busy = true; vc.loop = !!coach.voiceLoop;
+    voiceStatus('Pensando…', 'think');
+    const log = $('#aiLog');
+    vc.before = log ? [...log.children].filter(w => w.querySelector('.ai-msg.bot')).pop() : null;
+    if (!vc.obs && log) { vc.obs = new MutationObserver(() => mirrorReply()); vc.obs.observe(log, { childList: true, subtree: true, characterData: true }); }
+    try { await handleCommand(text, { voice: true }); } catch (e) { console.error(e); }
+    vc.busy = false;
+    mirrorReply();
+    voiceStatus(SR ? 'Toca el micrófono para otra orden' : 'Escribe otra orden', '');
+    if (!vc.loop || !SR) return;
+    // Conversación continua: espera a que termine de hablar y vuelve a escuchar.
+    const t0 = Date.now();
+    const again = () => {
+      if (!voiceOpen() || !vc.loop || flow.alive) return;
+      if ((isSpeaking() || busy) && Date.now() - t0 < 30000) { setTimeout(again, 220); return; }
+      voiceListen();
+    };
+    setTimeout(again, 500);
+  }
+  // Si se abre un cuestionario, la barra de voz se aparta (el cuestionario tiene su propia voz).
+  const _runFlow = runFlow;
+  runFlow = function (...args) { if (voiceOpen()) voiceClose(); return _runFlow(...args); };
+
+  /* ---------- Órdenes de voz para moverse por la app ---------- */
+  const NAV_WORDS = [
+    [/\b(mi dia|el dia de hoy|linea de tiempo|mi horario|horario de hoy)\b/, 'hoy', 'midia'],
+    [/\b(prioridades|plan del dia|para hoy)\b/, 'hoy', 'prioridades'],
+    [/\b(tareas|pendientes|lista de tareas)\b/, 'hoy', 'tareas'],
+    [/\b(enfoque|pomodoro|temporizador|concentracion)\b/, 'hoy', 'enfoque'],
+    [/\b(hoy|inicio|resumen|principal|pantalla principal)\b/, 'hoy', 'resumen'],
+    [/\b(plan del mes|plan mensual|mi mes|el mes)\b/, 'plan', 'miplan', 'mes'],
+    [/\b(plan del ano|plan anual|mi ano|el ano|meta del ano)\b/, 'plan', 'miplan', 'anio'],
+    [/\b(diagnostico|mi test|el test)\b/, 'plan', 'miplan', 'diag'],
+    [/\b(reglas|parametros|mis reglas|mis parametros|automatizacion)\b/, 'plan', 'miplan', 'params'],
+    [/\b(agenda|calendario|compromisos)\b/, 'plan', 'agenda'],
+    [/\b(habitos|rachas)\b/, 'plan', 'habitos'],
+    [/\b(metas|objetivos)\b/, 'plan', 'metas'],
+    [/\b(mi plan|el plan|plan)\b/, 'plan', 'miplan', 'dia'],
+    [/\b(graficas|graficos)\b/, 'progreso', 'graficas'],
+    [/\b(progreso|mi semana|semana|estadisticas)\b/, 'progreso', 'semana'],
+    [/\b(perfil|mi cuenta|cuenta|pin)\b/, 'mas', 'perfil'],
+    [/\b(notas|apuntes)\b/, 'notas'],
+    [/\b(recordatorios|alarmas|avisos programados)\b/, 'recordatorios'],
+    [/\b(conexiones|plugins|integraciones|aplicaciones conectadas)\b/, 'conexiones'],
+    [/\b(analizador|archivos)\b/, 'analizador'],
+    [/\b(descargas|exportar)\b/, 'descargas'],
+    [/\b(mas|menu|todas las secciones)\b/, 'mas', 'hub'],
+  ];
+  const NAV_SHEETS = [[/\b(ajustes|configuracion|colores|tema)\b/, 'themeSheet', 'los ajustes'], [/\b(respaldo|copia de seguridad)\b/, 'backupSheet', 'el respaldo'], [/\b(chat|conversacion)\b/, 'aiSheet', 'el chat'], [/\b(instalar|instalacion)\b/, 'installSheet', 'cómo instalarme']];
+  function navFrom(target) {
+    for (const [re, sheet, label] of NAV_SHEETS) if (re.test(target)) return { sheet, label };
+    for (const [re, v, p, tab] of NAV_WORDS) if (re.test(target)) return { v, p, tab };
+    return null;
+  }
+  function navLabel(d) {
+    if (d.sheet) return d.label;
+    if (d.tab) return { dia: 'tu plan del día', mes: 'tu plan del mes', anio: 'tu plan del año', diag: 'tu diagnóstico', params: 'tus reglas' }[d.tab];
+    const pl = d.p && panelsOf(d.v).find(x => x[0] === d.p);
+    return pl && panelsOf(d.v).length > 1 ? `${VIEW_DEF[d.v].title} → ${pl[1]}` : VIEW_DEF[d.v].title;
+  }
+  function navGo(d) {
+    if (d.sheet) { setTimeout(() => { if (voiceOpen() && !vc.loop) voiceClose(); openSheet(d.sheet); }, 600); return; }
+    if (d.tab) { planTab = d.tab; }
+    closeSheets(); showView(d.v, { panel: d.p });
+    if (d.tab) renderCoachPlan();
+  }
+  function voiceRules() {
+    const mine = [];
+    const add = (name, re, fn) => { mine.push([name, re, fn]); LOCAL_FIRST.add(name); };
+    add('coachNav', /^(?:(?:oye|por favor)\s+)?(abre|abrir|abreme|ve a|vete a|vamos a|muestrame|mostrar|ensename|ir a|llevame a|quiero ver|pasa a|cambia a|entra a|entra en)\s+(?:(?:a|la seccion de|la pestana de|la pantalla de|el|la|las|los|mis|mi|tu)\s+)*(.+)$/, (m) => {
+      const d = navFrom(m[2]);
+      if (!d) return null;
+      navGo(d);
+      return { text: `Listo: ${navLabel(d)}.`, say: `Abriendo ${navLabel(d).replace('→', ',')}.` };
+    });
+    add('coachNavBare', /^(tareas|mis tareas|habitos|mis habitos|metas|mis metas|notas|mis notas|agenda|recordatorios|conexiones|progreso|mi plan|mi dia|enfoque|prioridades|ajustes|graficas|perfil)$/, (m) => {
+      const d = navFrom(m[1]); if (!d) return null; navGo(d); return { text: `Listo: ${navLabel(d)}.`, say: `Abriendo ${navLabel(d).replace('→', ',')}.` };
+    });
+    add('coachPanelStep', /^(siguiente|anterior|la siguiente|la anterior)(\s+(pestana|panel|seccion|pantalla))?$/, (m) => {
+      const list = panelsOf(curView).map(x => x[0]), i = list.indexOf(curPanel[curView]);
+      const j = /anterior/.test(m[1]) ? i - 1 : i + 1;
+      if (j < 0 || j >= list.length) return { text: 'No hay más pestañas por ese lado.' };
+      showPanel(curView, list[j], { dir: j < i ? 'l' : 'r' });
+      return { text: `${panelsOf(curView)[j][1]}.` };
+    });
+    add('coachVolver', /^(atras|volver|regresa|regresar|vuelve)$/, () => {
+      if (VIEW_DEF[curView].parent) { showView(VIEW_DEF[curView].parent); return { text: 'Volvimos a Más.' }; }
+      showView('hoy', { panel: 'resumen' }); return { text: 'Volvimos a Hoy.' };
+    });
+    // Responder al asistente metiche con la voz
+    const askTarget = () => { const n = nudgeOpen && tasks.find(t => t.id === nudgeOpen); return n || (pendingAsks()[0] || {}).t || null; };
+    add('coachAnsDone', /^(si[, ]*)?((ya )?(la|lo) (hice|termine|acabe)|ya (termine|acabe|esta hecha|quedo)|ya la complete|listo ya( la hice)?|hecho)$/, () => {
+      const t = askTarget(); if (!t) return null; closeSheets(); return { text: answerCheck(t, 'done', { quietVoice: true }), celebrate: true };
+    });
+    add('coachAnsSnooze', /^(voy en eso|estoy en eso|todavia no|aun no|ahorita|dame (un rato|(\d+|cinco|diez|quince|veinte|treinta|media hora)( minutos)?))$/, (m, o) => {
+      const t = askTarget(); if (!t) return null;
+      const w = { cinco: 5, diez: 10, quince: 15, veinte: 20, treinta: 30 };
+      const mm = /(\d+)/.exec(o.n); const word = /(cinco|diez|quince|veinte|treinta)/.exec(o.n);
+      const mins = /media hora/.test(o.n) ? 30 : mm ? +mm[1] : word ? w[word[1]] : 15;
+      closeSheets(); return { text: answerCheck(t, 'snooze', { minutes: mins, quietVoice: true }) };
+    });
+    add('coachAnsTomorrow', /^(pasala|pasalo|dejala|dejalo|muevela|muevelo) (a|para) manana$/, () => { const t = askTarget(); if (!t || !nudgeOpen && !pendingAsks().length) return null; closeSheets(); return { text: answerCheck(t, 'tomorrow', { quietVoice: true }) }; });
+    add('coachAnsDrop', /^(no la (hare|voy a hacer)|ya no la (hare|voy a hacer)|olvidala|cancelala)$/, () => { const t = askTarget(); if (!t) return null; closeSheets(); return { text: answerCheck(t, 'drop', { quietVoice: true }) }; });
+    add('coachAskWhat', /^(que me (quieres )?preguntar|que tengo pendiente de responder|que me falta responder)$/, () => {
+      const l = pendingAsks(); if (!l.length) return { text: 'Nada por ahora. Vas al día.' };
+      const t = l[0].t; setTimeout(() => openNudge(t, ckOf(t, t.due || todayKey())), 600);
+      return { text: `Quiero saber si hiciste "${t.text}".` };
+    });
+    add('coachDictate2', /^(dictar|dicta|quiero dictar|voy a dictar)( tareas| varias tareas)?$/, () => ({ text: 'Te escucho. Dime todas tus tareas.', after: () => { if (voiceOpen()) voiceClose(); setTimeout(voiceAdd, 300); } }));
+    add('coachConnect', /^(conecta|conectar|activa|autoriza)\s+(el |la )?(whatsapp|wasap|google calendar|calendario de google|correo|gmail|compartir)$/, (m) => {
+      const id = /whats|wasap/.test(m[3]) ? 'whatsapp' : /correo|gmail/.test(m[3]) ? 'gmail' : /compartir/.test(m[3]) ? 'share' : 'gcal';
+      return { text: `Necesito tu permiso para conectar ${PLUGINS[id].name}. Revisa la pantalla.`, after: () => { if (voiceOpen()) voiceClose(); setTimeout(() => authorizePlugin(id), 300); } };
+    });
+    add('coachPin', /^(crea|crear|pon|ponle|cambia|cambiar) (un |el |mi )?pin$/, () => ({ text: 'Vamos a crear tu PIN.', after: () => setTimeout(() => accountAction('pin'), 300) }));
+    add('coachVoiceHelp', /^(que puedo decir|que (le )?puedo pedir|comandos de voz|ayuda con la voz)$/, () => ({ text: 'Te muestro lo que puedes decirme.', after: () => voiceCmd({ help: true }) }));
+    R.unshift(...mine);
   }
 
   /* =====================================================================
@@ -11150,17 +11553,6 @@ ${JSON.stringify(aiState())}`;
       prof.parentElement.insertBefore(b, prof);
     }
   }
-  function micFab() {
-    if (!SR || $('#cxMicFab')) return;
-    const b = document.createElement('button');
-    b.id = 'cxMicFab'; b.type = 'button'; b.className = 'cx-micfab'; b.setAttribute('aria-label', 'Dictar tareas'); b.title = 'Dictar tareas';
-    b.innerHTML = ic('mic');
-    b.onclick = () => voiceAdd();
-    document.body.appendChild(b);
-    const upd = () => { b.hidden = curView !== 'hoy' || flow.alive; };
-    new MutationObserver(upd).observe(document.querySelector('main'), { subtree: true, attributes: true, attributeFilter: ['hidden'] });
-    upd();
-  }
   function initCoach() {
     buildViews();
     addRepeatControl();
@@ -11168,11 +11560,11 @@ ${JSON.stringify(aiState())}`;
     openTaskPlan = function (id) { _otp(id); fillRepeatControl(id); };
     injectSettings();
     coachRules();
+    voiceRules();
     coachAiTools();
-    micFab();
     renderAccountBox();
     const h = (location.hash || '').replace('#', '');
-    if (h && (VIEW_DEF[h] || document.getElementById(h))) goHash(h, false); else showView('hoy', { noHash: true });
+    if (h && (VIEW_DEF[h.split('/')[0]] || document.getElementById(h))) goHash(h, false); else showView('hoy', { noHash: true });
     coachRender();
     setInterval(coachTick, 20000);
     setInterval(() => schedulePushSync(10), 20 * 60000);
@@ -11183,6 +11575,11 @@ ${JSON.stringify(aiState())}`;
       else if (eveningDue() && !flow.alive) setTimeout(maybeRunQuizzes, 800);
     });
     window.addEventListener('online', () => schedulePushSync(500));
+    document.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || isTyping(document.activeElement) || flow.alive) return;
+      if (e.key.toLowerCase() === 'v') { e.preventDefault(); voiceOpen() ? voiceClose() : voiceCmd(); }
+      if (e.key === 'Escape' && voiceOpen()) voiceClose();
+    });
   }
   function coachAfterBoot() {
     coach.lastSeenDay = todayKey(); saveCoach();

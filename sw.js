@@ -1,5 +1,5 @@
 /* dilex.exe: guarda la app para que funcione sin internet */
-const CACHE = 'dilex-v8-coach-20261028';
+const CACHE = 'dilex-v9-app-20261028';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {

@@ -201,4 +201,68 @@ html.locked .cx-micfab, .cx-micfab[hidden] { display: none; }
 .cx-perm::before { content: '✓'; color: rgb(var(--h-habits)); font-weight: 800; }
 .cx-perm.no::before { content: '✕'; color: #ef4444; }
 .cx-pre { white-space: pre-wrap; font-size: .82rem; line-height: 1.45; max-height: 14rem; overflow-y: auto; background: rgb(var(--n100)); border-radius: var(--r-sm); padding: .75rem; }
+
+/* ===== Modo programa: pantallas fijas con pestañas ===== */
+html.cx-app, html.cx-app body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+html.cx-app #app { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+html.cx-app #app > header { flex: none; }
+html.cx-app #app > main { flex: 1; min-height: 0; width: 100%; overflow: hidden; padding-top: .75rem !important; padding-bottom: calc(4.25rem + env(safe-area-inset-bottom)) !important; }
+@media (min-width: 768px) { html.cx-app #app > main { padding-top: 1rem !important; padding-bottom: 1rem !important; } }
+html.cx-app #app > main > footer { display: none; }
+html.cx-app main > .cx-view { margin: 0 !important; }
+.cx-view { height: 100%; display: flex; flex-direction: column; gap: .7rem; min-height: 0; }
+.cx-vhead { display: flex; align-items: center; gap: .6rem; flex: none; min-width: 0; }
+.cx-vh1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; flex: none; }
+.cx-back { width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; background: rgb(var(--n100)); color: rgb(var(--n700)); flex: none; }
+.cx-back svg { width: 1.1rem; height: 1.1rem; transform: rotate(90deg); }
+.cx-ptabs { flex: 1; min-width: 0; display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; padding: 2px; margin-left: auto; justify-content: flex-start; }
+.cx-ptabs::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) { .cx-ptabs { justify-content: flex-end; } }
+.cx-ptabs button { display: inline-flex; align-items: center; gap: .35rem; flex: none; padding: .45rem .8rem; border-radius: 999px; font-size: .82rem; font-weight: 700; color: rgb(var(--n500)); background: rgb(var(--n100)); transition: background .15s, color .15s; white-space: nowrap; }
+.cx-ptabs button svg { width: 1rem; height: 1rem; }
+.cx-ptabs button[aria-selected="true"] { background: rgb(var(--accent)); color: var(--on-accent); box-shadow: 0 4px 12px -6px rgb(var(--accent) / .7); }
+@media (max-width: 420px) { .cx-ptabs button:not([aria-selected="true"]) span { display: none; } .cx-ptabs button:not([aria-selected="true"]) { padding: .45rem .6rem; } .cx-vh1 { font-size: 1.2rem; } }
+.cx-vbody { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; border-radius: var(--r); scrollbar-width: thin; }
+.cx-panel { display: flex; flex-direction: column; gap: 1rem; min-height: 100%; padding-bottom: .5rem; }
+.cx-panel[hidden] { display: none !important; }
+.cx-panel.enter { animation: cxPanR .24s ease-out; }
+.cx-panel.enter.from-l { animation-name: cxPanL; }
+@keyframes cxPanR { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes cxPanL { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+.cx-panel > .cx-fill:only-child { flex: 1; }
+.cx-stack { display: flex !important; flex-direction: column; gap: 1rem; }
+.cx-stack > * { width: 100%; }
+html.cx-app #tareas #taskList { max-height: none; }
+html.cx-app #resumen { gap: 1rem; display: flex; flex-direction: column; }
+html.cx-app #resumen > * + * { margin-top: 0 !important; }
+@media (max-width: 767px) {
+  html.cx-app #resumen > .card:first-child { padding: 1.1rem; }
+  html.cx-app #resumen > .card:first-child .w-44 { width: 7.5rem; height: 7.5rem; }
+  html.cx-app #resumen > .card:first-child #dayPct { font-size: 1.4rem; }
+  html.cx-app #dayLegend { display: none; }
+  html.cx-app #greeting { font-size: 1.45rem; }
+}
+.cx-hubtile { min-height: 6.4rem; padding: .85rem; }
+html.cx-app .ai-fab { display: none; }
+@media (min-width: 768px) { html.cx-app .ai-fab { display: block; } }
+.cx-voicelink { margin-left: auto; color: rgb(var(--accent)) !important; background: rgb(var(--accent) / .1); }
+
+/* ===== Barra de comando de voz ===== */
+#cxCmd { position: fixed; left: 0; right: 0; bottom: calc(4.6rem + env(safe-area-inset-bottom)); z-index: 66; display: flex; justify-content: center; padding: 0 10px; pointer-events: none; opacity: 0; transform: translateY(16px); transition: opacity .2s, transform .2s; }
+#cxCmd.open { opacity: 1; transform: none; }
+#cxCmd.open .cx-cmdbox { pointer-events: auto; }
+@media (min-width: 768px) { #cxCmd { bottom: 104px; } }
+.cx-cmdbox { width: 100%; max-width: 34rem; max-height: 62vh; overflow-y: auto; background: var(--surface); border: 1px solid rgb(var(--n200)); border-radius: 22px; padding: .9rem 1rem 1rem; box-shadow: 0 18px 50px -12px rgba(0,0,0,.35), 0 0 0 4px rgb(var(--accent) / .08); }
+.cx-cmddot { width: .7rem; height: .7rem; border-radius: 999px; background: rgb(var(--n400)); flex: none; }
+.cx-cmddot[data-mode="listen"] { background: #ef4444; animation: pulse 1s ease-in-out infinite; }
+.cx-cmddot[data-mode="think"] { background: rgb(var(--accent)); animation: pulse .7s ease-in-out infinite; }
+.cx-cmddot[data-mode="err"] { background: #f59e0b; }
+.cx-cmdsaid { margin-top: .45rem; font-size: 1.05rem; font-weight: 650; min-height: 1.4rem; overflow-wrap: anywhere; }
+.cx-cmdsaid:empty::before { content: 'Di lo que necesites: "abre mis metas", "añade…", "organízame el día"'; font-weight: 500; font-size: .88rem; color: rgb(var(--n400)); }
+.cx-cmdreply { margin-top: .6rem; padding: .7rem .8rem; border-radius: 14px; background: rgb(var(--n100)); font-size: .92rem; line-height: 1.45; }
+.cx-cmdtxt { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cx-cmdhelp { margin-top: .4rem; }
+.cx-loop { display: inline-flex; align-items: center; gap: .3rem; font-size: .75rem; font-weight: 700; color: rgb(var(--n500)); flex: none; cursor: pointer; }
+.cx-loop input { accent-color: rgb(var(--accent)); width: 1rem; height: 1rem; }
+html.cx-cmd-open .bnav .fab { box-shadow: 0 0 0 4px rgb(239 68 68 / .35), 0 8px 22px -6px rgb(var(--accent) / .55); }
 /* COACH-CSS:END */
