@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Copia el motor, la interfaz y los estilos de la Agenda dentro de index.html.
+"""Copia la Agenda, el coach (plan, asistente metiche, voz, conexiones, avisos) y el PIN dentro de index.html.
 
 index.html debe seguir siendo un solo archivo que funcione sin internet, así que
 el código fuente vive en planner/ y este script lo incrusta entre marcadores.
@@ -24,6 +24,11 @@ BLOCKS = [
      '  /* =====================================================================\n     ASISTENTE · utilidades comunes',
      None),
     ('agenda.css', 'AGENDA-CSS', '</head>', ('<style id="agenda-css">\n', '\n</style>\n')),
+    ('coach.js', 'COACH',
+     '  /* =====================================================================\n     INICIO\n',
+     None),
+    ('coach.css', 'COACH-CSS', '</head>', ('<style id="coach-css">\n', '\n</style>\n')),
+    ('lock.js', 'LOCK', '<!-- ===================== SECUENCIA DE INICIO ===================== -->', ('<script id="lock-js">\n', '\n</script>\n')),
 ]
 
 

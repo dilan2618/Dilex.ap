@@ -48,6 +48,8 @@
   function planChips(t) {
     if (t.done) return '';
     return [
+      t.time ? `<span class="chip" style="background: rgb(var(--accent) / .1); color: rgb(var(--accent))">${ic('clock')}${t.time}${t.timeAuto ? ' · sugerida' : ''}</span>` : '',
+      t.repeat ? `<span class="chip">${ic('repeat')}${({ daily: 'Diaria', weekdays: 'L a V', weekly: 'Semanal', monthly: 'Mensual' })[t.repeat] || 'Se repite'}</span>` : '',
       t.durMin ? `<span class="chip">${ic('clock')}${PE.dur(t.durMin)}${t.durSrc === 'estimada' ? ' aprox.' : ''}</span>` : '',
       t.area && AG_AREAS[t.area] ? agAreaChip(t.area) : '',
       t.costo === 'critico' || t.costo === 'alto' ? `<span class="chip chip-amber">Aplazar: ${AG_COSTS[t.costo].toLowerCase()}</span>` : '',
