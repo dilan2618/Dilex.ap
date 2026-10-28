@@ -336,4 +336,27 @@ html.cx-simple [data-tabs="agenda"] [data-tab="rules"], html.cx-simple [data-tab
 .cxs-more summary { list-style: none; cursor: pointer; font-size: .85rem; font-weight: 700; color: rgb(var(--n500)); padding: .3rem 0 .7rem; }
 .cxs-more summary::-webkit-details-marker { display: none; }
 html.cx-simple .cx-panel[data-panel="inicio"] { padding-bottom: 1.5rem; }
+
+/* ===== Plan simple ===== */
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child > .tile,
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child .hint { display: none; }
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child .sec-title { font-size: 1rem; }
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child { margin-bottom: .75rem; }
+html.cx-simple #taskList li > div:last-child { display: none !important; }
+html.cx-simple #taskList li { cursor: pointer; }
+html.cx-simple #tareas:not(.cx-find) #taskSearch, html.cx-simple #tareas:not(.cx-find) #taskSort { display: none; }
+html.cx-simple #taskList { max-height: none; }
+.cxp-auto { border-radius: var(--r); padding: 1rem 1.1rem; background: linear-gradient(135deg, rgb(var(--accent) / .09), rgb(var(--accent) / .02)), var(--surface); border: 1px solid rgb(var(--accent) / .22); }
+.cxp-autohead { display: flex; align-items: center; gap: .75rem; }
+.cxp-bot { width: 2.6rem; height: 2.6rem; border-radius: 999px; display: grid; place-items: center; font-size: 1.35rem; background: rgb(var(--n100)); flex: none; filter: grayscale(1); }
+.cxp-bot.on { background: rgb(var(--accent) / .14); filter: none; animation: cxBot 3s ease-in-out infinite; }
+@keyframes cxBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+.cxp-auto .cx-on { margin-left: .35rem; }
+.cxp-auto .cxs-more summary { padding: .45rem 0 .35rem; }
+.cxp { display: flex; flex-direction: column; gap: 1.2rem; }
+.cxp-sec + .cxp-sec { border-top: 1px solid rgb(var(--n200) / .8); padding-top: 1.1rem; }
+.cxp-sec.cxs-more summary { padding: 0 0 .6rem; }
+.cxp-tacts { padding-top: .25rem; }
+.cxp-tacts[hidden] { display: none; }
+.cxp-tmore summary { padding: .2rem 0 .5rem; }
 /* COACH-CSS:END */

@@ -1,5 +1,5 @@
 /* DLX: guarda la app para que funcione sin internet */
-const CACHE = 'dlx-v11-simple-20261028';
+const CACHE = 'dlx-v12-plan-20261028';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {

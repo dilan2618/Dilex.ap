@@ -1131,6 +1131,29 @@ html.cx-simple [data-tabs="agenda"] [data-tab="rules"], html.cx-simple [data-tab
 .cxs-more summary { list-style: none; cursor: pointer; font-size: .85rem; font-weight: 700; color: rgb(var(--n500)); padding: .3rem 0 .7rem; }
 .cxs-more summary::-webkit-details-marker { display: none; }
 html.cx-simple .cx-panel[data-panel="inicio"] { padding-bottom: 1.5rem; }
+
+/* ===== Plan simple ===== */
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child > .tile,
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child .hint { display: none; }
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child .sec-title { font-size: 1rem; }
+html.cx-simple .cx-view[data-view="plan"] .cx-panel > section > div:first-child { margin-bottom: .75rem; }
+html.cx-simple #taskList li > div:last-child { display: none !important; }
+html.cx-simple #taskList li { cursor: pointer; }
+html.cx-simple #tareas:not(.cx-find) #taskSearch, html.cx-simple #tareas:not(.cx-find) #taskSort { display: none; }
+html.cx-simple #taskList { max-height: none; }
+.cxp-auto { border-radius: var(--r); padding: 1rem 1.1rem; background: linear-gradient(135deg, rgb(var(--accent) / .09), rgb(var(--accent) / .02)), var(--surface); border: 1px solid rgb(var(--accent) / .22); }
+.cxp-autohead { display: flex; align-items: center; gap: .75rem; }
+.cxp-bot { width: 2.6rem; height: 2.6rem; border-radius: 999px; display: grid; place-items: center; font-size: 1.35rem; background: rgb(var(--n100)); flex: none; filter: grayscale(1); }
+.cxp-bot.on { background: rgb(var(--accent) / .14); filter: none; animation: cxBot 3s ease-in-out infinite; }
+@keyframes cxBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+.cxp-auto .cx-on { margin-left: .35rem; }
+.cxp-auto .cxs-more summary { padding: .45rem 0 .35rem; }
+.cxp { display: flex; flex-direction: column; gap: 1.2rem; }
+.cxp-sec + .cxp-sec { border-top: 1px solid rgb(var(--n200) / .8); padding-top: 1.1rem; }
+.cxp-sec.cxs-more summary { padding: 0 0 .6rem; }
+.cxp-tacts { padding-top: .25rem; }
+.cxp-tacts[hidden] { display: none; }
+.cxp-tmore summary { padding: .2rem 0 .5rem; }
 /* COACH-CSS:END */
 </style>
 </head>
@@ -9106,7 +9129,7 @@ ${JSON.stringify(aiState())}`;
     params: {
       wake: '07:00', sleep: '23:00', workStart: '09:00', workEnd: '18:00', workDays: [1, 2, 3, 4, 5], peak: 'manana',
       nosy: 'normal', closeTime: '21:00', quietStart: '22:30', quietEnd: '07:00', startAlert: true,
-      simple: true, autoMoveOverdue: true, autoPlan: true, autoSchedule: true, morningQuiz: true, eveningQuiz: true, discreet: false, askBeforePlugins: true,
+      simple: true, autoReslot: true, autoTomorrow: true, autoRepeatSuggest: true, autoMoveOverdue: true, autoPlan: true, autoSchedule: true, morningQuiz: true, eveningQuiz: true, discreet: false, askBeforePlugins: true,
     },
   });
   let coach = (() => {
@@ -9175,10 +9198,10 @@ ${JSON.stringify(aiState())}`;
   const SIMPLE_ALIAS = { 'hoy/resumen': 'hoy/inicio', 'hoy/midia': 'hoy/inicio', 'hoy/prioridades': 'hoy/inicio', 'hoy/tareas': 'plan/tareas', 'hoy/enfoque': 'enfoque/main', 'plan/metas': 'plan/habitos', 'mas/perfil': 'mas/hub' };
   if (SIMPLE) {
     VIEW_DEF.hoy.panels = [['inicio', 'Hoy', 'home']];
-    VIEW_DEF.plan.panels = [['agenda', 'Calendario', 'calendar'], ['tareas', 'Tareas', 'tasks'], ['habitos', 'Hábitos y metas', 'repeat'], ['miplan', 'Mi plan', 'compass']];
+    VIEW_DEF.plan.panels = [['agenda', 'Calendario', 'calendar'], ['tareas', 'Tareas', 'tasks'], ['habitos', 'Hábitos y metas', 'repeat'], ['mesano', 'Mes y año', 'compass'], ['reglas', 'Reglas', 'wand']];
     VIEW_DEF.mas.panels = [['hub', 'Más', 'grid']];
     VIEW_DEF.enfoque = { title: 'Enfoque', icon: 'timer', parent: 'mas', hue: '--h-focus', desc: 'Temporizador para concentrarte' };
-    Object.assign(SECTION_AT, { resumen: null, cxAskCard: ['hoy', 'inicio'], cxSimple: ['hoy', 'inicio'], tareas: ['plan', 'tareas'], enfoque: ['enfoque', 'main'], metas: ['plan', 'habitos'], cxAccount: ['mas', 'hub'] });
+    Object.assign(SECTION_AT, { coachPlan: ['plan', 'mesano'], cxPlanMY: ['plan', 'mesano'], cxPlanRules: ['plan', 'reglas'], resumen: null, cxAskCard: ['hoy', 'inicio'], cxSimple: ['hoy', 'inicio'], tareas: ['plan', 'tareas'], enfoque: ['enfoque', 'main'], metas: ['plan', 'habitos'], cxAccount: ['mas', 'hub'] });
   }
   function buildViews() {
     const main = $('main');
@@ -9215,8 +9238,10 @@ ${JSON.stringify(aiState())}`;
       simple.querySelector('#cxsAskSlot').appendChild(ask);
       hold(res); if (planGrid) hold(planGrid);
       put($id('tareas'), 'plan/tareas');
-      const cp = document.createElement('section'); cp.id = 'coachPlan'; cp.className = 'card cx-pad'; put(cp, 'plan/miplan');
+      const ab = document.createElement('section'); ab.id = 'cxAutoBar'; ab.className = 'cxp-auto'; put(ab, 'plan/agenda');
       put($id('agenda'), 'plan/agenda');
+      const my = document.createElement('section'); my.id = 'cxPlanMY'; my.className = 'card cx-pad cxp'; put(my, 'plan/mesano');
+      const rl = document.createElement('section'); rl.id = 'cxPlanRules'; rl.className = 'card cx-pad cxp'; put(rl, 'plan/reglas');
       put($id('habitos'), 'plan/habitos');
       put($id('metas'), 'plan/habitos');
       put($id('stats'), 'progreso/semana');
@@ -9419,16 +9444,111 @@ ${JSON.stringify(aiState())}`;
     ].map(item).join('')}</div></details>`;
   }
 
-  /* Automatización: al abrir y cada rato, DLX ordena el día sin que se lo pidas. */
+  /* =====================================================================
+     PILOTO AUTOMÁTICO: cada 20 minutos (y al abrir) DLX revisa tu día
+     sin que se lo pidas: reacomoda lo que se pasó, ordena lo nuevo,
+     prepara mañana en la noche y detecta lo que repites.
+  ===================================================================== */
+  const AUTO_EVERY = 20 * 60000;
   let lastAuto = 0;
-  function autoOrganize(force) {
-    if (!coach.wizardDone || !P().autoSchedule || flow.alive) return;
-    if (!force && Date.now() - lastAuto < 20 * 60000) return;
-    const tk = todayKey();
-    const need = tasksOn(tk).some(t => !t.done && !t.time) || (P().autoMoveOverdue && tasks.some(isOverdue));
-    lastAuto = Date.now();
-    if (!need) return;
-    try { organizeDay({ silent: true }); } catch (e) { console.warn(e); }
+  function autoLog(text) {
+    if (!Array.isArray(coach.autoLog)) coach.autoLog = [];
+    coach.autoLog.unshift({ at: new Date().toISOString(), text });
+    coach.autoLog = coach.autoLog.slice(0, 20);
+  }
+  function autoOrganize(force, quiet) {
+    if (!P().autoSchedule || flow.alive || (window.DilexLock && DilexLock.isLocked())) return;
+    if (!force && Date.now() - lastAuto < AUTO_EVERY) return;
+    lastAuto = Date.now(); coach.lastAuto = lastAuto;
+    const tk = todayKey(), nm = nowM();
+    const did = [];
+    try {
+      // 1) Lo que se pasó y no hiciste: le busco otro hueco hoy
+      let moved = 0;
+      if (P().autoReslot) tasksOn(tk).forEach(t => {
+        if (t.done || !t.time || !t.timeAuto) return;
+        if (tMin(t.time) + estDur(t) + 30 > nm) return;
+        const ck = coach.checkins[`t:${t.id}:${tk}`];
+        if (ck && ck.state === 'answered') return;
+        delete t.time; delete t.timeAuto; delete coach.checkins[`t:${t.id}:${tk}`];
+        moved++;
+      });
+      // 2) Ordeno el día si hay algo sin hora o atrasado
+      const need = moved || tasksOn(tk).some(t => !t.done && !t.time) || (P().autoMoveOverdue && tasks.some(isOverdue));
+      if (need) {
+        const r = organizeDay({ silent: true });
+        if (moved) did.push(`Reacomodé ${plural(moved, 'tarea que se pasó', 'tareas que se pasaron')}`);
+        if (r.moved) did.push(`pasé ${plural(r.moved, 'atrasada', 'atrasadas')} a hoy`);
+        const nueva = r.scheduled.length - moved;
+        if (nueva > 0) did.push(`le puse hora a ${plural(nueva, 'tarea nueva', 'tareas nuevas')}`);
+      }
+      // 3) En la noche dejo listo mañana
+      const tmk = addDaysKey(1);
+      if (P().autoTomorrow && nm >= (tMin(P().closeTime) ?? 1260) && coach.tomorrowReady !== tmk && tasksOn(tmk).some(t => !t.done && !t.time)) {
+        const r2 = organizeDay({ day: tmk, moveOverdue: false, plan: false });
+        coach.tomorrowReady = tmk;
+        if (r2.scheduled.length) {
+          const first = r2.scheduled.slice().sort((a, b) => tMin(a.time) - tMin(b.time))[0];
+          did.push(`preparé mañana: empiezas con "${first.text}" a las ${hm12(first.time)}`);
+        }
+      }
+      // 4) Lo que repites
+      if (P().autoRepeatSuggest && !did.length) suggestRepeats();
+    } catch (e) { console.warn('auto', e); }
+    if (did.length) {
+      const txt = cap(listJoin(did)) + '.';
+      autoLog(txt);
+      if (!quiet && !document.hidden && !$$('.sheet.open').length) toast(`🤖 ${txt}`, 'info', undoAction());
+    }
+    saveCoach();
+    if (SIMPLE) renderAutoBar();
+  }
+  function suggestRepeats() {
+    if (!isObj(coach.repeatAsked)) coach.repeatAsked = {};
+    const since = Date.now() - 21 * 86400000, groups = {};
+    tasks.forEach(t => {
+      if (t.repeat || t.repeatOf || Date.parse(t.createdAt) < since) return;
+      const k = fold(t.text).replace(/[^a-z0-9ñ ]/g, '').trim();
+      if (k.length < 3) return;
+      (groups[k] = groups[k] || []).push(t);
+    });
+    const hit = Object.entries(groups).find(([k, l]) => l.length >= 3 && !coach.repeatAsked[k] && new Set(l.map(t => t.due || dayKey(t.createdAt))).size >= 3);
+    if (!hit) return;
+    const [k, list] = hit;
+    coach.repeatAsked[k] = todayKey();
+    const days = new Set(list.map(t => keyToDate(t.due || dayKey(t.createdAt)).getDay()));
+    const kind = days.size <= 1 ? 'weekly' : [...days].every(d => d >= 1 && d <= 5) ? 'weekdays' : 'daily';
+    const latest = list.filter(t => !t.done).sort((a, b) => (a.due || '').localeCompare(b.due || ''))[0] || list[0];
+    autoLog(`Noté que añades "${latest.text}" seguido; te propuse repetirla ${REPEAT[kind].toLowerCase()}.`);
+    toast(`Añades "${latest.text}" seguido. ¿La hago automática (${REPEAT[kind].toLowerCase()})?`, 'info', { label: 'Sí', fn: () => {
+      let t = latest;
+      if (t.done) { t = A.addTask({ text: t.text, due: nextRepeatDate(Object.assign({}, t, { repeat: kind })), priority: t.priority, durMin: t.durMin, area: t.area }); }
+      t.repeat = kind; saveTasks(); onTasksChanged(); schedulePushSync();
+      autoLog(`"${t.text}" ahora se repite ${REPEAT[kind].toLowerCase()}.`); saveCoach();
+      toast('Listo. Ya no tienes que añadirla cada vez.', 'ok');
+    } });
+  }
+  const agoText = (ms) => { const m = Math.round(ms / 60000); return m < 1 ? 'hace un momento' : m < 60 ? `hace ${m} min` : `hace ${Math.round(m / 60)} h`; };
+  function renderAutoBar() {
+    const box = $('#cxAutoBar'); if (!box) return;
+    const on = !!P().autoSchedule;
+    const last = coach.lastAuto || lastAuto;
+    const nextIn = last ? Math.max(1, Math.round((last + AUTO_EVERY - Date.now()) / 60000)) : null;
+    const log = Array.isArray(coach.autoLog) ? coach.autoLog : [];
+    const openLog = box.querySelector('details[data-k="log"]')?.open, openDay = box.querySelector('details[data-k="day"]')?.open;
+    const dk = planDay, rel = daysBetween(todayKey(), dk);
+    box.innerHTML = `<div class="cxp-autohead"><span class="cxp-bot ${on ? 'on' : ''}">🤖</span>
+        <div class="flex-1 min-w-0"><p class="cx-b">Piloto automático ${on ? '<span class="cx-on">activo</span>' : '<span class="cx-muted cx-small">pausado</span>'}</p>
+        <p class="cx-small cx-muted">${on ? `Reviso tu día cada 20 min${last ? ` · última vez ${agoText(Date.now() - last)} · próxima en ${nextIn} min` : ''}` : 'Actívalo y ordeno tu día sin que me lo pidas'}</p></div>
+        <input type="checkbox" class="cx-switch" id="cxAutoOn" ${on ? 'checked' : ''} aria-label="Piloto automático"></div>
+      <div class="cx-wrap mt-3"><button type="button" class="btn btn-sm btn-accent" id="cxAutoNow">${ic('wand')}Organizar ahora</button><button type="button" class="btn btn-sm" data-panel-go="plan/reglas">${ic('sliders')}Qué hace solo</button></div>
+      <details class="cxs-more mt-2" data-k="log" ${openLog ? 'open' : ''}><summary>Lo que hice solo (${log.length})</summary>${log.length ? `<div class="cx-list">${log.slice(0, 8).map(l => `<div class="cx-li"><span class="cx-small cx-muted" style="flex:none;width:4.5rem">${esc(new Date(l.at).toLocaleTimeString('es-ES', { hour: 'numeric', minute: '2-digit' }))}${dayKey(l.at) !== todayKey() ? `<br>${esc(shortDate(dayKey(l.at)))}` : ''}</span><p class="grow cx-small">${esc(l.text)}</p></div>`).join('')}</div>` : '<p class="hint cx-small">Todavía nada. Cuando ordene algo por mi cuenta, lo verás aquí.</p>'}</details>
+      <details class="cxs-more" data-k="day" ${openDay ? 'open' : ''}><summary>Mi día completo, con rutinas</summary>
+        <div class="cx-row" style="gap:.35rem;margin-bottom:.5rem"><button type="button" class="icon-btn" data-pday2="-1" aria-label="Día anterior">${ic('chevron').replace('<svg ', '<svg style="transform:rotate(90deg)" ')}</button><b class="text-[.95rem]">${esc(rel === 0 ? 'Hoy' : rel === 1 ? 'Mañana' : rel === -1 ? 'Ayer' : keyToDate(dk).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' }))}</b><button type="button" class="icon-btn" data-pday2="1" aria-label="Día siguiente">${ic('chevron').replace('<svg ', '<svg style="transform:rotate(-90deg)" ')}</button></div>
+        ${timelineHTML(dk)}</details>`;
+    box.querySelector('#cxAutoOn').onchange = (e) => { P().autoSchedule = e.target.checked; saveCoach(); if (e.target.checked) autoOrganize(true); renderAutoBar(); };
+    box.querySelector('#cxAutoNow').onclick = () => { autoOrganize(true); const t = coach.autoLog && coach.autoLog[0]; if (!t || Date.now() - Date.parse(t.at) > 5000) toast('Revisé tu día: ya estaba en orden.', 'ok'); };
+    box.querySelectorAll('[data-pday2]').forEach(b => b.onclick = () => { planDay = addDaysFrom(planDay, +b.dataset.pday2); renderAutoBar(); });
   }
   function setSimpleMode(on) {
     P().simple = !!on; saveCoach();
@@ -9441,7 +9561,7 @@ ${JSON.stringify(aiState())}`;
   function panelOfEl(el) { const p = el && el.closest && el.closest('.cx-panel'); return p ? p.dataset.panel : null; }
   function onPanelShown(v, p) {
     if (v === 'progreso') requestAnimationFrame(() => { if (p === 'graficas') { try { Object.values(charts).forEach(c => c.resize()); } catch { /* sin gráficas */ } } else renderWeek(); });
-    if (v === 'plan') { if (p === 'miplan') renderCoachPlan(); if (p === 'agenda') { try { renderAgenda(); } catch { /* agenda */ } } }
+    if (v === 'plan') { if (p === 'miplan' || p === 'mesano' || p === 'reglas') renderCoachPlan(); if (p === 'agenda') { try { renderAgenda(); } catch { /* agenda */ } if (SIMPLE) renderAutoBar(); } }
     if (v === 'hoy' && p === 'midia') renderDayCard();
     if (v === 'hoy' && p === 'inicio') renderSimpleHoy();
     if (v === 'recordatorios') renderReminders();
@@ -9465,7 +9585,10 @@ ${JSON.stringify(aiState())}`;
     onPanelShown(v, p);
   }
   function showView(v, opts = {}) {
-    if (SIMPLE) { const k = SIMPLE_ALIAS[`${v}/${opts.panel || ''}`]; if (k) { const [a, b] = k.split('/'); v = a; opts = Object.assign({}, opts, { panel: b }); } }
+    if (SIMPLE) {
+      if (v === 'plan' && opts.panel === 'miplan') opts = Object.assign({}, opts, { panel: { dia: 'agenda', mes: 'mesano', anio: 'mesano', diag: 'reglas', params: 'reglas' }[planTab] || 'mesano' });
+      const k = SIMPLE_ALIAS[`${v}/${opts.panel || ''}`]; if (k) { const [a, b] = k.split('/'); v = a; opts = Object.assign({}, opts, { panel: b }); }
+    }
     if (!VIEW_DEF[v]) v = 'hoy';
     const changed = v !== curView;
     curView = v;
@@ -10328,10 +10451,31 @@ ${JSON.stringify(aiState())}`;
   let planTab = 'dia', planDay = todayKey();
   function openPlanTab(tab) { planTab = tab; closeSheets(); showView('plan', { panel: 'miplan' }); renderCoachPlan(); }
   function renderCoachPlan() {
+    ensurePlans();
+    if (SIMPLE) return renderSimplePlan();
     const box = $('#coachPlan');
     if (!box) return;
-    ensurePlans();
     const tabs = [['dia', 'Día'], ['mes', 'Mes'], ['anio', 'Año'], ['diag', 'Test'], ['params', 'Reglas']];
+    const body = planBody(planTab);
+    box.innerHTML = `<div class="cx-row mb-4"><span class="tile" style="--h: var(--h-plan)">${ic('compass')}</span><div class="flex-1 min-w-0"><h2 class="sec-title">Tu plan</h2><p class="hint">${coach.wizardDone ? `Hecho para ti: ${esc(prob().name.toLowerCase())}` : 'Día, mes y año, a tu medida'}</p></div></div>
+      <div class="tabs cx-tabs mb-4" role="tablist">${tabs.map(([id, t]) => `<button type="button" data-ptab="${id}" aria-selected="${planTab === id}">${t}</button>`).join('')}</div><div>${body}</div>`;
+    box.querySelectorAll('[data-ptab]').forEach(b => b.onclick = () => { planTab = b.dataset.ptab; renderCoachPlan(); });
+    bindPlanBox(box, renderCoachPlan);
+  }
+  /* Vista simple: "Mes y año" y "Reglas" son pestañas propias; el día vive en Calendario. */
+  function renderSimplePlan() {
+    const my = $('#cxPlanMY'), rl = $('#cxPlanRules'), ab = $('#cxAutoBar');
+    if (my) {
+      my.innerHTML = coach.wizardDone ? `<div class="cxp-sec"><p class="cxs-h">Este mes</p>${planBody('mes')}</div><div class="cxp-sec"><p class="cxs-h">Este año</p>${planBody('anio')}</div>` : planBody('mes');
+      bindPlanBox(my, renderSimplePlan);
+    }
+    if (rl) {
+      rl.innerHTML = `<div class="cxp-sec">${paramsHTML(true)}</div>${coach.wizardDone ? `<details class="cxp-sec cxs-more"><summary>Mi diagnóstico: ${esc(prob().name.toLowerCase())}</summary>${planBody('diag')}</details>` : `<div class="cxp-sec">${planBody('diag')}</div>`}`;
+      bindPlanBox(rl, renderSimplePlan);
+    }
+    if (ab) renderAutoBar();
+  }
+  function planBody(planTab) {
     let body = '';
     if (!coach.wizardDone && planTab !== 'params') {
       body = `<div class="cx-soft"><p class="cx-b">Aún no hiciste tu diagnóstico</p><p class="hint mt-1">Son 3 minutos de preguntas (puedes responder por voz). Con eso descubro qué te frena y armo tu plan del día, del mes y del año.</p><button type="button" class="btn btn-accent mt-3" data-cx-act="wizard">${ic('wand')}Hacer mi diagnóstico</button></div>`;
@@ -10359,20 +10503,20 @@ ${JSON.stringify(aiState())}`;
     } else if (planTab === 'diag') {
       body = `${diagHTML(diag())}<div class="cx-wrap mt-5"><button type="button" class="btn" data-cx-act="wizard">${ic('reset')}Repetir diagnóstico</button></div>${evolutionHTML()}`;
     } else body = paramsHTML();
-    box.innerHTML = `<div class="cx-row mb-4"><span class="tile" style="--h: var(--h-plan)">${ic('compass')}</span><div class="flex-1 min-w-0"><h2 class="sec-title">Tu plan</h2><p class="hint">${coach.wizardDone ? `Hecho para ti: ${esc(prob().name.toLowerCase())}` : 'Día, mes y año, a tu medida'}</p></div></div>
-      <div class="tabs cx-tabs mb-4" role="tablist">${tabs.map(([id, t]) => `<button type="button" data-ptab="${id}" aria-selected="${planTab === id}">${t}</button>`).join('')}</div><div>${body}</div>`;
-    box.querySelectorAll('[data-ptab]').forEach(b => b.onclick = () => { planTab = b.dataset.ptab; renderCoachPlan(); });
-    box.querySelectorAll('[data-pday]').forEach(b => b.onclick = () => { planDay = addDaysFrom(planDay, +b.dataset.pday); renderCoachPlan(); });
+    return body;
+  }
+  function bindPlanBox(box, rerender) {
+    box.querySelectorAll('[data-pday]').forEach(b => b.onclick = () => { planDay = addDaysFrom(planDay, +b.dataset.pday); rerender(); });
     box.querySelectorAll('[data-cx-edit]').forEach(b => b.onclick = () => {
       const k = b.dataset.cxEdit;
       const v = prompt(k === 'yearGoal' ? 'Tu meta más importante del año' : 'Tu enfoque de este mes', coach[k] || '');
       if (v == null) return;
       coach[k] = cap(v.trim()).slice(0, 120); if (k === 'monthFocus') coach.monthKey = todayKey().slice(0, 7);
-      ensurePlans(); saveCoach(); renderCoachPlan();
+      ensurePlans(); saveCoach(); rerender();
     });
     const yg = box.querySelector('[data-cx-yeargoal]');
-    if (yg) yg.onclick = () => { const d = new Date(); d.setFullYear(d.getFullYear() + 1); A.addGoal({ name: coach.yearGoal, target: 100, unit: '%', deadline: dayKey(d), step: 5 }); toast('Meta creada. Súmale avance desde Metas.', 'ok'); renderCoachPlan(); };
-    if (planTab === 'params') bindParams(box);
+    if (yg) yg.onclick = () => { const d = new Date(); d.setFullYear(d.getFullYear() + 1); A.addGoal({ name: coach.yearGoal, target: 100, unit: '%', deadline: dayKey(d), step: 5 }); toast('Meta creada. Súmale avance desde Metas.', 'ok'); rerender(); };
+    if (box.querySelector('[data-prm], [data-prmt], [data-wd], [data-peak], [data-nosy]')) bindParams(box, rerender);
   }
   const addDaysFrom = (k, n) => { const d = keyToDate(k); d.setDate(d.getDate() + n); return dayKey(d); };
 
@@ -10386,29 +10530,32 @@ ${JSON.stringify(aiState())}`;
   }
 
   /* ---------- Parámetros (bajo tus reglas) ---------- */
-  function paramsHTML() {
+  function paramsHTML(autoFirst) {
     const p = P();
     const sw = (k, t, d) => `<label class="cx-set"><span><p>${t}</p>${d ? `<small>${d}</small>` : ''}</span><input type="checkbox" class="cx-switch" data-prm="${k}" ${p[k] ? 'checked' : ''}></label>`;
     const tm = (k, t) => `<label><span class="field-label">${t}</span><input type="time" class="input input-sm w-full" data-prmt="${k}" value="${esc(p[k])}"></label>`;
     const days = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
-    return `<p class="hint">Dilex organiza tu día por ti, pero siempre bajo estas reglas. Cámbialas cuando quieras.</p>
-      <p class="field-label mt-4">Tu horario</p>
+    const intro = `<p class="hint">Dilex organiza tu día por ti, pero siempre bajo estas reglas. Cámbialas cuando quieras.</p>`;
+    const head = `<p class="field-label mt-4">Tu horario</p>
       <div class="cx-grid2">${tm('wake', 'Me despierto')}${tm('sleep', 'Me acuesto')}${tm('workStart', 'Trabajo / estudio desde')}${tm('workEnd', 'Hasta')}</div>
       <p class="field-label mt-3">Días de trabajo o estudio</p><div class="cx-wrap">${[1, 2, 3, 4, 5, 6, 0].map(d => `<button type="button" class="cx-chipsel ${p.workDays.includes(d) ? 'sel' : ''}" data-wd="${d}">${days[d]}</button>`).join('')}</div>
       <p class="field-label mt-4">Mi mejor hora para concentrarme</p><div class="cx-wrap">${[['manana', 'Mañana'], ['mediodia', 'Mediodía'], ['tarde', 'Tarde'], ['noche', 'Noche']].map(([id, t]) => `<button type="button" class="cx-chipsel ${p.peak === id ? 'sel' : ''}" data-peak="${id}">${t}</button>`).join('')}</div>
       <p class="field-label mt-4">Qué tan metiche es ${esc(aiName())}</p><div class="tabs cx-tabs">${Object.entries(NOSY).map(([id, n]) => `<button type="button" data-nosy="${id}" aria-selected="${p.nosy === id}">${n.em} ${n.label}</button>`).join('')}</div>
       <p class="hint mt-1.5">${esc(NOSY[p.nosy].desc)}.</p>
       <div class="cx-grid2 mt-4">${tm('closeTime', 'Cierre del día a las')}<span></span>${tm('quietStart', 'Silencio desde')}${tm('quietEnd', 'Silencio hasta')}</div>
-      <p class="hint mt-1.5">En horas de silencio no te pregunto nada (salvo recordatorios que pongas tú).</p>
-      <p class="field-label mt-5">Automatización</p>
-      <div>${sw('autoMoveOverdue', 'Pasar lo atrasado a hoy', 'Cada mañana, lo que quedó pendiente pasa al día de hoy')}
+      <p class="hint mt-1.5">En horas de silencio no te pregunto nada (salvo recordatorios que pongas tú).</p>`;
+    const auto = `<p class="field-label mt-5">Lo que hago solo</p>
+      <div>${sw('autoSchedule', 'Piloto automático', 'Cada 20 min reviso tu día y le pongo hora a tus tareas')}${sw('autoMoveOverdue', 'Pasar lo atrasado a hoy', 'Cada mañana, lo que quedó pendiente pasa al día de hoy')}
       ${sw('autoPlan', 'Elegir mis 3 prioridades', 'Si no las eliges tú, las elijo yo con lo más importante')}
-      ${sw('autoSchedule', 'Ponerle hora a mis tareas', 'Les busco hueco según tu horario y tu mejor hora')}
+      ${sw('autoReslot', 'Reacomodar lo que se pasó', 'Si una tarea con hora sugerida se te pasó, le busco otro hueco hoy')}
+      ${sw('autoTomorrow', 'Preparar mañana en la noche', 'Después del cierre del día, dejo listo el horario de mañana')}
+      ${sw('autoRepeatSuggest', 'Detectar lo que repites', 'Si añades lo mismo varias veces, te propongo hacerlo automático')}
       ${sw('startAlert', 'Avisarme al empezar cada tarea', 'Además de preguntarte al terminar')}
       ${sw('morningQuiz', 'Preguntas de la mañana', 'Al abrir la app cada día: energía, pendientes y prioridad')}
       ${sw('eveningQuiz', 'Cierre del día', 'Qué hiciste, qué te frenó y qué harás mañana')}
       ${sw('discreet', 'Notificaciones discretas', 'No mostrar el nombre de la tarea en la pantalla de bloqueo')}
       ${sw('askBeforePlugins', 'Pedir permiso antes de usar una conexión', 'Te muestro lo que voy a enviar y tú confirmas')}</div>`;
+    return autoFirst ? intro + auto.replace('field-label mt-5', 'field-label mt-3') + `<p class="cxs-h" style="margin-top:1.4rem">Tu horario y tu estilo</p>` + head.replace('field-label mt-4">Tu horario', 'field-label">Horario') : intro + head + auto;
   }
   function bindParams(box) {
     const p = P();
@@ -11201,6 +11348,26 @@ ${JSON.stringify(aiState())}`;
       lab2.innerHTML = `<span class="field-label">Se repite</span><select id="tpRepeat" class="input input-sm w-full"><option value="">No</option>${Object.entries(REPEAT).map(([k, v]) => `<option value="${k}">${v}</option>`).join('')}</select>`;
       const grid = form.querySelector('.grid');
       grid.appendChild(lab); grid.appendChild(lab2);
+      // Vista simple: lo básico arriba, lo avanzado en "Más detalles", y las acciones de la fila aquí
+      const acts = document.createElement('div');
+      acts.className = 'cx-wrap cxp-tacts';
+      acts.innerHTML = `<button type="button" class="btn btn-sm" data-ta="focus">${ic('target')}Concentrarme</button><button type="button" class="btn btn-sm" data-ta="urgent">${ic('alert')}<span>Urgente</span></button><button type="button" class="btn btn-sm text-red-600" data-ta="del">${ic('trash')}Borrar</button>`;
+      form.insertBefore(acts, form.querySelector('button[type="submit"]'));
+      acts.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-ta]'); if (!b) return;
+        const t = tasks.find(x => x.id === form.dataset.cxTask); if (!t) return;
+        const k = b.dataset.ta;
+        if (k === 'del') { closeSheets(); removeTask(t); return; }
+        if (k === 'urgent') { t.priority = t.priority === 'urgent' ? 'normal' : 'urgent'; saveTasks(); onTasksChanged(); fillRepeatControl(t.id); toast(t.priority === 'urgent' ? 'Marcada como urgente' : 'Ya no es urgente'); return; }
+        if (k === 'focus') { closeSheets(); const m = A.startFocus(Math.min(60, estDur(t)), t); toast(`Concentración: ${m} min en "${t.text}".`, 'ok', { label: 'Ver', fn: () => showView('enfoque') }); }
+      });
+      if (SIMPLE) {
+        const more = document.createElement('details');
+        more.className = 'cxs-more cxp-tmore';
+        more.innerHTML = '<summary>Más detalles</summary><div class="grid grid-cols-2 gap-2"></div>';
+        ['#tpSrc', '#tpCost', '#tpImp', '#tpArea'].forEach(sel => { const l = form.querySelector(sel)?.closest('label'); if (l) more.lastElementChild.appendChild(l); });
+        grid.after(more);
+      }
       form.addEventListener('submit', () => {
         const id = form.dataset.cxTask; const t = tasks.find(x => x.id === id);
         if (!t) return;
@@ -11215,6 +11382,8 @@ ${JSON.stringify(aiState())}`;
     const t = tasks.find(x => x.id === id), form = $('#taskPlanForm');
     if (!t || !form) return;
     form.dataset.cxTask = id;
+    const ub = form.querySelector('[data-ta="urgent"] span'); if (ub) ub.textContent = t.priority === 'urgent' ? 'Quitar urgencia' : 'Urgente';
+    const ab = form.querySelector('.cxp-tacts'); if (ab) ab.hidden = !!t.done;
     if ($('#tpTime')) $('#tpTime').value = t.time || '';
     if ($('#tpRepeat')) $('#tpRepeat').value = t.repeat || '';
   }
@@ -12099,6 +12268,22 @@ ${JSON.stringify(aiState())}`;
       prof.parentElement.insertBefore(b, prof);
     }
   }
+  function simplifyTasks() {
+    if (!SIMPLE) return;
+    const list = $('#taskList');
+    if (list) list.addEventListener('click', (e) => {
+      if (e.target.closest('input, button, a')) return;
+      const li = e.target.closest('li[data-id]'); if (li) openTaskPlan(li.dataset.id);
+    });
+    const search = $('#taskSearch'), row = search && search.parentElement;
+    if (row && !$('#cxFindBtn')) {
+      const b = document.createElement('button');
+      b.id = 'cxFindBtn'; b.type = 'button'; b.className = 'btn btn-sm btn-ghost'; b.setAttribute('aria-label', 'Buscar y ordenar'); b.innerHTML = ic('search');
+      b.onclick = () => { const on = $('#tareas').classList.toggle('cx-find'); if (on) setTimeout(() => search.focus(), 50); };
+      row.prepend(b);
+    }
+    const ti = $('#taskInput'); if (ti) ti.placeholder = 'Nueva tarea (yo le pongo hora y detalles)';
+  }
   function hookCapture() {
     // Botones "Añadir" → captura inteligente
     $$('[data-open-sheet="addSheet"]').forEach(b => { b.removeAttribute('data-open-sheet'); b.dataset.cxAct = 'capture'; });
@@ -12139,6 +12324,7 @@ ${JSON.stringify(aiState())}`;
   function initCoach() {
     buildViews();
     hookCapture();
+    simplifyTasks();
     addRepeatControl();
     const _otp = openTaskPlan;
     openTaskPlan = function (id) { _otp(id); fillRepeatControl(id); };
@@ -12172,7 +12358,7 @@ ${JSON.stringify(aiState())}`;
     if (!handleLaunchParams()) setTimeout(maybeRunQuizzes, 700);
     schedulePushSync(3000);
     setTimeout(coachTick, 4000);
-    setTimeout(() => autoOrganize(true), 1500);
+    setTimeout(() => autoOrganize(true, true), 1500);
   }
 /* COACH:END */
   /* =====================================================================
