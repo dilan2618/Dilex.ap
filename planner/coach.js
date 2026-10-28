@@ -29,7 +29,7 @@
     params: {
       wake: '07:00', sleep: '23:00', workStart: '09:00', workEnd: '18:00', workDays: [1, 2, 3, 4, 5], peak: 'manana',
       nosy: 'normal', closeTime: '21:00', quietStart: '22:30', quietEnd: '07:00', startAlert: true,
-      autoMoveOverdue: true, autoPlan: true, autoSchedule: true, morningQuiz: true, eveningQuiz: true, discreet: false, askBeforePlugins: true,
+      simple: true, autoMoveOverdue: true, autoPlan: true, autoSchedule: true, morningQuiz: true, eveningQuiz: true, discreet: false, askBeforePlugins: true,
     },
   });
   let coach = (() => {
@@ -93,10 +93,21 @@
   const viewEl = (v) => document.querySelector(`.cx-view[data-view="${v}"]`);
   const panelsOf = (v) => VIEW_DEF[v].panels || [['main', VIEW_DEF[v].title, VIEW_DEF[v].icon]];
 
+  /* Vista simple (por defecto): menos pantallas y menos botones; DLX hace el resto. */
+  const SIMPLE = !!P().simple;
+  const SIMPLE_ALIAS = { 'hoy/resumen': 'hoy/inicio', 'hoy/midia': 'hoy/inicio', 'hoy/prioridades': 'hoy/inicio', 'hoy/tareas': 'plan/tareas', 'hoy/enfoque': 'enfoque/main', 'plan/metas': 'plan/habitos', 'mas/perfil': 'mas/hub' };
+  if (SIMPLE) {
+    VIEW_DEF.hoy.panels = [['inicio', 'Hoy', 'home']];
+    VIEW_DEF.plan.panels = [['agenda', 'Calendario', 'calendar'], ['tareas', 'Tareas', 'tasks'], ['habitos', 'Hábitos y metas', 'repeat'], ['miplan', 'Mi plan', 'compass']];
+    VIEW_DEF.mas.panels = [['hub', 'Más', 'grid']];
+    VIEW_DEF.enfoque = { title: 'Enfoque', icon: 'timer', parent: 'mas', hue: '--h-focus', desc: 'Temporizador para concentrarte' };
+    Object.assign(SECTION_AT, { resumen: null, cxAskCard: ['hoy', 'inicio'], cxSimple: ['hoy', 'inicio'], tareas: ['plan', 'tareas'], enfoque: ['enfoque', 'main'], metas: ['plan', 'habitos'], cxAccount: ['mas', 'hub'] });
+  }
   function buildViews() {
     const main = $('main');
     if (!main || viewEl('hoy')) return;
     document.documentElement.classList.add('cx-app');
+    document.documentElement.classList.toggle('cx-simple', SIMPLE);
     const footer = main.querySelector(':scope > footer');
     const panels = {};
     Object.keys(VIEW_DEF).forEach(v => {
@@ -116,6 +127,33 @@
     const planGrid = $id('planCard') && $id('planCard').parentElement;
     const tasksGrid = $id('tareas') && $id('tareas').parentElement;
     const hmGrid = $id('habitos') && $id('habitos').parentElement;
+    if (SIMPLE) {
+      // Lo que no se ve en la vista simple sigue existiendo (y funcionando) aquí, oculto.
+      const stash = document.createElement('div'); stash.id = 'cxStash'; stash.hidden = true; document.body.appendChild(stash);
+      const hold = (el) => { if (el) stash.appendChild(el); };
+      const simple = document.createElement('section'); simple.id = 'cxSimple'; simple.className = 'cxs';
+      simple.innerHTML = '<div id="cxsTop"></div><form id="cxsCap" class="cxs-cap" autocomplete="off"></form><div id="cxsBanner"></div><div id="cxsAskSlot"></div><div id="cxsNow"></div><div id="cxsList"></div><div id="cxsHabits"></div>';
+      put(simple, 'hoy/inicio');
+      const ask = document.createElement('section'); ask.id = 'cxAskCard'; ask.className = 'card cx-pad cx-ask hidden';
+      simple.querySelector('#cxsAskSlot').appendChild(ask);
+      hold(res); if (planGrid) hold(planGrid);
+      put($id('tareas'), 'plan/tareas');
+      const cp = document.createElement('section'); cp.id = 'coachPlan'; cp.className = 'card cx-pad'; put(cp, 'plan/miplan');
+      put($id('agenda'), 'plan/agenda');
+      put($id('habitos'), 'plan/habitos');
+      put($id('metas'), 'plan/habitos');
+      put($id('stats'), 'progreso/semana');
+      const wk = document.createElement('section'); wk.id = 'cxWeek'; wk.className = 'card cx-pad'; put(wk, 'progreso/semana');
+      put($id('progreso'), 'progreso/graficas');
+      panels['mas/hub'].innerHTML = '<div id="cxHub"></div>';
+      put($id('enfoque'), 'enfoque/main');
+      ['notas', 'analizador', 'descargas'].forEach(v => put($id(v), `${v}/main`));
+      ['recordatorios', 'conexiones'].forEach(v => { const s2 = document.createElement('section'); s2.id = v; s2.className = 'card cx-pad'; put(s2, `${v}/main`); });
+      [tasksGrid, hmGrid].forEach(g => { if (g && !g.children.length) g.remove(); });
+      $$('.cx-panel > .card, .cx-panel > section').forEach(c => c.classList.add('cx-fill'));
+      buildNav(); renderHub(); initSwipe(); buildSimpleCapture();
+      return;
+    }
     // Hoy
     put(res, 'hoy/resumen');
     const ask = document.createElement('section'); ask.id = 'cxAskCard'; ask.className = 'card cx-pad cx-ask hidden';
@@ -158,7 +196,7 @@
         <a href="#mas" data-view-go="mas" id="cxNavMore">${ic('grid')}Más</a></div>`;
     }
     const top = $('#topNav');
-    if (top) top.innerHTML = ['hoy', 'plan', 'progreso', 'notas', 'recordatorios', 'conexiones', 'analizador', 'descargas']
+    if (top) top.innerHTML = (SIMPLE ? ['hoy', 'plan', 'progreso', 'mas'] : ['hoy', 'plan', 'progreso', 'notas', 'recordatorios', 'conexiones', 'analizador', 'descargas'])
       .map(v => `<a class="navlink" href="#${v}" data-view-go="${v}">${ic(VIEW_DEF[v].icon)}${VIEW_DEF[v].title}</a>`).join('')
       + `<button type="button" class="navlink cx-voicelink" data-cx-act="voice">${ic('mic')}Voz</button>`;
     const brand = $('header a[href="#resumen"]'); if (brand) { brand.setAttribute('href', '#hoy'); brand.dataset.viewGo = 'hoy'; }
@@ -167,6 +205,7 @@
 
   function renderHub() {
     const hub = $('#cxHub'); if (!hub) return;
+    if (SIMPLE) return renderSimpleHub(hub);
     const pend = reminders.filter(r => !r.done).length;
     const plugs = Object.values(coach.plugins).filter(p => p && p.on).length;
     const tiles = [
@@ -184,12 +223,150 @@
       <span><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span></button>`).join('');
   }
 
+  /* =====================================================================
+     VISTA SIMPLE: una pantalla "Hoy" limpia
+     escribir/decir → DLX organiza → "Ahora toca" → lista del día.
+  ===================================================================== */
+  function buildSimpleCapture() {
+    const f = $('#cxsCap'); if (!f) return;
+    f.innerHTML = `<input id="cxsInput" class="cxs-input" maxlength="600" placeholder="¿Qué tienes que hacer?" aria-label="Qué tienes que hacer" enterkeyhint="done" />
+      ${SR ? `<button type="button" class="cxs-mic" id="cxsMic" aria-label="Decirlo por voz">${ic('mic')}</button>` : ''}<button class="cxs-go" aria-label="Añadir">${ic('send')}</button>`;
+    const inp = f.querySelector('#cxsInput');
+    f.onsubmit = (e) => {
+      e.preventDefault();
+      const v = inp.value.trim(); if (!v) { inp.focus(); return; }
+      inp.value = '';
+      const r = smartAdd(v, { defaultDue: todayKey() });
+      if (!r.results.length) { toast('No entendí qué añadir. Prueba con otras palabras.', 'warn'); return; }
+      const res = r.results;
+      toast(res.length > 1 ? r.say : r.text, 'ok', { label: res.length > 1 ? 'Ver' : 'Cambiar', fn: () => showRouted(res) });
+      if (settings.voice) speak(r.say);
+      renderSimpleHoy();
+    };
+    const mic = f.querySelector('#cxsMic');
+    if (mic) mic.onclick = () => quickListen((txt) => { inp.value = txt; f.requestSubmit(); }, mic, null);
+  }
+
+  function simpleItems(dk) {
+    const items = [];
+    eventsOn(dk).forEach(e => { if (!e.taskId) items.push({ kind: 'event', id: e.id, title: e.title, s: tMin(e.start), e: tMin(e.end), done: dk === todayKey() && tMin(e.end) <= nowM(), ev: e }); });
+    tasksOn(dk).forEach(t => items.push({ kind: 'task', id: t.id, title: t.text, s: t.time ? tMin(t.time) : null, e: t.time ? tMin(t.time) + estDur(t) : null, done: !!t.done, t }));
+    return items;
+  }
+  function renderSimpleHoy() {
+    const top = $('#cxsTop'); if (!top) return;
+    const tk = todayKey(), nm = nowM();
+    const items = simpleItems(tk);
+    const tasksT = items.filter(x => x.kind === 'task');
+    const doneN = tasksT.filter(x => x.done).length;
+    const pri = new Set(todayPlan().map(p => fold(p.text.trim())).filter(Boolean));
+    const nm1 = firstName();
+    top.innerHTML = `<p class="cxs-date">${esc(new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }))}</p>
+      <h2 class="cxs-hello">${esc(greetWord())}${nm1 ? `, ${esc(nm1)}` : ''}</h2>
+      <p class="cxs-sum">${tasksT.length ? `${doneN} de ${tasksT.length} ${tasksT.length === 1 ? 'cosa hecha' : 'cosas hechas'} hoy` : 'Tu día está libre'}${tasksT.length ? `<span class="cxs-bar"><i style="width:${Math.round((doneN / tasksT.length) * 100)}%"></i></span>` : ''}</p>`;
+    // Un solo aviso a la vez
+    const ban = $('#cxsBanner');
+    let b = '';
+    if (!coach.wizardDone) b = `<button type="button" class="cxs-banner" data-cx-act="wizard"><span>✨</span><span><b>Conozcámonos (3 min)</b><small>Así organizo tu día a tu medida</small></span>${ic('chevron')}</button>`;
+    else if (morningDue()) b = `<button type="button" class="cxs-banner" data-cx-act="morning"><span>☀️</span><span><b>Empecemos el día</b><small>3 preguntas rápidas</small></span>${ic('chevron')}</button>`;
+    else if (eveningDue()) b = `<button type="button" class="cxs-banner" data-cx-act="evening"><span>🌙</span><span><b>Cierre del día</b><small>Cuéntame cómo te fue</small></span>${ic('chevron')}</button>`;
+    ban.innerHTML = b;
+    // Ahora toca
+    const pend = items.filter(x => !x.done);
+    const cur = pend.filter(x => x.s != null && x.s <= nm && x.e > nm).sort((a, c) => a.s - c.s)[0];
+    const next = pend.filter(x => x.s != null && x.s > nm).sort((a, c) => a.s - c.s)[0];
+    const loose = pend.filter(x => x.kind === 'task' && x.s == null).sort((a, c) => taskScore(c.t) - taskScore(a.t))[0];
+    const focus = cur || next || loose;
+    const now = $('#cxsNow');
+    if (!focus) {
+      now.innerHTML = tasksT.length ? `<div class="cxs-now done"><p class="cxs-k">¡Todo listo por hoy! 🎉</p><p class="cxs-nt">Terminaste lo de hoy. Descansa o adelanta algo de mañana.</p></div>`
+        : `<div class="cxs-now empty"><p class="cxs-k">Empieza aquí</p><p class="cxs-nt">Escribe o di lo que tienes que hacer: "llamar al banco a las 3", "reunión mañana de 10 a 11", "gimnasio todos los días"… Yo lo pongo en su sitio.</p></div>`;
+    } else {
+      const label = focus === cur ? 'Ahora' : focus === next ? `A las ${hm12(tHM(focus.s))}` : 'Lo siguiente';
+      const left = focus === cur ? `Quedan ${Math.max(1, focus.e - nm)} min` : focus === next ? `En ${focus.s - nm < 60 ? `${focus.s - nm} min` : `${Math.round((focus.s - nm) / 6) / 10} h`}` : (focus.t && focus.t.durMin ? `${focus.t.durMin} min` : '');
+      now.innerHTML = `<div class="cxs-now"><div class="cx-row" style="justify-content:space-between"><p class="cxs-k">${esc(label)}</p><span class="cxs-left">${esc(left)}</span></div>
+        <p class="cxs-nt">${focus.kind === 'event' ? '📅 ' : ''}${esc(focus.title)}</p>
+        ${focus.kind === 'task' ? `<div class="cxs-acts"><button type="button" class="btn cx-yes" data-sn="done">${ic('check')}Hecho</button><button type="button" class="btn" data-sn="focus">${ic('play')}Empezar</button></div>` : ''}</div>`;
+      now.querySelector('[data-sn="done"]')?.addEventListener('click', () => { A.completeTask(focus.t, true); toast(shuffle1(['¡Bien hecho!', '¡Una menos!', '¡Eso es!']), 'ok', undoAction()); });
+      now.querySelector('[data-sn="focus"]')?.addEventListener('click', () => { const m = A.startFocus(Math.min(60, estDur(focus.t)), focus.t); toast(`Concentración: ${m} min en "${focus.title}". Te aviso al terminar.`, 'ok', { label: 'Ver', fn: () => showView('enfoque') }); });
+    }
+    // Lista del día
+    const rows = items.filter(x => !x.done || x.kind === 'event').filter(x => x !== focus).sort((a, c) => (a.s ?? 9999) - (c.s ?? 9999));
+    const doneRows = items.filter(x => x.done && x.kind === 'task');
+    const row = (x) => `<div class="cxs-row ${x.done ? 'is-done' : ''}" data-sid="${x.kind}:${x.id}">
+      ${x.kind === 'task' ? `<input type="checkbox" class="chk" data-task-chk="${x.id}" ${x.done ? 'checked' : ''} aria-label="Hecha: ${esc(x.title)}">` : `<span class="cxs-ev">${ic('calendar')}</span>`}
+      <span class="cxs-rt">${esc(x.title)}${x.kind === 'task' && pri.has(fold(x.title)) ? ' <span class="cxs-star" title="Prioridad">★</span>' : ''}</span>
+      <span class="cxs-time">${x.s != null ? esc(tHM(x.s)) : ''}</span></div>`;
+    const list = $('#cxsList');
+    list.innerHTML = (rows.length ? `<p class="cxs-h">Tu día</p><div class="cxs-rows">${rows.map(row).join('')}</div>` : '')
+      + (doneRows.length ? `<details class="cxs-done"><summary>${ic('check')} ${plural(doneRows.length, 'hecha', 'hechas')}</summary><div class="cxs-rows">${doneRows.map(row).join('')}</div></details>` : '');
+    list.querySelectorAll('.cxs-row').forEach(r => r.addEventListener('click', (e) => {
+      if (e.target.closest('input')) return;
+      const [k, id] = r.dataset.sid.split(':');
+      if (k === 'task') openTaskPlan(id); else openEventSheet(id);
+    }));
+    // Un vistazo a mañana
+    const tmk = addDaysKey(1);
+    const tom = simpleItems(tmk).filter(x => !x.done).sort((a, c) => (a.s ?? 9999) - (c.s ?? 9999)).slice(0, 3);
+    if (tom.length) list.innerHTML += `<p class="cxs-h" style="margin-top:1rem">Mañana</p><div class="cxs-rows cxs-tom">${tom.map(row).join('')}</div>`;
+    list.querySelectorAll('.cxs-tom .cxs-row').forEach(r => r.addEventListener('click', (e) => { if (e.target.closest('input')) return; const [k, id] = r.dataset.sid.split(':'); if (k === 'task') openTaskPlan(id); else openEventSheet(id); }));
+    // Hábitos de hoy, en una línea
+    const hb = $('#cxsHabits');
+    hb.innerHTML = habits.length ? `<p class="cxs-h">Hábitos</p><div class="cx-wrap">${habits.map(h => `<button type="button" class="cxs-habit ${h.days[tk] ? 'on' : ''}" data-hid="${h.id}">${h.days[tk] ? '✓ ' : ''}${esc(h.name)}${streak(h) > 1 ? ` · 🔥${streak(h)}` : ''}</button>`).join('')}</div>` : '';
+    hb.querySelectorAll('[data-hid]').forEach(bt => bt.onclick = () => { toggleHabit(bt.dataset.hid, tk); renderSimpleHoy(); });
+  }
+
+  function renderSimpleHub(hub) {
+    const pend = reminders.filter(r => !r.done).length;
+    const plugs = Object.values(coach.plugins).filter(p => p && p.on).length + (pushState().on ? 1 : 0);
+    const item = (x) => `<button type="button" class="cxs-item" ${x.go ? `data-view-go="${x.go}"` : x.sheet ? `data-open-sheet="${x.sheet}"` : `data-cx-act="${x.act}"`}><span class="tile tile-sm" style="--h: var(${x.hue})">${ic(x.icon)}</span><span class="grow"><b>${esc(x.t)}</b>${x.d ? `<small>${esc(x.d)}</small>` : ''}</span>${x.badge ? `<span class="chip">${esc(String(x.badge))}</span>` : ''}${ic('chevron')}</button>`;
+    const group = (title, list) => `<p class="cxs-h">${esc(title)}</p><div class="cxs-group">${list.map(item).join('')}</div>`;
+    hub.innerHTML = group('Herramientas', [
+      { go: 'notas', icon: 'note', hue: '--h-notes', t: 'Notas' },
+      { go: 'recordatorios', icon: 'bell', hue: '--h-goals', t: 'Recordatorios', badge: pend || '' },
+      { go: 'enfoque', icon: 'timer', hue: '--h-focus', t: 'Enfoque', d: 'Temporizador para concentrarte' },
+      { sheet: 'aiSheet', icon: 'chat', hue: '--h-tasks', t: 'Chat con Dilex' },
+    ]) + group('Conectar', [
+      { go: 'conexiones', icon: 'plug', hue: '--h-files', t: 'Conexiones y avisos', d: 'Calendario, correo, WhatsApp y notificaciones', badge: plugs ? `${plugs} activas` : '' },
+    ]) + group('Ajustes', [
+      { act: 'params', icon: 'wand', hue: '--h-plan', t: 'Mis reglas', d: 'Horario y qué tanto insisto' },
+      { sheet: 'themeSheet', icon: 'sliders', hue: '--accent', t: 'Ajustes', d: 'Voz, colores, perfil y PIN' },
+      { sheet: 'backupSheet', icon: 'shield', hue: '--h-dl', t: 'Respaldo' },
+    ]) + `<details class="cxs-more"><summary>Más opciones</summary><div class="cxs-group">${[
+      { go: 'analizador', icon: 'search', hue: '--h-stats', t: 'Analizador de archivos' },
+      { go: 'descargas', icon: 'download', hue: '--h-dl', t: 'Descargas (PDF, Excel)' },
+      { act: 'voiceHelp', icon: 'mic', hue: '--accent', t: 'Comandos de voz' },
+      { sheet: 'installSheet', icon: 'phone', hue: '--accent', t: 'Instalar' },
+      { act: 'wizard', icon: 'question', hue: '--h-focus', t: 'Repetir diagnóstico' },
+      { act: 'fullMode', icon: 'layers', hue: '--n500', t: 'Vista completa', d: 'Todas las secciones y botones' },
+    ].map(item).join('')}</div></details>`;
+  }
+
+  /* Automatización: al abrir y cada rato, DLX ordena el día sin que se lo pidas. */
+  let lastAuto = 0;
+  function autoOrganize(force) {
+    if (!coach.wizardDone || !P().autoSchedule || flow.alive) return;
+    if (!force && Date.now() - lastAuto < 20 * 60000) return;
+    const tk = todayKey();
+    const need = tasksOn(tk).some(t => !t.done && !t.time) || (P().autoMoveOverdue && tasks.some(isOverdue));
+    lastAuto = Date.now();
+    if (!need) return;
+    try { organizeDay({ silent: true }); } catch (e) { console.warn(e); }
+  }
+  function setSimpleMode(on) {
+    P().simple = !!on; saveCoach();
+    ui.cxPanels = {}; saveUI();
+    toast(on ? 'Vista simple activada.' : 'Vista completa activada.', 'ok');
+    setTimeout(() => location.reload(), 500);
+  }
+
   function viewOfEl(el) { const v = el && el.closest && el.closest('.cx-view'); return v ? v.dataset.view : null; }
   function panelOfEl(el) { const p = el && el.closest && el.closest('.cx-panel'); return p ? p.dataset.panel : null; }
   function onPanelShown(v, p) {
     if (v === 'progreso') requestAnimationFrame(() => { if (p === 'graficas') { try { Object.values(charts).forEach(c => c.resize()); } catch { /* sin gráficas */ } } else renderWeek(); });
     if (v === 'plan') { if (p === 'miplan') renderCoachPlan(); if (p === 'agenda') { try { renderAgenda(); } catch { /* agenda */ } } }
     if (v === 'hoy' && p === 'midia') renderDayCard();
+    if (v === 'hoy' && p === 'inicio') renderSimpleHoy();
     if (v === 'recordatorios') renderReminders();
     if (v === 'conexiones') renderPlugins();
     if (v === 'mas') { renderHub(); renderAccountBox(); }
@@ -211,6 +388,7 @@
     onPanelShown(v, p);
   }
   function showView(v, opts = {}) {
+    if (SIMPLE) { const k = SIMPLE_ALIAS[`${v}/${opts.panel || ''}`]; if (k) { const [a, b] = k.split('/'); v = a; opts = Object.assign({}, opts, { panel: b }); } }
     if (!VIEW_DEF[v]) v = 'hoy';
     const changed = v !== curView;
     curView = v;
@@ -289,7 +467,9 @@
     else if (what === 'morning') runMorningQuiz(true);
     else if (what === 'evening') runEveningQuiz(true);
     else if (what === 'voiceAdd') voiceAdd();
-    else if (what === 'capture') openCapture();
+    else if (what === 'capture') { if (SIMPLE && $('#cxsInput')) { showView('hoy'); setTimeout(() => $('#cxsInput').focus(), 80); } else openCapture(); }
+    else if (what === 'fullMode') setSimpleMode(false);
+    else if (what === 'simpleMode') setSimpleMode(true);
     else if (what === 'captureVoice') openCapture('', true);
     else if (what === 'voice') voiceCmd();
     else if (what === 'voiceHelp') voiceCmd({ help: true });
@@ -1433,12 +1613,12 @@
         freeVoice: (txt, a) => { a.focusText = cap(txt); flowGo(flow.steps.findIndex(s => s.id === 'capacity')); }, next: () => 'capacity' },
       { id: 'focusText', type: 'text', kicker: 'Tu prioridad', q: 'Dímelo con tus palabras', placeholder: 'Ej.: Terminar la propuesta para el cliente', required: true, skip: (a) => !!a.focus && !a._wantText,
         onAnswer: (v, a) => { a.focusText = v; return true; } },
-      { id: 'capacity', type: 'single', kicker: 'Tu tiempo', q: '¿Cuánto tiempo libre real tienes hoy para tus tareas?', sub: 'Así no te lleno el día de más.', options: [
+      { id: 'capacity', type: 'single', skip: () => !!P().simple, kicker: 'Tu tiempo', q: '¿Cuánto tiempo libre real tienes hoy para tus tareas?', sub: 'Así no te lleno el día de más.', options: [
         { id: '60', em: '⏱️', label: 'Una hora o menos', syn: ['una hora', 'poco', 'nada'] }, { id: '180', em: '🕒', label: 'De dos a tres horas', syn: ['dos', 'tres'] },
         { id: '300', em: '🕔', label: 'De cuatro a cinco horas', syn: ['cuatro', 'cinco'] }, { id: '600', em: '🌞', label: 'Casi todo el día', syn: ['todo el dia', 'mucho'] }] },
-      { id: 'more', type: 'text', kicker: 'Algo más', q: '¿Hay algo más que tengas que hacer hoy?', sub: 'Dímelo como quieras, con hora si la tiene: "llamar a Juan a las 4 y luego ir al banco". Si no hay nada, toca Continuar.', placeholder: 'Escribe o dicta tus tareas', rows: 3, max: 400,
+      { id: 'more', type: 'text', skip: () => !!P().simple, kicker: 'Algo más', q: '¿Hay algo más que tengas que hacer hoy?', sub: 'Dímelo como quieras, con hora si la tiene: "llamar a Juan a las 4 y luego ir al banco". Si no hay nada, toca Continuar.', placeholder: 'Escribe o dicta tus tareas', rows: 3, max: 400,
         voiceAppend: true, onAnswer: (v, a) => { if (v && !/^(nada|no|ninguna|eso es todo)$/i.test(fold(v))) a.added = addTasksFromText(v, { defaultDue: tk }).length; return true; }, cta: 'Continuar' },
-      { id: 'done', type: 'done', optional: false, kicker: 'Día organizado', q: (a) => (a._sum ? 'Tu día está listo' : 'Listo'), sub: (a) => a._sum || '', html: (a) => a._html || '', cta: 'Ver mi día',
+      { id: 'done', type: 'done', optional: false, kicker: 'Día organizado', q: (a) => { finishMorning(a); return 'Tu día está listo'; }, sub: (a) => a._sum || '', html: (a) => a._html || '', cta: 'Ver mi día',
         onShow: () => {}, say: (a) => spoken(`Tu día está listo. ${a._sum || ''}`) },
     ];
     // "Otra cosa" activa el paso de texto
@@ -1454,6 +1634,8 @@
     if (ans) { showView('hoy'); renderDayCard(); }
   }
   function finishMorning(a) {
+    if (a._fin) return;
+    a._fin = true;
     const tk = todayKey();
     const focusTask = a.focus ? tasks.find(t => t.id === a.focus) : null;
     if (focusTask && focusTask.due !== tk) A.updateTask(focusTask, { due: tk });
@@ -2814,8 +2996,9 @@
     schedulePushSync();
   }
   function coachRender() {
-    if (!$('#cxDayCard')) return;
-    renderDayCard(); renderAskCard();
+    if (SIMPLE) renderSimpleHoy();
+    renderAskCard();
+    renderDayCard();
     if (curView === 'plan') renderCoachPlan();
     if (curView === 'progreso') renderWeek();
     if (curView === 'recordatorios') renderReminders();
@@ -2824,7 +3007,7 @@
   function coachTick() {
     try { checkTick(); repeatReminders(); } catch (e) { console.error(e); }
     const m = nowM();
-    if (m !== lastMin) { lastMin = m; if (!document.hidden) { renderDayCard(); renderAskCard(); } }
+    if (m !== lastMin) { lastMin = m; if (!document.hidden) { autoOrganize(); renderDayCard(); renderAskCard(); if (SIMPLE) renderSimpleHoy(); } }
   }
   function injectSettings() {
     const th = $('#themeSheet .space-y-6');
@@ -2835,7 +3018,7 @@
     const prof = $('#profileBox');
     if (prof && !$('#cxParamsLink')) {
       const b = document.createElement('div'); b.id = 'cxParamsLink'; b.className = 'cx-soft';
-      b.innerHTML = `<p class="cx-b">Tu coach</p><p class="hint mt-0.5">Horario, nivel de metiche, cierre del día y automatización.</p><div class="cx-wrap mt-2"><button type="button" class="btn btn-sm btn-accent" data-cx-act="params">${ic('wand')}Mis parámetros</button><button type="button" class="btn btn-sm" data-cx-act="wizard">Repetir diagnóstico</button></div>`;
+      b.innerHTML = `<p class="cx-b">Tu coach</p><p class="hint mt-0.5">Horario, nivel de metiche, cierre del día y automatización.</p><div class="cx-wrap mt-2"><button type="button" class="btn btn-sm btn-accent" data-cx-act="params">${ic('wand')}Mis parámetros</button><button type="button" class="btn btn-sm" data-cx-act="wizard">Repetir diagnóstico</button><button type="button" class="btn btn-sm" data-cx-act="${SIMPLE ? 'fullMode' : 'simpleMode'}">${SIMPLE ? 'Vista completa' : 'Vista simple'}</button></div>`;
       prof.parentElement.insertBefore(b, prof);
     }
   }
@@ -2912,5 +3095,6 @@
     if (!handleLaunchParams()) setTimeout(maybeRunQuizzes, 700);
     schedulePushSync(3000);
     setTimeout(coachTick, 4000);
+    setTimeout(() => autoOrganize(true), 1500);
   }
 /* COACH:END */
