@@ -1,5 +1,5 @@
-/* dilex.exe: guarda la app para que funcione sin internet */
-const CACHE = 'dilex-v9-app-20261028';
+/* DLX: guarda la app para que funcione sin internet */
+const CACHE = 'dlx-v10-organizador-20261028';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
@@ -56,13 +56,13 @@ async function tellClients(msg) { const list = await self.clients.matchAll({ typ
 
 self.addEventListener('push', (e) => {
   let d = {};
-  try { d = e.data ? e.data.json() : {}; } catch (_) { d = { title: 'dilex.exe', body: e.data ? e.data.text() : '' }; }
+  try { d = e.data ? e.data.json() : {}; } catch (_) { d = { title: 'DLX', body: e.data ? e.data.text() : '' }; }
   const opts = {
     body: d.body || '', icon: 'icon-192.png', badge: 'icon-192.png', tag: d.tag || d.group || 'dilex', renotify: true,
     requireInteraction: !!d.insist, vibrate: d.insist ? [300, 120, 300, 120, 300] : [200, 100, 200],
     actions: Array.isArray(d.actions) ? d.actions.slice(0, 2) : [], data: d,
   };
-  e.waitUntil(self.registration.showNotification(d.title || 'dilex.exe', opts));
+  e.waitUntil(self.registration.showNotification(d.title || 'DLX', opts));
 });
 
 self.addEventListener('notificationclick', (e) => {

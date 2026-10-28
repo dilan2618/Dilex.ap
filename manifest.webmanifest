@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "dilex.exe",
-  "short_name": "Dilex",
+  "name": "DLX",
+  "short_name": "DLX",
   "description": "Tu asistente personal de productividad. Funciona sin internet.",
   "lang": "es",
   "start_url": "./",

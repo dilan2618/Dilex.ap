@@ -289,6 +289,8 @@
     else if (what === 'morning') runMorningQuiz(true);
     else if (what === 'evening') runEveningQuiz(true);
     else if (what === 'voiceAdd') voiceAdd();
+    else if (what === 'capture') openCapture();
+    else if (what === 'captureVoice') openCapture('', true);
     else if (what === 'voice') voiceCmd();
     else if (what === 'voiceHelp') voiceCmd({ help: true });
     else if (what === 'push') enablePush();
@@ -779,7 +781,7 @@
         options: (a) => { const d = computeDiagnosis(a); const list = [...PROBLEMS[d.main].habits, ...(d.secondary ? PROBLEMS[d.secondary].habits.slice(0, 1) : [])]; return list.filter(h => !habits.some(x => x.name.toLowerCase() === h.toLowerCase())).map(h => ({ id: h, label: h, em: '🔁' })); },
         skip: (a) => { const d = computeDiagnosis(a); return ![...PROBLEMS[d.main].habits].some(h => !habits.some(x => x.name.toLowerCase() === h.toLowerCase())); },
         onShow: (a) => { if (!a.habits) { a.habits = flowOptions(flow.steps[flow.i]).map(o => o.id); $$('#cxFBody [data-o]').forEach(b => b.classList.add('sel')); } }, cta: 'Crear y seguir' },
-      { id: 'pin', type: 'pin', kicker: 'Tu espacio', q: 'Protege dilex.exe con un PIN', sub: 'Cuatro números. Te los pediré al abrir la app. Puedes cambiarlo en Ajustes.', skip: () => !window.DilexLock || DilexLock.hasPin(), skipLabel: 'Ahora no', optional: true },
+      { id: 'pin', type: 'pin', kicker: 'Tu espacio', q: 'Protege DLX con un PIN', sub: 'Cuatro números. Te los pediré al abrir la app. Puedes cambiarlo en Ajustes.', skip: () => !window.DilexLock || DilexLock.hasPin(), skipLabel: 'Ahora no', optional: true },
       { id: 'push', type: 'single', kicker: 'Avisos', q: '¿Te puedo avisar aunque la app esté cerrada?', sub: 'Así te pregunto por tus tareas a su hora y te insisto en el cierre del día. Tu teléfono te pedirá permiso.',
         skip: () => !pushSupported() || pushState().on, options: [{ id: 'si', em: '🔔', label: 'Sí, avísame', yes: true }, { id: 'no', em: '🔕', label: 'Ahora no', no: true }],
         onAnswer: (v) => { if (v === 'si') enablePush({ quiet: true }); return true; } },
@@ -1350,7 +1352,7 @@
     const doneN = tasksOn(tk).filter(t => t.done).length, allN = tasksOn(tk).length;
     box.innerHTML = `<div class="cx-row mb-3" style="flex-wrap:wrap"><span class="tile" style="--h: var(--h-plan)">${ic('clock')}</span><div class="flex-1 min-w-0" style="flex-basis:60%"><h2 class="sec-title">Tu día con ${esc(aiName())}</h2>
       <p class="hint">${next ? `Ahora toca: <b>${esc(next.text)}</b> · ${esc(hm12(next.time))}` : allN ? `${doneN} de ${allN} tareas hechas hoy` : 'Sin tareas con hora todavía'}</p></div>
-      <div class="cx-row" style="gap:.4rem">${SR ? `<button type="button" class="btn btn-sm" data-cx-act="voiceAdd" title="Dictar tareas">${ic('mic')}<span class="hidden sm:inline">Dictar</span></button>` : ''}<button type="button" class="btn btn-sm btn-accent" data-cx-act="organize">${ic('wand')}Organízame</button></div></div>
+      <div class="cx-row" style="gap:.4rem"><button type="button" class="btn btn-sm" data-cx-act="capture" title="Agregar y organizar">${ic('plus')}Agregar</button><button type="button" class="btn btn-sm btn-accent" data-cx-act="organize">${ic('wand')}Organízame</button></div></div>
       ${cta}${coach.wizardDone ? `<p class="cx-small cx-muted mb-3">💡 ${esc(coachTipFor(tk))}</p>` : ''}
       ${timelineHTML(tk, { compact: true })}
       ${noTime ? `<p class="hint mt-2">${plural(noTime, 'tarea de hoy no tiene', 'tareas de hoy no tienen')} hora. Toca "Organízame" y se la pongo.</p>` : ''}
@@ -1550,48 +1552,309 @@
     [/\b(cada semana|semanalmente|todas las semanas|cada (?:lunes|martes|miercoles|jueves|viernes|sabado|domingo)|todos los (?:lunes|martes|miercoles|jueves|viernes|sabados|domingos))\b/, 'weekly'],
     [/\b(cada mes|mensualmente|todos los meses)\b/, 'monthly'],
   ];
+  const ITEM_START = /^(?:y\s+)?(?:[a-zñ]+(?:ar|er|ir)(?:me|le|lo|la|les|los|las|se)?|reunion|reuniones|junta|cita|clase|clases|examen|entrevista|consulta|turno|vuelo|viaje|cumpleanos|cena|almuerzo|desayuno|fiesta|partido|meta|objetivo|idea|nota|apunte|recuerdame|recordatorio|avisame|gimnasio|gym|tengo|hay que|debo|necesito|quiero|me toca|no olvidar|habito|llamada|dentista|doctor|medico|tarea|compromiso|evento)\b/;
+  const startsItem = (seg) => ITEM_START.test(fold(seg.trim()));
   function splitTasks(text) {
-    return String(text).split(/\s*(?:;|\n|\.\s+|,\s*(?:y\s+)?(?:luego|despues|tambien|ademas)\s+|\s+y\s+(?:luego|despues|tambien|ademas)\s+|\s+(?:luego|despues|ademas|tambien)\s+|,\s*otra\s+(?:tarea\s+)?(?:es\s+)?|\s+y\s+otra\s+(?:cosa|tarea)\s*(?:es\s+)?)\s*/i)
-      .map(s => s.trim().replace(/^(y|e|tambien|ademas|luego|despues)\s+/i, '').replace(/^(tengo que|hay que|debo|necesito|quiero|anota(?:r)?|apunta(?:r)?|agrega(?:r)?|añade|anade|pon(?:er)?|recuerdame)\s+/i, '').trim())
+    const first = String(text).split(/\s*(?:;|\n|\.\s+|,\s*(?:y\s+)?(?:luego|despues|después|tambien|también|ademas|además)\s+|\s+y\s+(?:luego|despues|después|tambien|también|ademas|además)\s+|\s+(?:luego|después|despues|además|ademas|también|tambien)\s+|,\s*otra\s+(?:tarea\s+)?(?:es\s+)?|\s+y\s+otra\s+(?:cosa|tarea)\s*(?:es\s+)?)\s*/i);
+    const out = [];
+    for (const chunk of first) {
+      // Comas e "y": solo separan si lo que sigue empieza como algo nuevo ("pagar…", "reunión…", "meta:…")
+      const parts = chunk.split(/\s*,\s*|\s+y\s+(?=\S)/);
+      const seps = chunk.match(/\s*,\s*|\s+y\s+(?=\S)/g) || [];
+      let cur = parts[0] || '';
+      for (let i = 1; i < parts.length; i++) {
+        if (startsItem(parts[i])) { out.push(cur); cur = parts[i]; } else cur += seps[i - 1] + parts[i];
+      }
+      out.push(cur);
+    }
+    return out.map(s => s.trim().replace(/^(y|e|tambien|también|ademas|además|luego|despues|después)\s+/i, '').replace(/^(tengo que|hay que|debo|necesito|anota(?:r)?|apunta(?:r)?|agrega(?:r)?|añade|anade|pon(?:er)?)\s+/i, '').trim())
       .filter(s => s.length > 1);
   }
-  /** Crea tareas desde texto libre: fechas, horas, urgencia y repetición. */
-  function addTasksFromText(text, opts = {}) {
-    const out = [];
-    for (const part of splitTasks(text)) {
-      let p = part, repeat = null;
-      const fp = fold(p);
-      for (const [re, kind] of REPEAT_RE) { const m = re.exec(fp); if (m) { repeat = kind; p = p.slice(0, m.index) + ' ' + p.slice(m.index + m[0].length); const wd = /(lunes|martes|miercoles|jueves|viernes|sabado|domingo)/.exec(m[0]); if (wd) p += ` el ${wd[1]}`; break; } }
-      const before = tasks.length;
-      const g = pair(p);
-      const clk = takeTime(g);
-      const due0 = takeDate(g);
-      let priority = 'normal';
-      if (cut(g, /\b(es\s+)?(muy\s+)?(urgente|importante|prioritari[ao]|con\s+prioridad)\b/)) priority = 'urgent';
-      const dm = /\b(?:durante|por|de)\s+(\d{1,3})\s*(minutos?|min|horas?|h)\b/.exec(g.n);
-      let durMin = null;
-      if (dm) { durMin = +dm[1] * (/^h/.test(dm[2]) ? 60 : 1); cut(g, /\b(?:durante|por|de)\s+\d{1,3}\s*(minutos?|min|horas?|h)\b/); }
-      tidy(g);
-      const title = cap(g.s.trim().replace(/[.,;:]+$/, ''));
-      if (!title) continue;
-      let due = due0 === undefined ? (opts.defaultDue || (repeat ? todayKey() : null)) : due0;
-      let time = null;
-      if (clk != null) {
-        if (clk && typeof clk === 'object' && !clk.explicit && clk.h >= 1 && clk.h <= 7) clk.h += 12;
-        const at = typeof clk === 'number' ? clk : atFrom(due, clk);
-        if (!due) due = dayKey(at);
-        const d = new Date(at); time = `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
-      }
-      const t = A.addTask({ text: title, due, priority, ...(durMin ? { durMin, durSrc: 'usuario' } : {}) });
-      if (time) t.time = time;
-      if (repeat) t.repeat = repeat;
-      if (time || repeat) saveTasks();
-      if (tasks.length > before) out.push(t);
+  /* =====================================================================
+     ORGANIZADOR AUTOMÁTICO: escribes o dices lo que sea y DLX decide
+     dónde va (tarea, agenda, recordatorio, hábito, meta o nota) y le da
+     forma: fecha, hora, duración, área e importancia.
+  ===================================================================== */
+  const KINDS = {
+    task: { name: 'Tarea', icon: 'tasks', hue: '--h-tasks', where: 'Tareas' },
+    event: { name: 'Agenda', icon: 'calendar', hue: '--h-plan', where: 'tu agenda' },
+    reminder: { name: 'Recordatorio', icon: 'bell', hue: '--h-goals', where: 'Recordatorios' },
+    habit: { name: 'Hábito', icon: 'repeat', hue: '--h-habits', where: 'Hábitos' },
+    goal: { name: 'Meta', icon: 'flag', hue: '--h-goals', where: 'Metas' },
+    note: { name: 'Nota', icon: 'note', hue: '--h-notes', where: 'Notas' },
+  };
+  const EVENT_RE = /\b(reunion|reuniones|junta|meeting|cita|consulta|turno|clase|clases|examen|entrevista|cumpleanos|cumple|cena|almuerzo|desayuno con|fiesta|partido|vuelo|viaje|dentista|doctor|medico|webinar|evento|boda|misa|concierto|presentacion con|llamada con|videollamada|zoom|conferencia|curso de|taller)\b/;
+  const EVENT_DUR = [[/\b(vuelo|viaje)\b/, 180], [/\b(examen|boda|concierto|fiesta|cena)\b/, 120], [/\b(clase|clases|curso de|taller|partido)\b/, 90], [/\b(llamada|videollamada|zoom)\b/, 30], [/.*/, 60]];
+  const HABIT_RE = /\b(leer|meditar|ejercicio|entrenar|gimnasio|gym|correr|caminar|estudiar|tomar agua|beber agua|dormir temprano|levantarme|despertarme|journaling|escribir en mi diario|orar|rezar|estirar|yoga|practicar|repasar|ahorrar|no fumar|sin azucar|cama hecha|vitaminas)\b/;
+  const AREA_RULES = [
+    ['trabajo', /\b(cliente|clientes|correo|correos|email|reporte|informe|venta|ventas|lead|leads|crm|jefe|oficina|propuesta|cotizacion|factura|proveedor|reunion|junta|turno|trabajo|empresa|presentacion|llamar a (?:un |al )?cliente|onboat|yacht|pedido|inventario)\b/],
+    ['estudio', /\b(estudiar|examen|curso|clase|tarea de|leer el capitulo|repasar|ingles|universidad|tesis|investigar|aprender|practicar)\b/],
+    ['ejercicio', /\b(gimnasio|gym|correr|entrenar|caminar|yoga|pesas|bici|nadar|cardio|futbol|partido|estirar)\b/],
+    ['hogar', /\b(limpiar|lavar|cocinar|comprar|mercado|supermercado|pagar|luz|agua|internet|alquiler|renta|ropa|arreglar|planchar|basura|carro|banco|cuentas|casa)\b/],
+    ['social', /\b(mama|papa|amigo|amiga|amigos|familia|novia|novio|esposa|esposo|hermano|hermana|cumpleanos|regalo|visitar|cena|fiesta|boda)\b/],
+  ];
+  const DUR_RULES = [[/\b(pagar|enviar|mandar|responder|contestar|agendar|confirmar|reservar)\b/, 15], [/\b(llamar|revisar|buscar|imprimir|firmar)\b/, 20], [/\b(comprar|lavar|cocinar|ordenar)\b/, 40], [/\b(limpiar|gimnasio|gym|entrenar|correr|estudiar|leer)\b/, 60], [/\b(preparar|escribir|redactar|disenar|reporte|informe|propuesta|presentacion|proyecto)\b/, 75]];
+  const routeKey = (title) => cxToks(title).slice(0, 2).join(' ');
+
+  /** Analiza una frase sin crear nada: devuelve qué es y con qué datos. */
+  function analyzeItem(raw, opts = {}) {
+    let p = String(raw).trim(), repeat = null, forced = null;
+    let f0 = fold(p);
+    const lead = /^(nota|idea|apunte)\s*[:,-]?\s+/.exec(f0); if (lead) { forced = 'note'; p = p.slice(lead[0].length); }
+    const lg = /^(meta|objetivo|mi meta es|mi objetivo es)\s*[:,-]?\s+/.exec(f0); if (lg) { forced = 'goal'; p = p.slice(lg[0].length); }
+    const lr = /^(recuerdame|recordarme|avisame|recordatorio(?: de| para)?|no olvidar|no olvides)\s+(que\s+|de\s+|a\s+)?/.exec(f0); if (lr) { forced = 'reminder'; p = p.slice(lr[0].length); }
+    const lh = /^(habito|nuevo habito|crear el habito)\s*[:,-]?\s+/.exec(f0); if (lh) { forced = 'habit'; p = p.slice(lh[0].length); }
+    const le = /^(agenda(?:me)?|compromiso|evento|en mi agenda|en el calendario)\s*[:,-]?\s+/.exec(f0); if (le) { forced = 'event'; p = p.slice(le[0].length); }
+    f0 = fold(p);
+    for (const [re, kind] of REPEAT_RE) { const m = re.exec(f0); if (m) { repeat = kind; p = p.slice(0, m.index) + ' ' + p.slice(m.index + m[0].length); const wd = /(lunes|martes|miercoles|jueves|viernes|sabado|domingo)/.exec(m[0]); if (wd) p += ` el ${wd[1]}`; break; } }
+    const g = pair(p);
+    // Rango "de 3 a 5"
+    let range = null;
+    const rm = /\b(?:de|desde)\s+(?:las?\s+)?(\d{1,2}(?:[:.]\d{2})?)\s*(am|pm|de la manana|de la tarde|de la noche)?\s+(?:a|hasta)\s+(?:las?\s+)?(\d{1,2}(?:[:.]\d{2})?)\s*(am|pm|de la manana|de la tarde|de la noche)?\b/.exec(g.n);
+    if (rm) {
+      const toM = (h, suf, other) => { let [hh, mm] = h.split(/[:.]/).map(Number); mm = mm || 0; const s = suf || other || ''; if (/pm|tarde|noche/.test(s) && hh < 12) hh += 12; else if (!s && hh >= 1 && hh <= 7) hh += 12; return hh * 60 + mm; };
+      const a = toM(rm[1], rm[2], rm[4]); let b = toM(rm[3], rm[4], rm[2]); if (b <= a) b += 12 * 60;
+      range = [tHM(a), tHM(Math.min(b, 1439))];
+      cut(g, /\b(?:de|desde)\s+(?:las?\s+)?\d{1,2}(?:[:.]\d{2})?\s*(am|pm|de la manana|de la tarde|de la noche)?\s+(?:a|hasta)\s+(?:las?\s+)?\d{1,2}(?:[:.]\d{2})?\s*(am|pm|de la manana|de la tarde|de la noche)?\b/);
     }
-    if (out.length) { onTasksChanged(true); schedulePushSync(); }
-    return out;
+    const clk = range ? null : takeTime(g);
+    const due0 = takeDate(g);
+    let priority = 'normal', imp = null;
+    if (cut(g, /\b(es\s+)?(muy\s+)?(urgente|importante|prioritari[ao]|con\s+prioridad|sin\s+falta|si o si)\b/)) { priority = 'urgent'; imp = 3; }
+    const dm = /\b(?:durante|por)\s+(\d{1,3})\s*(minutos?|min|horas?|h)\b|\b(media hora|una hora|dos horas)\b/.exec(g.n);
+    let durMin = null;
+    if (dm) { durMin = dm[3] ? { 'media hora': 30, 'una hora': 60, 'dos horas': 120 }[dm[3]] : +dm[1] * (/^h/.test(dm[2]) ? 60 : 1); cut(g, /\b(?:durante|por)\s+\d{1,3}\s*(minutos?|min|horas?|h)\b|\b(?:durante\s+)?(media hora|una hora|dos horas)\b/); }
+    const someday = !!cut(g, /\b(algun dia|cuando pueda|sin fecha|mas adelante)\b/);
+    const goalWhen = /\b(este mes|este ano|para fin de ano|para fin de mes|antes de fin de ano)\b/.exec(g.n);
+    if (goalWhen && (forced === 'goal' || /^(quiero|voy a|me propongo|ahorrar|bajar|perder|leer|correr|ganar|lograr|vender)\b/.test(g.n.trim()))) cut(g, /\b(este mes|este ano|para fin de ano|para fin de mes|antes de fin de ano)\b/);
+    tidy(g);
+    const title = cap(g.s.trim().replace(/[.,;:]+$/, '').replace(/^(un|una|unos|unas)\s+/i, ''));
+    if (!title) return null;
+    const f = fold(`${raw}`), ft = fold(title);
+    // Fecha y hora
+    let due = due0 === undefined ? null : due0, time = null;
+    if (clk != null) {
+      if (clk && typeof clk === 'object' && !clk.explicit && clk.h >= 1 && clk.h <= 7) clk.h += 12;
+      const at = typeof clk === 'number' ? clk : atFrom(due, clk);
+      if (!due) due = dayKey(at);
+      const d = new Date(at); time = `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+    }
+    if (range) { time = range[0]; if (!due) due = tMin(range[0]) > nowM() ? todayKey() : addDaysKey(1); }
+    // ¿Qué es?
+    let kind = forced;
+    const learned = coach.routeMemory && coach.routeMemory[routeKey(title)];
+    if (!kind && learned && KINDS[learned]) kind = learned;
+    if (!kind) {
+      const goalNum = /\b(\d+[.,]?\d*)\s*(km|kilometros|kilos|kg|libros|dolares|usd|\$|euros|horas|paginas|clientes|ventas|veces|cursos|lbs|libras)\b/.exec(ft);
+      if (/^(quiero|voy a|me propongo|mi meta)\s+(ahorrar|bajar|perder|leer|correr|ganar|lograr|llegar|vender|conseguir|aprender)\b/.test(ft) || (goalNum && /\b(este (mes|ano)|para (fin de|diciembre|el ano)|en (\d+ )?(meses|semanas))\b/.test(f))) kind = 'goal';
+      else if (repeat && !time && HABIT_RE.test(ft)) kind = 'habit';
+      else if ((range || time) && (EVENT_RE.test(ft) || /\bcon\s+(el|la|los|mi|mis|[a-zñ]+)\b/.test(ft) && /^(reunion|cita|cena|almuerzo|llamada|salida|junta|clase|cafe)\b/.test(ft))) kind = 'event';
+      else if (!time && !range && EVENT_RE.test(ft) && due && /^(reunion|cita|consulta|examen|entrevista|cumpleanos|boda|vuelo|viaje|clase|fiesta)\b/.test(ft)) kind = 'event';
+      else if (/\b(tomar (la |las |el )?(pastilla|medicina|medicamento|pastillas))\b/.test(ft) && time) kind = 'reminder';
+      else if (title.length > 140 && !due && !time) kind = 'note';
+      else kind = 'task';
+    }
+    if (kind === 'reminder' && !time) kind = 'task';
+    if (kind === 'event' && !time) { time = '09:00'; }
+    // Forma: área, duración, importancia
+    let area = null;
+    for (const [a, re] of AREA_RULES) if (re.test(ft)) { area = a; break; }
+    if (!durMin) { if (kind === 'event') durMin = range ? tMin(range[1]) - tMin(range[0]) : (EVENT_DUR.find(([re]) => re.test(ft)) || [0, 60])[1]; else { const r = DUR_RULES.find(([re]) => re.test(ft)); durMin = r ? r[1] : 30; } }
+    if (!imp) imp = /\b(cliente|jefe|pagar|vence|vencimiento|antes de|fecha limite|entrega|examen|medico|doctor)\b/.test(ft) ? 3 : 2;
+    const costo = /\b(vence|vencimiento|antes de|fecha limite|entrega|multa|corte)\b/.test(ft) ? 'alto' : imp === 3 ? 'alto' : undefined;
+    if (kind === 'task' && !due && !someday && !repeat) due = opts.defaultDue || todayKey();
+    if ((kind === 'task' || kind === 'habit') && repeat && !due) due = todayKey();
+    // Meta: número y unidad
+    let target = null, unit = '', deadline = null;
+    if (kind === 'goal') {
+      const gm = /\b(\d+[.,]?\d*)\s*(km|kilometros|kilos|kg|libros|dolares|usd|\$|euros|horas|paginas|clientes|ventas|veces|cursos|lbs|libras)\b/.exec(ft) || /\$\s*(\d+[.,]?\d*)/.exec(title);
+      if (gm) { target = parseFloat(String(gm[1]).replace(',', '.')); unit = gm[2] ? gm[2].replace('dolares', 'USD').replace('usd', 'USD').replace('kilometros', 'km') : 'USD'; } else { target = 100; unit = '%'; }
+      const now = new Date();
+      if (/\beste mes\b/.test(f)) deadline = dayKey(new Date(now.getFullYear(), now.getMonth() + 1, 0));
+      else if (/\b(este ano|fin de ano|diciembre)\b/.test(f)) deadline = `${now.getFullYear()}-12-31`;
+      else deadline = due;
+    }
+    return { kind, title, due, time, end: range ? range[1] : (time ? tHM(tMin(time) + durMin) : null), repeat, priority, imp, costo, durMin, area, target, unit, deadline, someday, learned: !!learned && !forced };
   }
+
+  function describeItem(it) {
+    const bits = [];
+    if (it.kind === 'goal') bits.push(`${fmt(it.target)} ${it.unit}`, it.deadline ? `hasta ${shortDate(it.deadline)}` : 'sin fecha límite');
+    else if (it.kind === 'habit') bits.push('cada día');
+    else if (it.kind === 'note') bits.push('guardada en tus notas');
+    else {
+      if (it.due) bits.push(dueText(it.due).replace(/^para /, ''));
+      if (it.time) bits.push(it.kind === 'event' ? `${hm12(it.time)}–${hm12(it.end)}` : `a las ${hm12(it.time)}`);
+      if (it.repeat) bits.push(REPEAT[it.repeat].toLowerCase());
+      if (it.kind === 'task') bits.push(`${it.durMin} min`);
+      if (it.area && AG_AREAS[it.area]) bits.push(AG_AREAS[it.area][0]);
+      if (it.priority === 'urgent') bits.push('importante');
+    }
+    return bits.filter(Boolean).join(' · ');
+  }
+
+  /** Crea el elemento donde va. Devuelve { kind, ref, it, warn }. */
+  function commitItem(it) {
+    let ref = null, warn = '';
+    if (it.kind === 'event') {
+      const busy = eventsOn(it.due).filter(e => tMin(e.start) < tMin(it.end) && tMin(e.end) > tMin(it.time));
+      const e = cleanEvent({ title: it.title, area: it.area || 'personal', date: it.due, start: it.time, end: it.end, fixed: true });
+      events.push(e); saveEvents();
+      try { logChange('compromiso', e.id, e.title, null, { date: e.date, start: e.start, end: e.end }, 'Añadido por el organizador automático', 'sistema'); } catch { /* registro */ }
+      pushUndo(`añadir "${e.title}" a la agenda`, () => { events = events.filter(x => x !== e); saveEvents(); renderAgenda(); renderDayCard(); });
+      ref = e;
+      const at = atOf(it.due, it.time) - 15 * 60000;
+      if (at > Date.now()) { const r = addReminder(at, `En 15 minutos: ${it.title}`); r.eventId = e.id; saveReminders(); }
+      if (busy.length) warn = `Choca con "${busy[0].title}" (${busy[0].start}–${busy[0].end}).`;
+      // Si choca con tareas que yo ubiqué, las recoloco
+      tasksOn(it.due).filter(t => !t.done && t.timeAuto && t.time && tMin(t.time) < tMin(it.end) && tMin(t.time) + estDur(t) > tMin(it.time)).forEach(t => { delete t.time; delete t.timeAuto; });
+      renderAgenda();
+    } else if (it.kind === 'reminder') {
+      const r = addReminder(atOf(it.due, it.time), it.title);
+      if (it.repeat) { r.repeat = it.repeat; saveReminders(); }
+      ref = r;
+    } else if (it.kind === 'habit') {
+      ref = A.addHabit(it.title).habit;
+    } else if (it.kind === 'goal') {
+      ref = A.addGoal({ name: it.title, target: it.target || 100, unit: it.unit || '', deadline: it.deadline || null });
+    } else if (it.kind === 'note') {
+      ref = A.addNote(it.title);
+    } else {
+      const t = A.addTask({ text: it.title, due: it.due, priority: it.priority, durMin: it.durMin, durSrc: 'estimada', area: it.area || undefined, importancia: it.imp, costo: it.costo });
+      if (it.time) t.time = it.time;
+      if (it.repeat) t.repeat = it.repeat;
+      saveTasks();
+      ref = t;
+    }
+    logC('route', { kind: it.kind, key: routeKey(it.title) });
+    return { kind: it.kind, ref, it, warn };
+  }
+
+  /** Quita lo creado (para cambiarlo de sitio). */
+  function uncommit(res) {
+    const r = res.ref;
+    if (!r) return;
+    if (res.kind === 'event') { events = events.filter(x => x !== r); reminders = reminders.filter(x => x.eventId !== r.id); saveEvents(); saveReminders(); renderAgenda(); }
+    else if (res.kind === 'reminder') { reminders = reminders.filter(x => x !== r); saveReminders(); }
+    else if (res.kind === 'habit') { habits = habits.filter(x => x !== r); saveHabits(); onHabitsChanged(); }
+    else if (res.kind === 'goal') { goals = goals.filter(x => x !== r); saveGoals(); onGoalsChanged(); }
+    else if (res.kind === 'note') { const i = notes.indexOf(r); if (i >= 0) { notes.splice(i, 1); saveNotes(); renderNotesList(); renderEditor(); } }
+    else { const i = tasks.indexOf(r); if (i >= 0) { tasks.splice(i, 1); saveTasks(); } }
+  }
+  /** Cambia un elemento a otro tipo y aprende para la próxima vez. */
+  function moveItem(res, kind) {
+    uncommit(res);
+    const it = Object.assign({}, res.it, { kind });
+    if (kind === 'event' && !it.time) { it.time = '09:00'; it.end = '10:00'; }
+    if (kind === 'event' && !it.due) it.due = todayKey();
+    if (kind === 'reminder' && !it.time) { it.kind = 'task'; }
+    if ((kind === 'task' || kind === 'event' || kind === 'reminder') && !it.due) it.due = todayKey();
+    if (kind === 'goal' && !it.target) { it.target = 100; it.unit = '%'; }
+    coach.routeMemory = Object.assign({}, coach.routeMemory, { [routeKey(it.title)]: kind });
+    saveCoach();
+    const nr = commitItem(it);
+    onTasksChanged(); schedulePushSync();
+    return nr;
+  }
+
+  /** Punto único: añade lo que sea y lo organiza. */
+  function smartAdd(text, opts = {}) {
+    const results = [];
+    for (const part of splitTasks(text)) {
+      const it = analyzeItem(part, opts);
+      if (it) results.push(commitItem(it));
+    }
+    if (!results.length) return { results, text: 'No encontré nada que añadir.' };
+    // Lo que va hoy y no tiene hora, se ordena solo
+    const today = results.some(r => r.kind === 'task' && r.ref.due === todayKey() && !r.ref.time) || results.some(r => r.kind === 'event' && r.it.due === todayKey());
+    if (today && P().autoSchedule && opts.organize !== false) { try { organizeDay({ moveOverdue: false, plan: false }); } catch (e) { console.warn(e); } }
+    onTasksChanged(true); renderReminders(); schedulePushSync();
+    const lines = results.map(r => `${KINDS[r.kind].name}: "${r.it.title}"${r.kind === 'task' && r.ref.time ? ` a las ${hm12(r.ref.time)}` : r.kind === 'event' ? ` ${dueText(r.it.due).replace(/^para /, '')} ${hm12(r.it.time)}` : ''}${r.warn ? ` (${r.warn})` : ''}`);
+    const say = results.length === 1 ? `Listo. Lo puse en ${KINDS[results[0].kind].where}.` : `Listo. Organicé ${results.length} cosas.`;
+    return { results, text: results.length === 1 ? `Lo puse en ${KINDS[results[0].kind].where}: ${lines[0].replace(/^[^:]+: /, '')}${results[0].kind === 'event' ? '. Te aviso 15 minutos antes.' : '.'}` : `Organicé ${results.length} cosas:\n${lines.map(l => `• ${l}`).join('\n')}`, say };
+  }
+  // Compatibilidad: lo que antes solo creaba tareas ahora se organiza solo
+  function addTasksFromText(text, opts = {}) {
+    const r = smartAdd(text, opts);
+    if (r.results.length) showRouted(r.results, { silent: true });
+    return r.results.filter(x => x.kind === 'task').map(x => x.ref);
+  }
+  const itemLine = (res) => `${res.it.title}${describeItem(res.kind === 'task' ? Object.assign({}, res.it, { time: res.ref.time || res.it.time, due: res.ref.due }) : res.it) ? ` · ${describeItem(res.kind === 'task' ? Object.assign({}, res.it, { time: res.ref.time || res.it.time, due: res.ref.due }) : res.it)}` : ''}`;
   const taskLine = (t) => `${t.text}${t.due ? ` · ${dueText(t.due).replace(/^para /, '')}` : ''}${t.time ? ` a las ${hm12(t.time)}` : ''}${t.repeat ? ` · ${REPEAT[t.repeat].toLowerCase()}` : ''}${t.priority === 'urgent' ? ' · urgente' : ''}`;
+
+  /* ---------- Tarjeta "Lo ubiqué así" (con opción de cambiarlo) ---------- */
+  function routedHTML(results) {
+    return `<div class="cx-list">${results.map((r, i) => `<div class="cx-li" data-ri="${i}"><span class="tile tile-sm" style="--h: var(${KINDS[r.kind].hue})">${ic(KINDS[r.kind].icon)}</span>
+      <div class="grow"><p class="text-sm cx-b">${esc(r.it.title)}</p><p class="cx-small cx-muted">${esc(KINDS[r.kind].name)}${(() => { const d = describeItem(r.kind === 'task' ? Object.assign({}, r.it, { time: r.ref && r.ref.time || r.it.time, due: r.ref && r.ref.due }) : r.it); return d ? ' · ' + esc(d) : ''; })()}</p>${r.warn ? `<p class="cx-small" style="color:#d97706">⚠ ${esc(r.warn)}</p>` : ''}</div>
+      <select class="input input-sm cx-move" aria-label="Cambiar a" data-move="${i}"><option value="">Cambiar…</option>${Object.entries(KINDS).filter(([k]) => k !== r.kind).map(([k, v]) => `<option value="${k}">${v.name}</option>`).join('')}</select></div>`).join('')}</div>`;
+  }
+  function bindRouted(box, results, onChange) {
+    box.querySelectorAll('[data-move]').forEach(sel => sel.onchange = () => {
+      const i = +sel.dataset.move, k = sel.value; if (!k) return;
+      results[i] = moveItem(results[i], k);
+      toast(`Movido a ${KINDS[k].where}. Lo recordaré para la próxima.`, 'ok');
+      onChange && onChange();
+    });
+  }
+  function showRouted(results, opts = {}) {
+    if (opts.silent) return;
+    const el = $('#cxRouted') || (() => { const e = document.createElement('aside'); e.id = 'cxRouted'; e.className = 'sheet'; e.setAttribute('aria-label', 'Lo que organicé'); document.body.appendChild(e); return e; })();
+    const draw = () => {
+      el.innerHTML = `<div class="p-5 space-y-4"><div class="w-10 h-1.5 rounded-full bg-neutral-200 mx-auto md:hidden"></div>
+        <div class="cx-row"><span class="tile" style="--h: var(--accent)">${ic('wand')}</span><div class="flex-1 min-w-0"><h2 class="sec-title">Lo ubiqué así</h2><p class="hint">Si algo no va ahí, cámbialo y aprenderé.</p></div><button class="icon-btn" data-close-sheet aria-label="Cerrar">${ic('x')}</button></div>
+        ${routedHTML(results)}<div class="flex gap-2"><button type="button" class="btn flex-1" id="cxRoutedUndo">${ic('reset')}Deshacer todo</button><button type="button" class="btn btn-accent flex-1" data-close-sheet>Perfecto</button></div></div>`;
+      bindRouted(el, results, draw);
+      el.querySelector('#cxRoutedUndo').onclick = () => { results.forEach(uncommit); onTasksChanged(); renderReminders(); schedulePushSync(); closeSheets(); toast('Deshecho.'); };
+    };
+    draw();
+    openSheet('cxRouted');
+  }
+
+  /* ---------- Captura rápida: "Agrega lo que sea" ---------- */
+  function captureSheet() {
+    let el = $('#cxCapture');
+    if (el) return el;
+    el = document.createElement('aside');
+    el.id = 'cxCapture'; el.className = 'sheet'; el.setAttribute('aria-label', 'Agregar');
+    el.innerHTML = `<div class="p-5 space-y-4"><div class="w-10 h-1.5 rounded-full bg-neutral-200 mx-auto md:hidden"></div>
+      <div class="cx-row"><div class="flex-1 min-w-0"><p class="cx-kicker">Agrega lo que sea</p><h2 class="sec-title mt-0.5">Escríbelo o dilo, yo lo organizo</h2></div><button class="icon-btn" data-close-sheet aria-label="Cerrar">${ic('x')}</button></div>
+      <form id="cxCapForm" class="space-y-3"><div class="flex gap-2"><textarea id="cxCapText" class="input flex-1 cx-big" rows="2" maxlength="600" placeholder="Ej.: reunión con el cliente mañana de 3 a 4, pagar la luz el viernes y leer 20 minutos todos los días"></textarea>${SR ? `<button type="button" class="cx-mic" id="cxCapMic" aria-label="Dictar">${ic('mic')}</button>` : ''}</div>
+      <div id="cxCapPrev"></div>
+      <button class="btn btn-accent w-full cx-big" id="cxCapGo" disabled>${ic('wand')}Organizar</button></form>
+      <p class="hint cx-small">Decido si va a <b>Tareas</b>, <b>Agenda</b>, <b>Recordatorios</b>, <b>Hábitos</b>, <b>Metas</b> o <b>Notas</b>, y le pongo fecha, hora, duración y área. Puedes empezar con "nota:", "meta:" o "recuérdame" para elegirlo tú.</p></div>`;
+    document.body.appendChild(el);
+    const ta = el.querySelector('#cxCapText'), prev = el.querySelector('#cxCapPrev'), go = el.querySelector('#cxCapGo');
+    const preview = () => {
+      const v = ta.value.trim();
+      go.disabled = !v;
+      if (!v) { prev.innerHTML = ''; return; }
+      const items = splitTasks(v).map(x => analyzeItem(x)).filter(Boolean);
+      prev.innerHTML = items.length ? `<p class="field-label">Así lo voy a organizar</p><div class="cx-list">${items.map(it => `<div class="cx-li"><span class="tile tile-sm" style="--h: var(${KINDS[it.kind].hue})">${ic(KINDS[it.kind].icon)}</span><div class="grow"><p class="text-sm cx-b">${esc(it.title)}</p><p class="cx-small cx-muted">${esc(KINDS[it.kind].name)}${describeItem(it) ? ' · ' + esc(describeItem(it)) : ''}${it.learned ? ' · aprendido' : ''}</p></div></div>`).join('')}</div>` : '';
+    };
+    let t = null;
+    ta.addEventListener('input', () => { clearTimeout(t); t = setTimeout(preview, 180); });
+    ta.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.querySelector('#cxCapForm').requestSubmit(); } });
+    el.querySelector('#cxCapForm').onsubmit = (e) => {
+      e.preventDefault();
+      const v = ta.value.trim(); if (!v) return;
+      const r = smartAdd(v);
+      ta.value = ''; preview();
+      if (settings.voice) speak(r.say || r.text);
+      showRouted(r.results);
+    };
+    const mic = el.querySelector('#cxCapMic');
+    if (mic) mic.onclick = () => quickListen((txt) => { ta.value = (ta.value ? ta.value + ', ' : '') + txt; preview(); }, mic, null);
+    el._preview = preview;
+    return el;
+  }
+  function openCapture(prefill = '', listen = false) {
+    const el = captureSheet();
+    const ta = el.querySelector('#cxCapText');
+    ta.value = prefill; el._preview();
+    openSheet('cxCapture');
+    if (listen && SR) setTimeout(() => el.querySelector('#cxCapMic')?.click(), 300);
+    else setTimeout(() => ta.focus(), 320);
+  }
 
   function quickListen(onText, btn, label) {
     if (!SR) { toast('Este navegador no permite dictar. Prueba con Chrome.', 'warn'); return; }
@@ -1618,24 +1881,26 @@
     }
     const draw = (state, said, made) => {
       el.innerHTML = `<div class="p-5 space-y-3"><div class="w-10 h-1.5 rounded-full bg-neutral-200 mx-auto md:hidden"></div>
-        <div class="cx-row" style="justify-content:space-between"><div><p class="cx-kicker">Dictar tareas</p><h2 class="sec-title mt-0.5">${state === 'listen' ? 'Te escucho…' : state === 'done' ? (made.length ? `Añadí ${plural(made.length, 'tarea', 'tareas')}` : 'No encontré tareas') : 'Dime qué tienes que hacer'}</h2></div><button class="icon-btn" data-close-sheet aria-label="Cerrar">${ic('x')}</button></div>
+        <div class="cx-row" style="justify-content:space-between"><div><p class="cx-kicker">Dictar</p><h2 class="sec-title mt-0.5">${state === 'listen' ? 'Te escucho…' : state === 'done' ? (made.length ? 'Lo ubiqué así' : 'No encontré nada que añadir') : 'Dime qué tienes que hacer'}</h2></div><button class="icon-btn" data-close-sheet aria-label="Cerrar">${ic('x')}</button></div>
         <div class="cx-wave ${state === 'listen' ? '' : 'idle'}"><i></i><i></i><i></i><i></i><i></i></div>
         <p class="cx-said" id="cxSaid">${esc(said || '')}</p>
-        ${state === 'done' && made.length ? `<div class="cx-list">${made.map(t => `<div class="cx-li"><span class="tile tile-sm" style="--h: var(--h-tasks)">${ic('check')}</span><p class="grow text-sm cx-b">${esc(taskLine(t))}</p></div>`).join('')}</div>` : ''}
+        ${state === 'done' && made.length ? `<div id="cxVRouted">${routedHTML(made)}</div>` : ''}
         ${state !== 'listen' ? `<p class="hint">Ejemplos: "mañana a las 3 llamar al cliente urgente", "pagar la luz el viernes y luego comprar café", "gimnasio todos los días a las 6".</p>` : ''}
         <div class="cx-row" style="justify-content:center;gap:.6rem">${state === 'done' && made.length ? `<button type="button" class="btn" id="cxVUndo">${ic('reset')}Deshacer</button>` : ''}<button type="button" class="btn btn-accent cx-big" id="cxVGo">${ic('mic')}${state === 'listen' ? 'Terminar' : state === 'done' ? 'Dictar más' : 'Hablar'}</button></div>
         <form id="cxVForm" class="flex gap-2"><input class="input flex-1" id="cxVText" placeholder="…o escríbelas aquí" autocomplete="off"/><button class="btn">Añadir</button></form></div>`;
       el.querySelector('#cxVGo').onclick = () => (voiceRec ? (voiceRec.stop(), null) : start());
       el.querySelector('#cxVForm').onsubmit = (e) => { e.preventDefault(); const v = el.querySelector('#cxVText').value.trim(); if (v) handle(v); };
       const u = el.querySelector('#cxVUndo');
-      if (u) u.onclick = () => { made.slice().reverse().forEach(t => A.deleteTask(t)); toast('Deshecho'); draw('idle', '', []); };
+      if (u) u.onclick = () => { made.forEach(uncommit); onTasksChanged(); renderReminders(); toast('Deshecho'); draw('idle', '', []); };
+      const rb = el.querySelector('#cxVRouted'); if (rb) bindRouted(rb, made, () => draw('done', said, made));
     };
     const handle = (txt) => {
-      const made = addTasksFromText(txt, { defaultDue: todayKey() });
+      const r = smartAdd(txt);
+      const made = r.results;
       draw('done', `"${txt}"`, made);
-      const s = made.length ? `Listo. ${made.length === 1 ? `Añadí ${made[0].text}` : `Añadí ${made.length} tareas`}.` : 'No entendí ninguna tarea. Inténtalo otra vez.';
+      const s = made.length ? r.say : 'No entendí nada que añadir. Inténtalo otra vez.';
       if (settings.voice) speak(s);
-      if (made.length) toast(`${plural(made.length, 'tarea añadida', 'tareas añadidas')} por voz`, 'ok', undoAction());
+      if (made.length) toast(r.text.split('\n')[0], 'ok');
     };
     const start = () => {
       draw('listen', '', []);
@@ -1881,17 +2146,17 @@
     const loose = tasksOn(dk).filter(t => !t.time);
     return [`Mi plan para el ${d}`, pri.length ? `\nPrioridades:\n${pri.map((x, i) => `${i + 1}. ${x.text}${x.done ? ' ✓' : ''}`).join('\n')}` : '',
       timed.length ? `\nHorario:\n${timed.map(t => `${hm12(t.time)} · ${t.text}${t.done ? ' ✓' : ''}`).join('\n')}` : '',
-      loose.length ? `\nTambién:\n${loose.map(t => `• ${t.text}${t.done ? ' ✓' : ''}`).join('\n')}` : '', '\n— Organizado con dilex.exe'].filter(Boolean).join('\n');
+      loose.length ? `\nTambién:\n${loose.map(t => `• ${t.text}${t.done ? ' ✓' : ''}`).join('\n')}` : '', '\n— Organizado con DLX'].filter(Boolean).join('\n');
   }
   function progressText() {
     const tk = todayKey(), all = tasksOn(tk), done = all.filter(t => t.done);
-    return `Hoy hice ${done.length} de ${all.length} tareas${done.length ? `:\n${done.map(t => `✓ ${t.text}`).join('\n')}` : '.'}${all.length - done.length ? `\nMe faltó:\n${all.filter(t => !t.done).map(t => `• ${t.text}`).join('\n')}` : ''}\n— dilex.exe`;
+    return `Hoy hice ${done.length} de ${all.length} tareas${done.length ? `:\n${done.map(t => `✓ ${t.text}`).join('\n')}` : '.'}${all.length - done.length ? `\nMe faltó:\n${all.filter(t => !t.done).map(t => `• ${t.text}`).join('\n')}` : ''}\n— DLX`;
   }
   function weekText() {
     const days = lastDays(7);
     const n = days.reduce((a, d) => a + tasks.filter(t => t.done && t.completedAt && dayKey(t.completedAt) === d.key).length, 0);
     const closes = days.filter(d => coach.quizzes[d.key] && coach.quizzes[d.key].evening).length;
-    return `Resumen de mi semana\n\nTareas completadas: ${n}\nCierres del día: ${closes} de 7\nHábitos: ${habits.map(h => `${h.name} (racha ${streak(h)})`).join(', ') || 'ninguno'}\nMetas: ${goals.map(g => `${g.name} ${Math.round(goalPct(g))}%`).join(', ') || 'ninguna'}${coach.yearGoal ? `\nMeta del año: ${coach.yearGoal}` : ''}\n\n— dilex.exe`;
+    return `Resumen de mi semana\n\nTareas completadas: ${n}\nCierres del día: ${closes} de 7\nHábitos: ${habits.map(h => `${h.name} (racha ${streak(h)})`).join(', ') || 'ninguno'}\nMetas: ${goals.map(g => `${g.name} ${Math.round(goalPct(g))}%`).join(', ') || 'ninguna'}${coach.yearGoal ? `\nMeta del año: ${coach.yearGoal}` : ''}\n\n— DLX`;
   }
   const icsDate = (dk, hmS) => `${dk.replace(/-/g, '')}T${(hmS || '00:00').replace(':', '')}00`;
   const icsEsc = (s) => String(s).replace(/\\/g, '\\\\').replace(/[,;]/g, (c) => '\\' + c).replace(/\n/g, '\\n');
@@ -1900,7 +2165,7 @@
     tasksOn(dk).filter(t => t.time && !t.done).forEach(t => ev.push({ uid: t.id, title: t.text, s: t.time, e: tHM(tMin(t.time) + estDur(t)) }));
     eventsOn(dk).forEach(e => ev.push({ uid: e.id, title: e.title, s: e.start, e: e.end }));
     const now = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
-    return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//dilex.exe//ES', 'CALSCALE:GREGORIAN',
+    return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DLX//ES', 'CALSCALE:GREGORIAN',
       ...ev.flatMap(x => ['BEGIN:VEVENT', `UID:${x.uid}@dilex`, `DTSTAMP:${now}`, `DTSTART:${icsDate(dk, x.s)}`, `DTEND:${icsDate(dk, x.e)}`, `SUMMARY:${icsEsc(x.title)}`, 'BEGIN:VALARM', 'TRIGGER:-PT10M', 'ACTION:DISPLAY', `DESCRIPTION:${icsEsc(x.title)}`, 'END:VALARM', 'END:VEVENT']),
       'END:VCALENDAR'].join('\r\n');
   }
@@ -1922,7 +2187,7 @@
   function gcalLink(t, dk) {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
     const s = icsDate(dk, t.time), e = icsDate(dk, tHM(tMin(t.time) + estDur(t)));
-    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(t.text)}&dates=${s}/${e}${tz ? `&ctz=${encodeURIComponent(tz)}` : ''}&details=${encodeURIComponent('Creado con dilex.exe')}`;
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(t.text)}&dates=${s}/${e}${tz ? `&ctz=${encodeURIComponent(tz)}` : ''}&details=${encodeURIComponent('Creado con DLX')}`;
   }
   const openExternal = (url) => { const a = Object.assign(document.createElement('a'), { href: url, target: '_blank', rel: 'noopener' }); document.body.appendChild(a); a.click(); a.remove(); };
 
@@ -2191,7 +2456,7 @@
 - Diagnóstico: problema principal ${p.name}${diag().secondary ? `, secundario ${PROBLEMS[diag().secondary].name}` : ''}. Estrategia: ${p.plan.join(' ')}
 - Meta del año: ${coach.yearGoal || 'sin definir'}. Enfoque del mes: ${coach.monthFocus || 'sin definir'}.
 - Parámetros: se despierta ${prm.wake}, se acuesta ${prm.sleep}, trabaja/estudia ${prm.workStart}-${prm.workEnd}, mejor hora ${prm.peak}, nivel de insistencia ${prm.nosy}, cierre del día ${prm.closeTime}.
-- Adapta tus consejos a su problema principal. Si pide organizar el día usa organize_day. Para el cuestionario de la mañana, el cierre del día o repetir el diagnóstico usa open_coach. Para compartir por WhatsApp, correo o Google Calendar usa share_plan (la app pide permiso antes).
+- Adapta tus consejos a su problema principal. Si pide organizar el día usa organize_day. Para el cuestionario de la mañana, el cierre del día o repetir el diagnóstico usa open_coach. Para compartir por WhatsApp, correo o Google Calendar usa share_plan (la app pide permiso antes). Cuando la persona te cuente algo que tiene que hacer o recordar, prefiere smart_add: la app decide si va a tareas, agenda, recordatorios, hábitos, metas o notas.
 `;
   }
   function coachAiTools() {
@@ -2199,9 +2464,11 @@
       { name: 'organize_day', description: 'Organiza el día: pasa lo atrasado a hoy, elige las 3 prioridades y pone hora a las tareas según el horario de la persona.', input_schema: S({ day: tStr('AAAA-MM-DD, por defecto hoy') }) },
       { name: 'open_coach', description: 'Abre un cuestionario del coach: "morning" (preguntas de la mañana), "evening" (cierre del día), "wizard" (diagnóstico inicial) o "dictate" (dictar tareas por voz).', input_schema: S({ which: { type: 'string', enum: ['morning', 'evening', 'wizard', 'dictate'] } }, ['which']) },
       { name: 'share_plan', description: 'Comparte el plan o el avance por una conexión. La app pide permiso y muestra lo que se enviará.', input_schema: S({ channel: { type: 'string', enum: ['whatsapp', 'gmail', 'gcal', 'share'] }, what: { type: 'string', enum: ['plan', 'progress', 'week', 'ics', 'next'] } }, ['channel']) },
+      { name: 'smart_add', description: 'Añade cualquier cosa que la persona tenga que hacer o recordar y la app decide sola dónde va (tarea, compromiso de agenda, recordatorio, hábito, meta o nota) y le pone fecha, hora, duración y área. Úsala cuando no esté claro el tipo; puedes pasar varias separadas por punto y coma.', input_schema: S({ text: tStr('Lo que dijo la persona, con fechas y horas tal cual') }, ['text']) },
       { name: 'set_task_time', description: 'Pone o quita la hora (HH:MM) de una tarea para que Dilex pregunte por ella cuando toque, y opcionalmente si se repite.', input_schema: S({ id: tStr('id de la tarea'), time: tStr('HH:MM o "none"'), repeat: { type: 'string', enum: ['none', 'daily', 'weekdays', 'weekly', 'monthly'] } }, ['id']) },
     );
     Object.assign(AI_RUN, {
+      smart_add(i) { const r = smartAdd(String(i.text || '')); return { ok: r.results.length > 0, resumen: r.text }; },
       organize_day(i) { const r = organizeDay({ day: okDate(i.day) || todayKey() }); return { ok: true, resumen: organizeSummary(r) }; },
       open_coach(i) { setTimeout(() => { closeSheets(); ({ morning: () => runMorningQuiz(true), evening: () => runEveningQuiz(true), wizard: () => runWizard({ again: coach.wizardDone }), dictate: voiceAdd }[i.which] || (() => {}))(); }, 1200); return { ok: true }; },
       share_plan(i) { const ch = i.channel; const act = i.what || (ch === 'gcal' ? 'ics' : 'plan'); setTimeout(() => { closeSheets(); usePlugin(ch, act); }, 1000); return { ok: true, nota: 'La persona confirma en pantalla antes de enviar.' }; },
@@ -2214,7 +2481,7 @@
         return { ok: true };
       },
     });
-    Object.assign(TOOL_LABEL, { organize_day: 'Organizando tu día', open_coach: 'Abriendo', share_plan: 'Preparando para compartir', set_task_time: 'Poniendo hora' });
+    Object.assign(TOOL_LABEL, { smart_add: 'Organizando', organize_day: 'Organizando tu día', open_coach: 'Abriendo', share_plan: 'Preparando para compartir', set_task_time: 'Poniendo hora' });
   }
 
   /* =====================================================================
@@ -2456,9 +2723,34 @@
       const id = /whats|wasap/.test(m[3]) ? 'whatsapp' : /correo|gmail/.test(m[3]) ? 'gmail' : /compartir/.test(m[3]) ? 'share' : 'gcal';
       return { text: `Necesito tu permiso para conectar ${PLUGINS[id].name}. Revisa la pantalla.`, after: () => { if (voiceOpen()) voiceClose(); setTimeout(() => authorizePlugin(id), 300); } };
     });
+    // Organizador automático: "añade/anota/tengo que…" y DLX decide dónde va
+    const smartReply = (txt) => {
+      const r = smartAdd(txt);
+      if (!r.results.length) return null;
+      const res = r.results;
+      return { text: r.text, say: r.say, intent: 'smartAdd', actions: [{ label: 'Ver dónde lo puse', fn: () => showRouted(res) }, { label: 'Deshacer', fn: () => { res.forEach(uncommit); onTasksChanged(); renderReminders(); schedulePushSync(); toast('Deshecho.'); } }] };
+    };
+    const SKIP_OBJ = /^(una |la |un |el |mi )?(nota|notas|habito|meta|recordatorio|temporizador|alarma|cronometro|copia|respaldo|musica|tema|modo|color|voz)\b|\b(a la meta|al habito|a mi meta)\b|^\d+([.,]\d+)?\s*(km|kilos|kg|libros|paginas|minutos)?\s+(a|al|en)\b/;
+    add('smartCapture', /^(anota(me)?|apunta(me)?|agrega(me)?|anade(me)?|mete(me)?|agenda(me)?|programa(me)?|ponme|organiza(me)?|tengo que|tengo|debo|necesito|hay que|me toca|no olvidar|guarda(me)? que)\s+(.+)$/, (m, o) => {
+      const verb = m[1], rest = tailOf(o, m[m.length - 1]).trim();
+      const rf = fold(rest);
+      if (SKIP_OBJ.test(rf)) return null;
+      if (/^organiza/.test(verb) && /^(el |mi )?(dia|semana|agenda|tareas)$/.test(rf)) return null;
+      if (verb === 'tengo' && !EVENT_RE.test(rf) && !/^(que|una tarea|pendiente)/.test(rf)) return null;
+      if (/^programa/.test(verb) && /(temporizador|alarma|timer)/.test(rf)) return null;
+      return smartReply(/^(no olvidar)/.test(verb) ? 'recuérdame ' + rest : rest);
+    });
     add('coachPin', /^(crea|crear|pon|ponle|cambia|cambiar) (un |el |mi )?pin$/, () => ({ text: 'Vamos a crear tu PIN.', after: () => setTimeout(() => accountAction('pin'), 300) }));
     add('coachVoiceHelp', /^(que puedo decir|que (le )?puedo pedir|comandos de voz|ayuda con la voz)$/, () => ({ text: 'Te muestro lo que puedes decirme.', after: () => voiceCmd({ help: true }) }));
     R.unshift(...mine);
+    // Si dices algo que suena a pendiente ("pagar la luz el viernes") y ninguna otra orden lo entiende, lo organizo.
+    const CHORE = /^(pagar|llamar|comprar|enviar|mandar|revisar|terminar|preparar|limpiar|lavar|estudiar|entregar|responder|contestar|escribir|redactar|hacer|recoger|buscar|reservar|agendar|cocinar|arreglar|renovar|cancelar|confirmar|imprimir|firmar|sacar|llevar|devolver|depositar|transferir|cotizar|visitar|ir a|ir al|ir por|reunion|cita|clase|examen|entrevista)\b/;
+    const WHEN_CUE = /\b(hoy|manana|pasado manana|lunes|martes|miercoles|jueves|viernes|sabado|domingo|esta semana|a las|de \d{1,2} a \d{1,2}|el \d{1,2}|todos los dias|cada (dia|semana|mes))\b/;
+    R.push(['smartGuess', /^[a-zñ]/, (m, o) => {
+      const n = o.n.trim();
+      if (n.split(/\s+/).length < 2 || n.length > 200 || /\?$/.test(o.s.trim()) || /^(que|como|cuando|donde|por que|quien|cual|cuanto)\b/.test(n)) return null;
+      return CHORE.test(n) || (WHEN_CUE.test(n) && /^[a-zñ]+(ar|er|ir)\b/.test(n)) ? smartReply(o.s) : null;
+    }]);
   }
 
   /* =====================================================================
@@ -2547,8 +2839,46 @@
       prof.parentElement.insertBefore(b, prof);
     }
   }
+  function hookCapture() {
+    // Botones "Añadir" → captura inteligente
+    $$('[data-open-sheet="addSheet"]').forEach(b => { b.removeAttribute('data-open-sheet'); b.dataset.cxAct = 'capture'; });
+    const hb = $('#resumen [data-goto="task"]');
+    if (hb) { hb.removeAttribute('data-goto'); hb.dataset.cxAct = 'capture'; hb.innerHTML = `${ic('plus')}Agregar`; }
+    const hdr = $('header .flex.items-center.gap-1\\.5') || $('#installBtn')?.parentElement;
+    if (hdr && !$('#cxAddTop')) {
+      const b = document.createElement('button');
+      b.id = 'cxAddTop'; b.type = 'button'; b.className = 'btn btn-accent btn-icon sm:!px-3'; b.dataset.cxAct = 'capture'; b.title = 'Agregar lo que sea'; b.setAttribute('aria-label', 'Agregar lo que sea');
+      b.innerHTML = `${ic('plus')}<span class="hidden sm:inline">Agregar</span>`;
+      hdr.prepend(b);
+    }
+    // "Para hoy": lo que escribas se organiza solo
+    const qf = $('#quickForm');
+    if (qf) qf.addEventListener('submit', (e) => {
+      e.preventDefault(); e.stopImmediatePropagation();
+      const v = $('#quickInput').value.trim(); if (!v) return;
+      const r = smartAdd(v, { defaultDue: todayKey() }); $('#quickInput').value = '';
+      if (r.results.length) { toast(r.text.split('\n')[0], 'ok', { label: 'Ver', fn: () => showRouted(r.results) }); if (settings.voice) speak(r.say); }
+    }, true);
+    if ($('#quickInput')) $('#quickInput').placeholder = 'Escribe lo que sea: tarea, cita, hábito… yo lo ubico';
+    // Formulario de Tareas: la tarea se queda en Tareas, pero le doy forma (área, duración, importancia y hora)
+    const tf = $('#taskForm');
+    if (tf) tf.addEventListener('submit', () => setTimeout(() => {
+      const t = tasks[0];
+      if (!t || Date.now() - Date.parse(t.createdAt) > 3000) return;
+      const it = analyzeItem(t.text);
+      if (!it) return;
+      if (!t.area && it.area) t.area = it.area;
+      if (!t.durMin) { t.durMin = it.durMin; t.durSrc = 'estimada'; }
+      if (!t.importancia && it.imp) t.importancia = it.imp;
+      if (!t.due && !it.someday) t.due = it.due || todayKey();
+      saveTasks();
+      if (t.due === todayKey() && P().autoSchedule && !t.time) organizeDay({ moveOverdue: false, plan: false }); else onTasksChanged();
+      if (t.time) toast(`Le puse hora: ${hm12(t.time)}${t.area && AG_AREAS[t.area] ? ` · ${AG_AREAS[t.area][0]}` : ''}`, 'ok');
+    }, 50));
+  }
   function initCoach() {
     buildViews();
+    hookCapture();
     addRepeatControl();
     const _otp = openTaskPlan;
     openTaskPlan = function (id) { _otp(id); fillRepeatControl(id); };
